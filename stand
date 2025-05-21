@@ -1,0 +1,91 @@
+local Players = game:GetService("Players")
+local TextChatService = game:GetService("TextChatService")
+local RunService = game:GetService("RunService")
+local VirtualInputManager = game:GetService("VirtualInputManager")
+
+local LocalPlayer = Players.LocalPlayer
+local currentHoverConnection = nil
+local hoverPart = nil
+
+-- Find by partial username
+local function findPlayerByPartialName(inputName)
+	inputName = inputName:lower()
+	for _, player in ipairs(Players:GetPlayers()) do
+		if player ~= LocalPlayer and player.Name:lower():sub(1, #inputName) == inputName then
+			return player
+		end
+	end
+	return nil
+end
+
+-- Stop hovering
+local function stopHovering()
+	if currentHoverConnection then
+		currentHoverConnection:Disconnect()
+		currentHoverConnection = nil
+	end
+	if hoverPart then
+		hoverPart:Destroy()
+		hoverPart = nil
+	end
+end
+
+-- Start hovering behind target
+local function startHoveringBehind(targetPlayer)
+	local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+	local root = character:WaitForChild("HumanoidRootPart")
+
+	stopHovering() -- clear old
+
+	hoverPart = Instance.new("Part")
+	hoverPart.Name = "HoverAlign"
+	hoverPart.Size = Vector3.new(1, 1, 1)
+	hoverPart.Anchored = true
+	hoverPart.CanCollide = false
+	hoverPart.Transparency = 1
+	hoverPart.Parent = character
+
+	currentHoverConnection = RunService.RenderStepped:Connect(function()
+		if targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+			local targetRoot = targetPlayer.Character.HumanoidRootPart
+			local offset = CFrame.new(-2, 2.5, -3)
+			local newCF = targetRoot.CFrame * offset
+			hoverPart.CFrame = newCF
+			root.CFrame = CFrame.new(newCF.Position, newCF.Position + targetRoot.CFrame.LookVector)
+		end
+	end)
+end
+
+-- Simulate key press
+local function pressKey(keyCode)
+	VirtualInputManager:SendKeyEvent(true, keyCode, false, game)
+	task.wait(0.1)
+	VirtualInputManager:SendKeyEvent(false, keyCode, false, game)
+end
+
+-- Handle incoming PMs
+TextChatService.MessageReceived:Connect(function(message)
+	if message.TextSource and message.TextSource.UserId ~= LocalPlayer.UserId then
+		local text = message.Text:lower()
+
+		if text == "stop" then
+			stopHovering()
+			return
+		end
+
+if text == "1" then pressKey(Enum.KeyCode.One) return end
+if text == "2" then pressKey(Enum.KeyCode.Two) return end
+if text == "3" then pressKey(Enum.KeyCode.Three) return end
+if text == "4" then pressKey(Enum.KeyCode.Four) return end
+if text == "g" then pressKey(Enum.KeyCode.G) return end
+
+
+		local match = text:match("^stand%s+(%w+)$")
+		if match then
+			local target = findPlayerByPartialName(match)
+			if target then
+				startHoveringBehind(target)
+			end
+		end
+	end
+end)
