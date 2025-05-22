@@ -1,0 +1,22 @@
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+local targetAnimationId = "rbxassetid://98089065269079"
+
+local function onCharacterAdded(character)
+    local humanoid = character:WaitForChild("Humanoid")
+
+    humanoid.AnimationPlayed:Connect(function(track)
+        if track.Animation and track.Animation.AnimationId == targetAnimationId then
+            print("Target animation is playing. Stopping and destroying it.")
+            track:Stop()
+            track:Destroy()
+        end
+    end)
+end
+
+if player.Character then
+    onCharacterAdded(player.Character)
+end
+
+player.CharacterAdded:Connect(onCharacterAdded)

@@ -1,0 +1,5 @@
+game.workspace.Effects.DescendantAdded:Connect(function(descendant)
+    if descendant.Name == "Hitsphere" then
+        descendant.Size = Vector3.new(40,40,40)
+    end
+end)

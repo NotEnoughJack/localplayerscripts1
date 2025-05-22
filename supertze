@@ -1,0 +1,975 @@
+
+local function skyTransition()
+    local lighting = game:GetService("Lighting")
+    local tweenService = game:GetService("TweenService")
+    local players = game:GetService("Players")
+    
+    
+    local player = players.LocalPlayer
+    local playerGui = player:FindFirstChildOfClass("PlayerGui") or Instance.new("PlayerGui", player)
+    
+    
+    local sky = lighting:FindFirstChildOfClass("Sky") or Instance.new("Sky")
+    sky.Parent = lighting
+    
+    
+    local atmosphere = lighting:FindFirstChildOfClass("Atmosphere") or Instance.new("Atmosphere")
+    atmosphere.Parent = lighting
+    
+    
+    local defaultSettings = {
+        Brightness = 0.5,
+        OutdoorAmbient = Color3.fromRGB(200, 200, 200),
+        Ambient = Color3.fromRGB(180, 180, 180),
+        FogEnd = 100000,
+        FogColor = Color3.fromRGB(255, 255, 255),
+        ClockTime = 14
+    }
+    
+    
+    local darkClouds = {
+        Brightness = 0.2,
+        OutdoorAmbient = Color3.fromRGB(50, 50, 50),
+        Ambient = Color3.fromRGB(30, 30, 30),
+        FogEnd = 200,
+        FogColor = Color3.fromRGB(40, 40, 40),
+        ClockTime = 20
+    }
+    
+    
+    local defaultSkybox = {
+        SkyboxBk = "https://www.roblox.com/asset/?id=600830446",
+        SkyboxDn = "https://www.roblox.com/asset/?id=600831635",
+        SkyboxFt = "https://www.roblox.com/asset/?id=600832720",
+        SkyboxLf = "https://www.roblox.com/asset/?id=600886090",
+        SkyboxRt = "https://www.roblox.com/asset/?id=600833862",
+        SkyboxUp = "https://www.roblox.com/asset/?id=600835177"
+    }
+    
+    local darkCloudSkybox = defaultSkybox 
+    
+    
+    local function tweenProperty(object, property, targetValue, time)
+        local tweenInfo = TweenInfo.new(time, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
+        local tween = tweenService:Create(object, tweenInfo, {[property] = targetValue})
+        tween:Play()
+    end
+    
+    
+    local function transitionLighting(targetSettings, targetSkybox)
+        local transitionTime = 2
+        for property, value in pairs(targetSettings) do
+            tweenProperty(lighting, property, value, transitionTime)
+        end
+    
+        
+        for property, textureId in pairs(targetSkybox) do
+            sky[property] = textureId
+        end
+    end
+    
+    
+    task.spawn(function()
+        wait(1)
+
+        transitionLighting(darkClouds, darkCloudSkybox)
+        wait(20)
+
+        transitionLighting(defaultSettings, defaultSkybox)
+
+end)
+    
+end
+
+
+
+
+local function startEMERALDS()
+    local replicatedStorage = game:GetService("ReplicatedStorage")
+    local tweenService = game:GetService("TweenService")
+    local players = game:GetService("Players")
+    local runService = game:GetService("RunService")
+    
+    local emeraldsFolder = replicatedStorage.Utils.Misc.S.C
+    local player = players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local rootPart = character:WaitForChild("HumanoidRootPart")
+    
+    local numEmeralds = 7
+    local radius = 7 
+    local speed = 3 
+    local duration = 7 
+    local burstDistance = 9 
+    local emeraldScale = Vector3.new(2, 2, 2) 
+    
+    local emeraldInstances = {}
+    
+    
+    
+    
+    
+    
+    
+    
+    function freezeAnimationAtTime(animationTrack, timePosition)
+        if not animationTrack.IsPlaying then
+            animationTrack:Play()
+        end
+        animationTrack:AdjustSpeed(0)
+        animationTrack.TimePosition = timePosition
+    end
+    
+    local Player = game.Players.LocalPlayer
+    local Character = Player.Character
+    local Humanoid = Character:WaitForChild("Humanoid")
+    
+    local Animation = Instance.new("Animation")
+    Animation.AnimationId = "rbxassetid://74315407390008"
+    
+    local Track = Humanoid:LoadAnimation(Animation)
+    Track:Play()
+    
+    wait(0.4)
+    freezeAnimationAtTime(Track, 0.4)
+    wait(0.7)
+    
+    
+    
+    
+    for i, emerald in ipairs(emeraldsFolder:GetChildren()) do
+        if i > numEmeralds then break end
+        local clone = emerald:Clone()
+        clone.Parent = workspace
+        clone.Position = rootPart.Position
+        clone.Size = clone.Size * emeraldScale 
+        clone.Color = Color3.fromRGB(255, 255, 255)
+        table.insert(emeraldInstances, clone)
+    end
+    
+    
+    
+    for i, emerald in ipairs(emeraldInstances) do
+        local angle = math.rad((i - 1) * (360 / numEmeralds))
+        local burstPosition = rootPart.Position + Vector3.new(math.cos(angle) * burstDistance, 2, math.sin(angle) * burstDistance)
+        
+        local tween = tweenService:Create(emerald, TweenInfo.new(0.7, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = burstPosition})
+        tween:Play()
+    end
+    
+    
+    local startTime = tick()
+    local connection
+    connection = runService.RenderStepped:Connect(function()
+        local elapsed = tick() - startTime
+        for i, emerald in ipairs(emeraldInstances) do
+            local angle = math.rad((i - 1) * (360 / numEmeralds) + elapsed * speed * 100)
+            local x = math.cos(angle) * radius
+            local z = math.sin(angle) * radius
+            local targetPosition = rootPart.Position + Vector3.new(x, 0, z)
+            
+            emerald.Position = targetPosition 
+        end
+    end)
+    
+    task.wait(0.6) 
+    
+    
+    for i, emerald in ipairs(emeraldInstances) do
+        local angle = math.rad((i - 1) * (360 / numEmeralds))
+        local circlePosition = rootPart.Position + Vector3.new(math.cos(angle) * radius, 0, math.sin(angle) * radius)
+        
+        local tween = tweenService:Create(emerald, TweenInfo.new(0.7, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = circlePosition})
+        tween:Play()
+    end
+    
+    
+    
+    
+    task.wait(0.6) 
+    
+    local jacobsLadder = game:GetService("ReplicatedStorage").Utils.Misc.JacobsLadder
+    local clonedLadder = jacobsLadder:Clone()
+
+	
+for _, descendant in ipairs(clonedLadder:GetDescendants()) do
+	if descendant:IsA("BasePart") then
+		descendant.Color = Color3.new(1, 1, 1) 
+	elseif descendant:IsA("PointLight") then
+		descendant.Color = Color3.new(1, 1, 1)
+	elseif descendant:IsA("ParticleEmitter") or descendant:IsA("Trail") then
+		descendant.Color = ColorSequence.new(Color3.new(1, 1, 1))
+	end
+end
+    
+    
+    for _, beam in ipairs(clonedLadder:GetDescendants()) do
+        if beam:IsA("Beam") and beam.Name == "Beam" then
+            beam.Color = ColorSequence.new(Color3.new(1, 1, 1)) 
+        end
+    end
+    
+    
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+    
+    
+    local ladderHeight = clonedLadder.Size.Y
+    
+    
+    
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+    
+    
+    local bodyPosition = humanoidRootPart:FindFirstChildOfClass("BodyPosition")
+    
+    
+    
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+    
+    
+    local initialPosition = humanoidRootPart.Position + Vector3.new(0, -3, 0) 
+    
+    
+    local temporaryPart = Instance.new("Part")
+    temporaryPart.Size = Vector3.new(1, 1, 1)  
+    temporaryPart.Position = initialPosition  
+    temporaryPart.Anchored = true  
+    temporaryPart.CanCollide = false  
+    temporaryPart.Parent = game.Workspace  
+    temporaryPart.Transparency = 1
+    
+    
+    local particleEmitter = game:GetService("ReplicatedStorage").Utils.Megumi.Mahoraga.RitualStart.Attachment.Ring:Clone()
+    
+    
+    local attachment = Instance.new("Attachment")
+    attachment.Parent = temporaryPart
+    attachment.Position = Vector3.new(0, 0, 0)  
+    
+    
+    attachment.CFrame = attachment.CFrame * CFrame.Angles(0, 0, math.rad(90))  
+    
+    
+    particleEmitter.Parent = attachment
+    
+    
+    particleEmitter:Emit(50)
+    
+    print("particle called")
+    
+    task.delay(1.7, function()
+        for i = 1, 12 do
+            particleEmitter:Emit(50)
+            task.wait(0.9)
+        end
+        task.wait(3)
+    
+        temporaryPart:Destroy()
+    end)
+    
+    
+    
+    
+    
+    
+    
+    task.delay(1.7, function()
+    
+    
+        if not bodyPosition then
+            bodyPosition = Instance.new("BodyPosition")
+            bodyPosition.MaxForce = Vector3.new(4000, 4000, 4000)
+            bodyPosition.D = 50
+            bodyPosition.P = 50
+            bodyPosition.Parent = humanoidRootPart
+        end
+        bodyPosition.Position = Vector3.new(humanoidRootPart.Position.X, humanoidRootPart.Position.Y + 30, humanoidRootPart.Position.Z)
+        clonedLadder.Position = bodyPosition.Position + Vector3.new(0, ladderHeight/2, 0)
+    
+    
+    end)
+    
+    
+    task.delay(6, function()
+        Track:AdjustSpeed(1)
+    end)
+    
+    
+    task.wait(duration)
+    
+    
+    local root = game.Players.LocalPlayer.Character.HumanoidRootPart
+    local attachment = Instance.new("Attachment")
+    attachment.Parent = root
+    
+    local particle = game:GetService("ReplicatedStorage").Utils.Itadori.CrushingBlow.Flames:Clone()
+    particle.Parent = attachment
+    particle.Color = ColorSequence.new(Color3.new(1, 1, 1)) 
+    particle.Size = NumberSequence.new(6) 
+    
+    
+    local root = game.Players.LocalPlayer.Character.HumanoidRootPart
+    local attachment = Instance.new("Attachment")
+    attachment.Parent = root
+    
+    local burstparticle = game:GetService("ReplicatedStorage").Utils.Megumi.Mahoraga.RitualStart.Attachment.Dust:Clone()
+    burstparticle.Parent = attachment
+    
+    local pointLIGHT = game:GetService("ReplicatedStorage").Utils.Misc.JacobsLadder.Bottom.PointLight:Clone()
+    pointLIGHT.Parent = root
+    pointLIGHT.Enabled = false
+    pointLIGHT.Color = Color3.new(1, 1, 1) 
+    
+    
+    
+    task.delay(0.6, function()
+    clonedLadder.Parent = game.Workspace
+    print("added")
+    
+    
+    
+    
+    pointLIGHT.Enabled = true
+    
+    task.wait(0.9)
+    particleStartup = task.spawn(function()
+        for i=1,9 do
+            burstparticle:Emit(20)
+            task.wait(1.5)
+        end
+    end)
+    particleStartup2 = task.spawn(function()
+        for i=1,60 do
+            particle:Emit(40)
+            task.wait(0.2)
+        end
+    end)
+    end)
+    
+    
+    
+    
+    
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local tweenService = game:GetService("TweenService")
+    
+    local highlight = Instance.new("Highlight")
+    highlight.Parent = character
+    highlight.FillColor = Color3.new(0, 0,0)
+    highlight.FillTransparency = 1 
+    highlight.DepthMode = Enum.HighlightDepthMode.Occluded
+    
+    local fadeInTime = 1
+    local holdTime = 3
+    local fadeOutTime = 2
+    
+    local fadeInTweenInfo = TweenInfo.new(fadeInTime, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut)
+    local fadeOutTweenInfo = TweenInfo.new(fadeOutTime, Enum.EasingStyle.Linear, Enum.EasingDirection.InOut)
+    
+    local fadeIn = tweenService:Create(highlight, fadeInTweenInfo, {FillTransparency = 0})
+    local fadeOut = tweenService:Create(highlight, fadeOutTweenInfo, {FillTransparency = 1})
+    
+    fadeIn:Play()
+    
+    
+    for _, emerald in ipairs(emeraldInstances) do
+        local tween = tweenService:Create(emerald, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {Position = rootPart.Position})
+        tween:Play()
+    
+    
+        
+        task.delay(0.4, function()
+            emerald:Destroy()
+            wait(1.07)
+            freezeAnimationAtTime(Track, 2.8)
+        end)
+    end
+    
+    task.delay(5, function()
+            fadeOut:Play()
+    end)
+    game:GetService("Debris"):AddItem(clonedLadder, 10)  
+    
+    wait(10)
+    Track:AdjustSpeed(1)
+    
+    
+    bodyPosition:Destroy()
+    
+end
+
+
+
+local function coolflying()
+
+
+    local Players = game:GetService("Players")
+    local UserInputService = game:GetService("UserInputService")
+    local RunService = game:GetService("RunService")
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    
+    local player = Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    local camera = workspace.CurrentCamera
+    
+    local cleaveAnim = ReplicatedStorage:WaitForChild("Animations"):WaitForChild("Heian"):WaitForChild("Cleave")
+    local idleAnim = game:GetService("ReplicatedStorage").Animations.Misc.S.Idle
+    
+    local isFlightMode = false
+    local boostSpeed = 100
+    local animationTrack = nil
+    local idleAnimationTrack = nil
+    local isAnimating = false
+    local bodyVelocity
+    
+    local hasPressedW = false 
+    
+    local TweenService = game:GetService("TweenService") 
+    
+    local normalFov = camera.FieldOfView 
+    local flightFov = 220 
+    local fovTweenInfo = TweenInfo.new(1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+    
+    
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local hrp = character:WaitForChild("HumanoidRootPart")
+    
+    local root = game.Players.LocalPlayer.Character.HumanoidRootPart
+    local attachment = Instance.new("Attachment")
+    attachment.Parent = root
+    
+    local particle = game:GetService("ReplicatedStorage").Utils.Megumi.Mahoraga.Earthquake.Floor.Ring:Clone()
+    particle.Parent = attachment
+    local flyingParticle = game:GetService("ReplicatedStorage").Utils.Hakari.IdleDeath.Jackpot.EnergyBurst:Clone()
+    flyingParticle.Parent = attachment
+    
+    
+    local function isOnGround()
+        local rayOrigin = hrp.Position 
+        local rayDirection = Vector3.new(0, -5, 0) 
+        local raycastParams = RaycastParams.new()
+        raycastParams.FilterDescendantsInstances = {character} 
+    
+        
+        local hit = workspace:Raycast(rayOrigin, rayDirection, raycastParams)
+    
+        if hit then
+            return true 
+        else
+            return false 
+        end
+    end
+    
+    
+    local function setupAnimation()
+        if not animationTrack then
+            local animator = humanoid:WaitForChild("Animator")
+            animationTrack = animator:LoadAnimation(cleaveAnim)
+        end
+    end
+    
+    local function setupIdleAnimation()
+        if not idleAnimationTrack then
+            local animator = humanoid:WaitForChild("Animator")
+            idleAnimationTrack = animator:LoadAnimation(idleAnim)
+        end
+    end
+    
+    
+    
+    function freezeAnimationAtTime(animationTrack, timePosition)
+        if not animationTrack.IsPlaying then
+            animationTrack:Play()
+        end
+        animationTrack:AdjustSpeed(0)
+        animationTrack.TimePosition = timePosition
+    end
+    
+    local function startFlight()
+        if not bodyVelocity then
+            bodyVelocity = Instance.new("BodyVelocity")
+            bodyVelocity.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+            bodyVelocity.Velocity = Vector3.new(0, 0, 0)
+            bodyVelocity.Name = "FlightForce"
+            bodyVelocity.Parent = hrp
+        end
+        humanoid:ChangeState(Enum.HumanoidStateType.Physics)
+    end
+    
+    local function stopFlight()
+        isFlightMode = false
+        RunService:UnbindFromRenderStep("SupermanFlight")
+    
+        if bodyVelocity then
+            bodyVelocity.Velocity = Vector3.new(0, 0, 0)
+            bodyVelocity:Destroy()
+            bodyVelocity = nil
+        end
+    end
+    
+    local particleStartup = nil 
+    
+    local flyingParticleLoop = nil 
+    
+    local flyingParticleLoopRunning = false 
+    
+    local IDLEParticleLoop = nil
+    
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    
+    local function createEffect(partName)
+        local part = character:FindFirstChild(partName)
+        if part then
+            
+            local attachment = part:FindFirstChild("EffectAttachment")
+            if not attachment then
+                attachment = Instance.new("Attachment")
+                attachment.Name = "EffectAttachment" 
+                attachment.Parent = part
+            end
+            
+            
+            local particle = game:GetService("ReplicatedStorage").Utils.Itadori.CrushingBlow.Flames:Clone()
+            particle.Name = "CrushingBlowFlames_" .. tick() 
+            particle.Parent = attachment
+    
+            
+            particle.Color = ColorSequence.new(Color3.new(1, 1, 1))
+            particle.Size = NumberSequence.new(1)
+            
+            
+    
+            particle:Emit(80)
+    
+            
+            task.delay(0.2, function()
+                if particle and particle.Parent then
+                    particle:Destroy()
+                end
+            end)
+        end
+    end
+    
+    local function applyEffectsForLimbs()
+        createEffect("HumanoidRootPart")
+        createEffect("Head")
+        createEffect("Left Arm")
+        createEffect("Right Arm")
+        createEffect("Left Leg")
+        createEffect("Right Leg")
+    end
+    
+    local flyingParticleLoopRunning = false
+    
+    local function startFlyingParticles()
+        if not flyingParticleLoopRunning then
+            flyingParticleLoopRunning = true
+            flyingParticleLoop = task.spawn(function()
+                while flyingParticleLoopRunning do
+                    applyEffectsForLimbs()
+                    task.wait(0.05) 
+                end
+            end)
+        end
+    end
+    
+    local function stopFlyingParticles()
+        flyingParticleLoopRunning = false
+    end
+    
+    local flyingParticleLoopIDLE = false
+    
+    local root = game.Players.LocalPlayer.Character.HumanoidRootPart
+    local attachment = Instance.new("Attachment")
+    attachment.Parent = root
+    
+    local IDLEparticle = game:GetService("ReplicatedStorage").Utils.Hakari.IdleDeath.Jackpot.EnergyBurst:Clone()
+    IDLEparticle.Parent = attachment
+    IDLEparticle.Color = ColorSequence.new(Color3.new(1, 1, 1)) 
+    IDLEparticle.Size = NumberSequence.new(12) 
+    
+    local megumiBurst = game:GetService("ReplicatedStorage").Utils.Megumi.Mahoraga.RitualStart.Attachment.Dust:Clone()
+    megumiBurst.Parent = attachment
+    
+    
+    
+    
+    
+    local function startIDLEParticles()
+        if not flyingParticleLoopIDLE then
+            flyingParticleLoopIDLE = true
+            IDLEParticleLoop = task.spawn(function()
+                while flyingParticleLoopIDLE do
+                    IDLEparticle:Emit(40)
+                    megumiBurst:Emit(20)
+                    task.wait(2) 
+                end
+            end)
+        end
+    end
+    
+    local function stopIDLEParticles()
+        flyingParticleLoopIDLE = false
+    end
+    
+    local function updateFlight()
+        if isFlightMode and bodyVelocity then
+    
+            
+    
+            
+            if UserInputService:IsKeyDown(Enum.KeyCode.W) then
+    
+                            
+                if particleStartup then
+                    task.cancel(particleStartup)
+                    particleStartup = nil
+                end
+    
+                startFlyingParticles()
+    
+                stopIDLEParticles()
+                if IDLEParticleLoop then
+                    task.cancel(IDLEParticleLoop)
+                end
+    
+    
+                idleAnimationTrack:Stop()
+    
+                freezeAnimationAtTime(animationTrack, 1.3)
+    
+                local lookVector = camera.CFrame.LookVector
+                bodyVelocity.Velocity = lookVector * boostSpeed
+                hrp.CFrame = CFrame.lookAt(hrp.Position, hrp.Position + lookVector) * CFrame.Angles(-0.3, 0, 0)
+    
+                if camera.FieldOfView ~= flightFov and isAnimating == true and isFlightMode == true then
+                    local fovTween = TweenService:Create(camera, fovTweenInfo, {FieldOfView = flightFov})
+                    fovTween:Play()
+                end
+            elseif not isOnGround() then
+                bodyVelocity.Velocity = Vector3.new(0, 0, 0) 
+                hrp.CFrame = CFrame.new(hrp.Position) * CFrame.Angles(math.rad(0), 0, 0)
+    
+                animationTrack:Stop()
+    
+                
+                
+    
+                startIDLEParticles()
+    
+                if not idleAnimationTrack then
+                    setupIdleAnimation()
+                end
+    
+                if idleAnimationTrack and not idleAnimationTrack.IsPlaying then
+                    idleAnimationTrack:Play()
+                    freezeAnimationAtTime(idleAnimationTrack, 0.7)
+                end
+                if camera.FieldOfView ~= normalFov then
+                    local fovTween = TweenService:Create(camera, fovTweenInfo, {FieldOfView = normalFov})
+                    fovTween:Play()
+                end
+    
+            end
+        end
+    end
+    
+    
+    
+    local function unlockMovement()
+        humanoid.WalkSpeed = 16
+        humanoid.JumpPower = 50
+        humanoid:ChangeState(Enum.HumanoidStateType.Running)
+    end
+    
+    local function handleYPress()
+        if not isAnimating then
+            isAnimating = true
+            setupAnimation()
+            setupIdleAnimation()
+    
+    
+            humanoid.WalkSpeed = 0
+            humanoid.JumpPower = 0
+                           
+                if not particleStartup then
+                    particleStartup = task.spawn(function()
+                        while true do
+                            particle:Emit(20)
+                            task.wait(0.12)
+                        end
+                    end)
+                end
+                
+            task.delay(0.7,function()
+                    startFlyingParticles()
+    
+            end)
+    
+            if animationTrack then
+                animationTrack:Play()
+                animationTrack:AdjustSpeed(2)
+                task.wait(0.4)
+                freezeAnimationAtTime(animationTrack, 0.7)
+    
+            end
+    
+            
+            isFlightMode = true
+            startFlight()
+        else
+    
+                        stopIDLEParticles()
+                if IDLEParticleLoop then
+                    task.cancel(IDLEParticleLoop)
+                end
+    
+                            if camera.FieldOfView ~= normalFov then
+                    local fovTween = TweenService:Create(camera, fovTweenInfo, {FieldOfView = normalFov})
+                    fovTween:Play()
+                end
+    
+                            stopFlyingParticles()
+                task.cancel(flyingParticleLoop)
+    
+            isAnimating = false
+            isFlightMode = false
+            stopFlight()
+    
+            if animationTrack then
+                animationTrack:Stop()
+            end
+            if idleAnimationTrack then
+                idleAnimationTrack:Stop()
+            end
+    
+            unlockMovement()
+            if camera.FieldOfView ~= normalFov then
+                    local fovTween = TweenService:Create(camera, fovTweenInfo, {FieldOfView = normalFov})
+                    fovTween:Play()
+            end
+        end
+    end
+    
+    UserInputService.InputBegan:Connect(function(input, gameProcessed)
+        if not gameProcessed and input.KeyCode == Enum.KeyCode.Y then
+            handleYPress()
+        end
+    end)
+    
+    
+    
+    
+    
+    local function handleWPress()
+        if not hasPressedW then
+            hasPressedW = true
+            RunService.RenderStepped:Connect(updateFlight) 
+        end
+    end
+    
+    UserInputService.InputBegan:Connect(function(input, gameProcessed)
+        if not gameProcessed then
+            if input.KeyCode == Enum.KeyCode.W then
+                handleWPress()
+            end
+        end
+    end)
+
+end
+
+
+
+
+
+local function coollightning()
+    local TweenService = game:GetService("TweenService")
+    local RunService = game:GetService("RunService")
+    local Workspace = game:GetService("Workspace")
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local Camera = Workspace.CurrentCamera
+    
+    local root = game.Players.LocalPlayer.Character.HumanoidRootPart
+    
+    
+    local BoltPartTemplate = Instance.new("Part")
+    BoltPartTemplate.TopSurface = Enum.SurfaceType.Smooth
+    BoltPartTemplate.BottomSurface = Enum.SurfaceType.Smooth
+    BoltPartTemplate.Anchored = true
+    BoltPartTemplate.CanCollide = false
+    BoltPartTemplate.Locked = true
+    BoltPartTemplate.CastShadow = false
+    BoltPartTemplate.Material = Enum.Material.Neon
+    BoltPartTemplate.Color = Color3.fromRGB(0, 0, 0)
+    BoltPartTemplate.Size = Vector3.new(0.2, 0.2, 0.2)
+    BoltPartTemplate.Transparency = 1
+    BoltPartTemplate.Name = "BoltPart"
+    
+    
+    local numCloseBolts = 20  
+    local numFarBolts = 20    
+    
+    
+    local function randomizeLightningSettings()
+        return {
+            AnimationSpeed = 10,
+            Thickness = 9,
+            MaxRadius = 7,
+            MinRadius = math.random(2, 3),
+            PulseSpeed = 10,
+            Color = Color3.fromRGB(0, 0, 0)
+        }
+    end
+    
+    local function randomizeLightningSettingsFar()
+        return {
+            AnimationSpeed = 10,
+            Thickness = 30,
+            MaxRadius = 7,
+            MinRadius = math.random(2, 3),
+            PulseSpeed = 10,
+            Color = Color3.fromRGB(0, 0, 0),
+            far = true
+        }
+    end
+    
+    
+    local animationDuration = 0.6
+    
+    local function createLightningBolt(startPos, endPos, settings)
+        local boltParts = {}
+        local numParts = 20
+        local startTime = tick()
+    
+        
+        for i = 1, numParts do
+            local part = BoltPartTemplate:Clone()
+            part.Parent = Workspace
+            part.CFrame = CFrame.new(startPos)
+            table.insert(boltParts, part)
+        end
+    
+        
+        local function animateBolt()
+            local elapsedTime = tick() - startTime
+            local progress = math.sin(elapsedTime * settings.AnimationSpeed) * 0.5 + 0.5
+            local sizeFactor = progress * (settings.MaxRadius - settings.MinRadius) + settings.MinRadius
+            local thickness = settings.Thickness
+    
+            for i, part in ipairs(boltParts) do
+                local partProgress = i / (numParts + 15)
+                local position = startPos:Lerp(endPos, partProgress)
+                local offset = Vector3.new(math.random() * sizeFactor, math.random() * sizeFactor, math.random() * sizeFactor)
+                part.Position = position + offset
+                part.Size = Vector3.new(thickness, thickness, thickness)
+                part.Color = settings.Color
+                part.Transparency = 0
+            end
+        end
+    
+        local connection
+        connection = RunService.RenderStepped:Connect(function()
+            animateBolt()
+            if tick() - startTime > animationDuration then
+                connection:Disconnect()
+                for _, part in ipairs(boltParts) do
+                    part:Destroy()
+                end
+                if settings.far == true then return end
+                
+                local effectPart = Instance.new("Part")
+                effectPart.Size = Vector3.new(5, 0.2, 5)
+                effectPart.Position = startPos - Vector3.new(0, 59, 0)
+                effectPart.Anchored = true
+                effectPart.CanCollide = false
+                effectPart.Transparency = 1
+                effectPart.Parent = Workspace
+                
+                
+                local effectAttachment = ReplicatedStorage.Utils.Heian.Lightning.Attachment:Clone()
+                effectAttachment.Parent = effectPart
+                
+                
+                for _, child in ipairs(effectAttachment:GetChildren()) do
+                    if child:IsA("ParticleEmitter") then
+                        child.Color = ColorSequence.new(Color3.new(1, 1, 1))
+                        child:Emit(child:GetAttribute("EmitCount") or 10)
+                    end
+                end
+                task.delay(0.7, function()
+                    if effectPart then
+                        effectPart:Destroy()
+                    end
+                end)
+            end
+        end)
+    end
+    
+    local function getRandomExcluding(min, max, excludeMin, excludeMax)
+        local value
+        repeat
+            value = math.random(min, max)
+        until value < excludeMin or value > excludeMax
+        return value
+    end
+    
+    
+    
+    task.spawn(function()
+    
+    for i = 1, numCloseBolts do
+        local randomX = getRandomExcluding(-30, 30, -8, 8)
+        local randomZ = getRandomExcluding(-30, 30, -8, 8)
+        local startPos = Vector3.new( root.CFrame.Position.X + randomX, 80,root.CFrame.Position.Z + randomZ)
+        local endPos =  Vector3.new(root.CFrame.Position.X + randomX, -20,root.CFrame.Position.Z + randomZ)
+        local settings = randomizeLightningSettings()
+        createLightningBolt(startPos, endPos, settings)
+        task.wait(0.2)
+    end
+    end)
+    
+    
+    task.spawn(function()
+    
+    for i = 1, numFarBolts do
+        local randomX = getRandomExcluding(-150, 150, -30, 30)
+        local randomZ = getRandomExcluding(-150, 150, -30, 30)
+        local startPos = root.CFrame.Position + Vector3.new(randomX, 150, randomZ)
+        local endPos = root.CFrame.Position + Vector3.new(randomX, -150, randomZ)
+        
+        
+        if (Workspace.CurrentCamera.CFrame.Position - startPos).Magnitude > 70 then
+            local settingsFar = randomizeLightningSettingsFar()
+            createLightningBolt(startPos, endPos, settingsFar)
+            task.wait(0.2)
+        end
+    end
+    end)
+    
+end
+
+coollightning()
+
+skyTransition()
+
+task.delay(3, function()
+    startEMERALDS()
+    coolflying()
+end)
+
+
+task.delay(8.4, function()
+    coollightning()
+end)
+
