@@ -18,21 +18,21 @@ local Tabs = {
 }
 
 local ButtonData = {
-    { Title = "Train Button", Description = "No discription", ScriptPath = "gumanba/Scripts/refs/heads/main/DeadRails" },
+    { Title = "Train Button", Description = "No discription", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/trainbutton" },
     { Title = "Flying", Description = "X To Fly", ScriptPath = "gyyfyu/test2/refs/heads/main/no%20key%20system/fly.lua" },
     { Title = "Teleport", Description = "Press C To Activate", ScriptPath = "gyyfyu/test2/refs/heads/main/no%20key%20system/teleport.lua" },
     { Title = "Simple Domain", Description = "Press Y To Activate", ScriptPath = "gyyfyu/test2/refs/heads/main/no%20key%20system/simple%20domain.lua" },
     { Title = "Lock on", Description = "Press J To Toggle, RMB to lock", ScriptPath = "gyyfyu/test2/refs/heads/main/no%20key%20system/lockon.lua" },
-    { Title = "Item ESP", Description = "May be Broken", ScriptPath = "gyyfyu/test2/refs/heads/main/no%20key%20system/teleport.lua" },
-    { Title = "HitBox Expander", Description = "Makes FrontDash Better", ScriptPath = "gyyfyu/test2/refs/heads/main/no%20key%20system/simple%20domain.lua" },
-    { Title = "SuperTZE", Description = "Press Y To Fly", ScriptPath = "gyyfyu/test2/refs/heads/main/no%20key%20system/lockon.lua" },
-    { Title = "Stand", Description = "Usage Tutorial In Kenma's discord", ScriptPath = "NotEnoughJack/trainbutton/refs/heads/main/saveinstance" },
-    { Title = "Blackhole", Description = "Moves backhole", ScriptPath = "NotEnoughJack/trainbutton/refs/heads/main/themiddle" },
-    { Title = "Gubby Morph", Description = "Gubby Is Not ServerSided", ScriptPath = "NotEnoughJack/trainbutton/refs/heads/main/saveinstance" },
-    { Title = "Surprise Blackhole", Description = "No discription", ScriptPath = "NotEnoughJack/trainbutton/refs/heads/main/saveinstance" },
-    { Title = "Macro Hiromi", Description = "Automatically Dodges Hiromi", ScriptPath = "NotEnoughJack/trainbutton/refs/heads/main/saveinstance" },
-    { Title = "Jerk Off", Description = "Press J To Goon", ScriptPath = "NotEnoughJack/trainbutton/refs/heads/main/saveinstance" },
-    { Title = "Anti Blackhole", Description = "No discription", ScriptPath = "NotEnoughJack/trainbutton/refs/heads/main/jerk" },
+    { Title = "Item ESP", Description = "May be Broken", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/itemesp" },
+    { Title = "HitBox Expander", Description = "Makes FrontDash Better", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/hitbox" },
+    { Title = "SuperTZE", Description = "Press Y To Fly", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/supertze" },
+    { Title = "Stand", Description = "Usage Tutorial In Kenma's discord", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/stand" },
+    { Title = "Blackhole", Description = "Moves backhole", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/blackhole" },
+    { Title = "Gubby Morph", Description = "Gubby Is Not ServerSided", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/gubby" },
+    { Title = "Surprise Blackhole", Description = "No discription", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/surpriseblackhole" },
+    { Title = "Macro Hiromi", Description = "Automatically Dodges Hiromi", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/macrohiromi" },
+    { Title = "Jerk Off", Description = "Press J To Goon", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/jerk" },
+    { Title = "Anti Blackhole", Description = "No discription", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/antiblackhole" },
 }
 
 local function AddButton(button)
