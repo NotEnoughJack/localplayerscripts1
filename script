@@ -31,6 +31,7 @@ local ButtonData = {
     { Title = "Gubby Morph", Description = "Gubby Is Not ServerSided", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/gubby" },
     { Title = "Surprise Blackhole", Description = "No discription", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/surpriseblackhole" },
     { Title = "Macro Hiromi", Description = "Automatically Dodges Hiromi", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/macrohiromi" },
+    { Title = "SuperTZE", Description = "Mobile Version", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/mobiletze" },
     { Title = "Anti Blackhole", Description = "No discription", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/antiblackhole" },
 }
 
@@ -81,7 +82,7 @@ Window:SelectTab(1)
 
 Fluent:Notify({
     Title = "Kenma's Scripts",
-    Content = "The script has been loaded.",
+    Content = "Join the discord .gg/jjshub",
     Duration = 8
 })
 
