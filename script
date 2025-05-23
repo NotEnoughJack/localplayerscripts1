@@ -31,7 +31,6 @@ local ButtonData = {
     { Title = "Gubby Morph", Description = "Gubby Is Not ServerSided", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/gubby" },
     { Title = "Surprise Blackhole", Description = "No discription", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/surpriseblackhole" },
     { Title = "Macro Hiromi", Description = "Automatically Dodges Hiromi", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/macrohiromi" },
-    { Title = "Jerk Off", Description = "Press J To Goon", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/jerk" },
     { Title = "Anti Blackhole", Description = "No discription", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/antiblackhole" },
 }
 
