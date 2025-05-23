@@ -82,7 +82,7 @@ Window:SelectTab(1)
 
 Fluent:Notify({
     Title = "Kenma's Scripts",
-    Content = "The script has been loaded.",
+    Content = "Join the discord .gg/jjshub",
     Duration = 8
 })
 
