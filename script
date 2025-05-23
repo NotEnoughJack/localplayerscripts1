@@ -32,6 +32,7 @@ local ButtonData = {
     { Title = "Surprise Blackhole", Description = "No discription", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/surpriseblackhole" },
     { Title = "Macro Hiromi", Description = "Automatically Dodges Hiromi", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/macrohiromi" },
     { Title = "SuperTZE", Description = "Mobile Version", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/mobiletze" },
+    { Title = "Auto Piano", Description = "Auto plays songs", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/piano" },
     { Title = "Anti Blackhole", Description = "No discription", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/antiblackhole" },
 }
 
