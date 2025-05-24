@@ -28,7 +28,7 @@ local ButtonData = {
     { Title = "SuperTZE", Description = "Press Y To Fly", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/supertze" },
     { Title = "Stand", Description = "Usage Tutorial In Kenma's discord", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/stand" },
     { Title = "Blackhole", Description = "Moves backhole", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/blackhole" },
-    { Title = "Gubby Morph", Description = "Gubby Is Not ServerSided", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/gubby" },
+    { Title = "Box Morph", Description = "Serversided", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/gubby" },
     { Title = "Surprise Blackhole", Description = "No discription", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/surpriseblackhole" },
     { Title = "Macro Hiromi", Description = "Automatically Dodges Hiromi", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/macrohiromi" },
     { Title = "SuperTZE", Description = "Mobile Version", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/mobiletze" },
@@ -36,6 +36,7 @@ local ButtonData = {
     { Title = "Anti Blackhole", Description = "No discription", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/antiblackhole" },
     { Title = "Backflip", Description = "T For Normal E For Super", ScriptPath = "gyyfyu/test2/refs/heads/main/obf_cj7o6P7567nEPA1xVqYZcv51ezWc7DOCzS475N108rwGEiEVi9688kJErn1g68ep.lua" },
     { Title = "Domain Invade", Description = "Stand Infront of Domain and Press U", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/domaininvade" },
+    { Title = "Pose", Description = "Press P to look awesome", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/pose" },
 }
 
 local function AddButton(button)

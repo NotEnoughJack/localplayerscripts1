@@ -1,0 +1,104 @@
+local UserInputService = game:GetService("UserInputService")
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local rootPart = character:WaitForChild("HumanoidRootPart")
+
+local animationIds = {
+    "rbxassetid://112072539845954",
+    "rbxassetid://138425417551609",
+    "rbxassetid://85457808070175",
+    "rbxassetid://70899744676322"
+}
+
+local animations = {}
+for _, id in ipairs(animationIds) do
+    local anim = Instance.new("Animation")
+    anim.AnimationId = id
+    table.insert(animations, anim)
+end
+
+local poseActive = false
+local currentTrack = nil
+local poseIndex = 1
+
+local bodyGyro, bodyPosition
+
+local function startHover()
+    if bodyGyro then bodyGyro:Destroy() end
+    if bodyPosition then bodyPosition:Destroy() end
+
+    bodyGyro = Instance.new("BodyGyro")
+    bodyGyro.P = 9e4
+    bodyGyro.MaxTorque = Vector3.new(9e9, 9e9, 9e9)
+    bodyGyro.CFrame = rootPart.CFrame
+    bodyGyro.Parent = rootPart
+
+    bodyPosition = Instance.new("BodyPosition")
+    bodyPosition.Position = rootPart.Position + Vector3.new(0, 5, 0)
+    bodyPosition.MaxForce = Vector3.new(0, 9e9, 0)
+    bodyPosition.D = 1000
+    bodyPosition.P = 20000
+    bodyPosition.Parent = rootPart
+end
+
+local function stopHover()
+    if bodyGyro then bodyGyro:Destroy() end
+    if bodyPosition then bodyPosition:Destroy() end
+end
+
+local function startPosing()
+    task.spawn(function()
+        while poseActive do
+            if currentTrack then
+                currentTrack:Stop()
+            end
+
+            local anim = animations[poseIndex]
+            currentTrack = humanoid:LoadAnimation(anim)
+            currentTrack:Play()
+
+            -- Wait briefly to load the animation
+            task.wait(0.05)
+
+            local middleTime = currentTrack.Length / 2
+            currentTrack.TimePosition = middleTime
+            currentTrack:AdjustSpeed(0) -- Freeze at middle
+
+            task.wait(0.5) -- Hold pose
+
+            poseIndex += 1
+            if poseIndex > #animations then
+                poseIndex = 1
+            end
+        end
+    end)
+end
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if gameProcessed then return end
+
+    if input.KeyCode == Enum.KeyCode.P then
+        poseActive = not poseActive
+        if poseActive then
+            startHover()
+            startPosing()
+        else
+            if currentTrack then currentTrack:Stop() end
+            stopHover()
+        end
+    end
+end)
+
+player.CharacterAdded:Connect(function(char)
+    character = char
+    humanoid = character:WaitForChild("Humanoid")
+    rootPart = character:WaitForChild("HumanoidRootPart")
+    if poseActive then
+        startHover()
+        startPosing()
+    end
+end)
