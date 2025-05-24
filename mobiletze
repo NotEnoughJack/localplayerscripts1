@@ -1,11 +1,8 @@
--- === BEGIN: Simulated 'Y' Key GUI Button ===
-
 local UserInputService = game:GetService("UserInputService")
 local VirtualInputManager = game:GetService("VirtualInputManager")
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 
--- Create a draggable button in ScreenGui
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "DraggableYButtonGui"
 screenGui.ResetOnSpawn = false
@@ -23,20 +20,12 @@ button.Parent = screenGui
 button.Active = true
 button.Draggable = true
 
--- Simulate "Y" key press when clicked
 button.MouseButton1Click:Connect(function()
 	print("Simulating key press: Y")
 	VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Y, false, game)
 	task.wait(0.1)
 	VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Y, false, game)
 end)
-
--- === END: Simulated 'Y' Key GUI Button ===
-
-
--- === BEGIN: Original Script ===
-
-
 
 local function skyTransition()
     local lighting = game:GetService("Lighting")

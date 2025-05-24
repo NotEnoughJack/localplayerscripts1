@@ -7,7 +7,6 @@ local LocalPlayer = Players.LocalPlayer
 local currentHoverConnection = nil
 local hoverPart = nil
 
--- Find by partial username
 local function findPlayerByPartialName(inputName)
 	inputName = inputName:lower()
 	for _, player in ipairs(Players:GetPlayers()) do
@@ -18,7 +17,6 @@ local function findPlayerByPartialName(inputName)
 	return nil
 end
 
--- Stop hovering
 local function stopHovering()
 	if currentHoverConnection then
 		currentHoverConnection:Disconnect()
@@ -30,12 +28,11 @@ local function stopHovering()
 	end
 end
 
--- Start hovering behind target
 local function startHoveringBehind(targetPlayer)
 	local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 	local root = character:WaitForChild("HumanoidRootPart")
 
-	stopHovering() -- clear old
+	stopHovering() 
 
 	hoverPart = Instance.new("Part")
 	hoverPart.Name = "HoverAlign"
@@ -56,14 +53,12 @@ local function startHoveringBehind(targetPlayer)
 	end)
 end
 
--- Simulate key press
 local function pressKey(keyCode)
 	VirtualInputManager:SendKeyEvent(true, keyCode, false, game)
 	task.wait(0.1)
 	VirtualInputManager:SendKeyEvent(false, keyCode, false, game)
 end
 
--- Handle incoming PMs
 TextChatService.MessageReceived:Connect(function(message)
 	if message.TextSource and message.TextSource.UserId ~= LocalPlayer.UserId then
 		local text = message.Text:lower()
