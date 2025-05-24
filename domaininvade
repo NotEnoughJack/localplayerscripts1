@@ -1,0 +1,23 @@
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local hrp = character:WaitForChild("HumanoidRootPart")
+
+local animation = Instance.new("Animation")
+animation.AnimationId = "rbxassetid://17284846608"
+local track = humanoid:LoadAnimation(animation)
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+	if gameProcessed then return end
+	if input.KeyCode == Enum.KeyCode.U then
+		if not track.IsPlaying then
+			track:Play()
+			track.Stopped:Wait()  
+			local forward = hrp.CFrame.LookVector * 10
+			hrp.CFrame = hrp.CFrame + forward
+		end
+	end
+end)

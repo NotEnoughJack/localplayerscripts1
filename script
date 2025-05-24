@@ -35,6 +35,7 @@ local ButtonData = {
     { Title = "Auto Piano", Description = "Auto plays songs", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/piano" },
     { Title = "Anti Blackhole", Description = "No discription", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/antiblackhole" },
     { Title = "Backflip", Description = "T For Normal E For Super", ScriptPath = "gyyfyu/test2/refs/heads/main/obf_cj7o6P7567nEPA1xVqYZcv51ezWc7DOCzS475N108rwGEiEVi9688kJErn1g68ep.lua" },
+    { Title = "Domain Invade", Description = "Stand Infront of Domain and Press U", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/domaininvade" },
 }
 
 local function AddButton(button)
