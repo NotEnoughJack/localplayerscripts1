@@ -36,6 +36,10 @@ local ButtonData = {
     { Title = "Pose", Description = "Press P to look awesome", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/pose" },
     { Title = "Drone", Description = "Automatically turns you to a drone", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/drone" },
     { Title = "Stand", Description = "Usage Tutorial In Kenma's discord", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/stand" },
+    { Title = "MVP - Domain Invasion", Description = "Press B", ScriptPath = "keatoscripts/JJS/refs/heads/main/Toji.txt" },
+    { Title = "MVP - Stand Proud", Description = "Press B", ScriptPath = "keatoscripts/JJS/refs/heads/main/Sukuna%20-%20Stand%20Proud.txt" },
+    { Title = "MVP - King Of Curses", Description = "Press B", ScriptPath = "keatoscripts/JJS/refs/heads/main/Sukuna%20-%20King%20Of%20Curses.txt" },
+    { Title = "MVP - Watch Your Head", Description = "Press B", ScriptPath = "keatoscripts/JJS/refs/heads/main/GojoAmanai.txt" },
 }
 
 local function AddButton(button)
