@@ -14,7 +14,6 @@ local Tabs = {
 
 local Options = Fluent.Options
 
--- 🔧 Function to easily add toggles
 local function AddScriptToggle(tab, id, title, scriptURL, defaultState)
     local toggle = tab:AddToggle(id, {
         Title = title,
