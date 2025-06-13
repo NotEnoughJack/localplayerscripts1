@@ -1,0 +1,50 @@
+-- Script B (LocalScript - For detection)
+
+local Players = game:GetService("Players")
+
+local function checkCharacter(player, character)
+    local existing = character:FindFirstChild("KenmaUser")
+    if existing then
+        warn(player.Name .. " is using the script.")
+        game.StarterGui:SetCore("ChatMakeSystemMessage", {
+            Text = player.Name .. " is using the Kenma GUI.",
+            Color = Color3.fromRGB(255, 100, 100),
+            Font = Enum.Font.SourceSansBold,
+            FontSize = Enum.FontSize.Size24,
+        })
+    end
+
+    character.ChildAdded:Connect(function(child)
+        if child.Name == "KenmaUser" then
+            warn(player.Name .. " is now using the script.")
+            game.StarterGui:SetCore("ChatMakeSystemMessage", {
+                Text = player.Name .. " just started using the Kenma GUI.",
+                Color = Color3.fromRGB(255, 0, 0),
+                Font = Enum.Font.SourceSansBold,
+                FontSize = Enum.FontSize.Size24,
+            })
+        end
+    end)
+end
+
+local function monitorPlayer(player)
+    player.CharacterAdded:Connect(function(character)
+        checkCharacter(player, character)
+    end)
+
+    if player.Character then
+        checkCharacter(player, player.Character)
+    end
+end
+
+for _, player in ipairs(Players:GetPlayers()) do
+    if player ~= Players.LocalPlayer then
+        monitorPlayer(player)
+    end
+end
+
+Players.PlayerAdded:Connect(function(player)
+    if player ~= Players.LocalPlayer then
+        monitorPlayer(player)
+    end
+end)
