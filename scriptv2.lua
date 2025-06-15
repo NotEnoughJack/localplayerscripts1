@@ -2,9 +2,6 @@ local Players = game:GetService("Players")
 local TeleportService = game:GetService("TeleportService")
 local LocalPlayer = Players.LocalPlayer
 
-local placeId = game.PlaceId
-local jobId = game.JobId
-
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local Window = Fluent:CreateWindow({
     Title = "Kenma GUI",
@@ -59,52 +56,6 @@ AddScriptToggle(Tabs.Main, "MVP - Stand Proud", "MVP - Stand Proud", "https://ra
 AddScriptToggle(Tabs.Main, "MVP - King Of Curses", "MVP - King Of Curses", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Sukuna%20-%20King%20Of%20Curses.txt")
 AddScriptToggle(Tabs.Main, "MVP - Watch Your Head", "MVP - Watch Your Head", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/GojoAmanai.txt")
 
-local function freezePlayer()
-	local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-	for _, part in pairs(character:GetDescendants()) do
-		if part:IsA("BasePart") then
-			part.Anchored = true
-		end
-	end
-end
 
-local function unfreezePlayer()
-	local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-	for _, part in pairs(character:GetDescendants()) do
-		if part:IsA("BasePart") then
-			part.Anchored = false
-		end
-	end
-end
-
-local function rejoinServer()
-	TeleportService:TeleportToPlaceInstance(placeId, jobId, LocalPlayer)
-end
-
-local function onPlayerChatted(player)
-	player.Chatted:Connect(function(message)
-		message = message:lower()
-		if player == LocalPlayer then return end -- ignore own commands
-
-		if message == "!freeze" then
-			freezePlayer()
-		elseif message == "!unfreeze" then
-			unfreezePlayer()
-		elseif message == "!stop" then
-			rejoinServer()
-		end
-	end)
-end
-
-for _, player in ipairs(Players:GetPlayers()) do
-	if player ~= LocalPlayer then
-		onPlayerChatted(player)
-	end
-end
-
-Players.PlayerAdded:Connect(function(player)
-	if player ~= LocalPlayer then
-		onPlayerChatted(player)
-	end
-end)
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/extrav2'))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/extra'))()
