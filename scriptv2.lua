@@ -51,6 +51,7 @@ AddScriptToggle(Tabs.Main, "DomainInvade", "Domain Invade", "https://raw.githubu
 AddScriptToggle(Tabs.Main, "Pose", "Pose", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/pose")
 AddScriptToggle(Tabs.Main, "Drone", "Drone", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/drone")
 AddScriptToggle(Tabs.Main, "Stand", "Stand", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/stand")
+AddScriptToggle(Tabs.Main, "Speed", "Speed", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/speedboost")
 AddScriptToggle(Tabs.Main, "MVP - Domain Invasion", "MVP - Domain Invasion", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Toji.txt")
 AddScriptToggle(Tabs.Main, "MVP - Stand Proud", "MVP - Stand Proud", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Sukuna%20-%20Stand%20Proud.txt")
 AddScriptToggle(Tabs.Main, "MVP - King Of Curses", "MVP - King Of Curses", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Sukuna%20-%20King%20Of%20Curses.txt")
