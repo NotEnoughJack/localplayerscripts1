@@ -45,7 +45,7 @@ AddScriptToggle(Tabs.Main, "Blackhole", "Blackhole", "https://raw.githubusercont
 AddScriptToggle(Tabs.Main, "AntiBlackhole", "Anti Blackhole", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/antiblackhole")
 AddScriptToggle(Tabs.Main, "SupriseBlackhole", "SupriseBlackhole", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/surpriseblackhole")
 AddScriptToggle(Tabs.Main, "Small Hitbox", "Small Hitbox", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/gubby")
-AddScriptToggle(Tabs.Main, "MacroHiromi", "Macro Hiromi", "NotEnoughJack/localplayerscripts/refs/heads/main/macrohiromi")
+AddScriptToggle(Tabs.Main, "MacroHiromi", "Macro Hiromi", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/macrohiromi")
 AddScriptToggle(Tabs.Main, "AutoPiano", "Auto Piano", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/piano")
 AddScriptToggle(Tabs.Main, "DomainInvade", "Domain Invade", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/domaininvade")
 AddScriptToggle(Tabs.Main, "Pose", "Pose", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/pose")
