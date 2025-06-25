@@ -1,0 +1,15 @@
+local RunService = game:GetService("RunService")
+
+RunService.RenderStepped:Wait()  
+
+local platform = Instance.new("Part")
+platform.Name = "LocalPlatform"
+platform.Size = Vector3.new(10000, 1, 10000)  
+platform.Position = Vector3.new(0, -140, 0)
+platform.Anchored = true
+platform.CanCollide = true
+platform.Material = Enum.Material.SmoothPlastic
+platform.Color = Color3.fromRGB(100, 100, 100)
+platform.TopSurface = Enum.SurfaceType.Smooth
+platform.BottomSurface = Enum.SurfaceType.Smooth
+platform.Parent = workspace
