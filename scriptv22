@@ -104,3 +104,5 @@ AddScriptToggle(Tabs.Animations, "MVP4", "MVP - Watch Your Head", "https://raw.g
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/extrav2'))()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/extra'))()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/antivoid'))()
+-- REMOVE THIS IF YOU DO NOT WANT THE WATERMARK VVV
+loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/icon'))()
