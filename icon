@@ -1,0 +1,33 @@
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "YouTubeBrand"
+screenGui.ResetOnSpawn = true
+screenGui.Parent = player:WaitForChild("PlayerGui")
+
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 250, 0, 60)
+frame.Position = UDim2.new(0, 10, 1, -70)
+frame.BackgroundTransparency = 1
+frame.Parent = screenGui
+
+local imageLabel = Instance.new("ImageLabel")
+imageLabel.Size = UDim2.new(0, 50, 0, 50)
+imageLabel.Position = UDim2.new(0, 0, 0, 5)
+imageLabel.BackgroundTransparency = 1
+imageLabel.Image = "rbxassetid://10709818626" -- Replace this
+imageLabel.Parent = frame
+imageLabel.ImageTransparency = 0.8
+
+local textLabel = Instance.new("TextLabel")
+textLabel.Size = UDim2.new(1, -60, 1, 0)
+textLabel.Position = UDim2.new(0, 60, 0, 0)
+textLabel.BackgroundTransparency = 1
+textLabel.Text = "Made By NotEnoughJack"
+textLabel.TextColor3 = Color3.new(1, 1, 1)
+textLabel.TextTransparency = 0.8 -- 90% transparent
+textLabel.TextStrokeTransparency = 0.7
+textLabel.TextScaled = true
+textLabel.Font = Enum.Font.Cartoon
+textLabel.Parent = frame
