@@ -1,3 +1,4 @@
+print("Script Loaded")
 local Players = game:GetService("Players")
 local TeleportService = game:GetService("TeleportService")
 local LocalPlayer = Players.LocalPlayer
@@ -8,7 +9,7 @@ local Window = Fluent:CreateWindow({
     SubTitle = "V2.2",
     TabWidth = 160,
     Size = UDim2.fromOffset(580, 460),
-    Theme = {},
+    Theme = "Amethyst",
     MinimizeKey = Enum.KeyCode.LeftControl
 })
 
