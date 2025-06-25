@@ -1,4 +1,5 @@
 print("Script Loaded")
+-- Check bottom to remove watermark
 local Players = game:GetService("Players")
 local TeleportService = game:GetService("TeleportService")
 local LocalPlayer = Players.LocalPlayer
