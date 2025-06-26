@@ -1,0 +1,388 @@
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local TweenService = game:GetService("TweenService")
+
+local localPlayer = Players.LocalPlayer
+local playerGui = localPlayer:WaitForChild("PlayerGui")
+local camera = workspace.CurrentCamera
+
+local highlightedPlayers = {}
+local selectedPlayer = nil
+local playerGui_Main = nil
+local connections = {}
+
+local function createMainGui()
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Name = "PlayerSelectionGui"
+    screenGui.Parent = playerGui
+    
+    local mainFrame = Instance.new("Frame")
+    mainFrame.Name = "MainFrame"
+    mainFrame.Size = UDim2.new(0, 280, 0, 420)
+    mainFrame.Position = UDim2.new(0, 30, 0.5, -210)
+    mainFrame.BackgroundColor3 = Color3.fromRGB(45, 35, 65)
+    mainFrame.BorderSizePixel = 0
+    mainFrame.Visible = false
+    mainFrame.Parent = screenGui
+    
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 12)
+    corner.Parent = mainFrame
+    
+    local gradient = Instance.new("UIGradient")
+    gradient.Color = ColorSequence.new{
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(50, 40, 70)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 15, 30))
+    }
+    gradient.Rotation = 45
+    gradient.Parent = mainFrame
+    
+    local stroke = Instance.new("UIStroke")
+    stroke.Color = Color3.fromRGB(70, 60, 90)
+    stroke.Thickness = 1
+    stroke.Transparency = 0.3
+    stroke.Parent = mainFrame
+    
+    local playerNameLabel = Instance.new("TextLabel")
+    playerNameLabel.Name = "PlayerNameLabel"
+    playerNameLabel.Size = UDim2.new(1, -20, 0, 35)
+    playerNameLabel.Position = UDim2.new(0, 10, 0, 15)
+    playerNameLabel.BackgroundTransparency = 1
+    playerNameLabel.Text = "PLAYERNAME"
+    playerNameLabel.TextColor3 = Color3.fromRGB(230, 230, 230)
+    playerNameLabel.TextScaled = true
+    playerNameLabel.Font = Enum.Font.GothamBold
+    playerNameLabel.TextStrokeTransparency = 0.8
+    playerNameLabel.TextStrokeColor3 = Color3.new(0, 0, 0)
+    playerNameLabel.Parent = mainFrame
+    
+    local healthLabel = Instance.new("TextLabel")
+    healthLabel.Name = "HealthLabel"
+    healthLabel.Size = UDim2.new(1, -20, 0, 25)
+    healthLabel.Position = UDim2.new(0, 10, 0, 55)
+    healthLabel.BackgroundTransparency = 1
+    healthLabel.Text = "HEALTH ?/100"
+    healthLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+    healthLabel.TextScaled = true
+    healthLabel.Font = Enum.Font.Gotham
+    healthLabel.Parent = mainFrame
+    
+    local avatarFrame = Instance.new("Frame")
+    avatarFrame.Name = "AvatarFrame"
+    avatarFrame.Size = UDim2.new(0, 160, 0, 160)
+    avatarFrame.Position = UDim2.new(0.5, -80, 0, 90)
+    avatarFrame.BackgroundColor3 = Color3.fromRGB(35, 25, 55)
+    avatarFrame.BorderSizePixel = 0
+    avatarFrame.Parent = mainFrame
+    
+    local avatarCorner = Instance.new("UICorner")
+    avatarCorner.CornerRadius = UDim.new(0, 8)
+    avatarCorner.Parent = avatarFrame
+    
+    local avatarStroke = Instance.new("UIStroke")
+    avatarStroke.Color = Color3.fromRGB(70, 60, 90)
+    avatarStroke.Thickness = 2
+    avatarStroke.Transparency = 0.3
+    avatarStroke.Parent = avatarFrame
+    
+    local avatarImage = Instance.new("ImageLabel")
+    avatarImage.Name = "AvatarImage"
+    avatarImage.Size = UDim2.new(1, -4, 1, -4)
+    avatarImage.Position = UDim2.new(0, 2, 0, 2)
+    avatarImage.BackgroundTransparency = 1
+    avatarImage.Parent = avatarFrame
+    
+    local avatarImageCorner = Instance.new("UICorner")
+    avatarImageCorner.CornerRadius = UDim.new(0, 6)
+    avatarImageCorner.Parent = avatarImage
+    
+    local characterNameLabel = Instance.new("TextLabel")
+    characterNameLabel.Name = "CharacterNameLabel"
+    characterNameLabel.Size = UDim2.new(1, -20, 0, 40)
+    characterNameLabel.Position = UDim2.new(0, 10, 0, 260)
+    characterNameLabel.BackgroundTransparency = 1
+    characterNameLabel.Text = "CHARACTER NAME HERE"
+    characterNameLabel.TextColor3 = Color3.new(1, 1, 1)
+    characterNameLabel.TextScaled = true
+    characterNameLabel.Font = Enum.Font.GothamBold
+    characterNameLabel.Parent = mainFrame
+    
+    local ultBarLabel = Instance.new("TextLabel")
+    ultBarLabel.Name = "UltBarLabel"
+    ultBarLabel.Size = UDim2.new(1, -20, 0, 25)
+    ultBarLabel.Position = UDim2.new(0, 10, 0, 310)
+    ultBarLabel.BackgroundTransparency = 1
+    ultBarLabel.Text = "ULT BAR"
+    ultBarLabel.TextColor3 = Color3.new(1, 1, 1)
+    ultBarLabel.TextScaled = true
+    ultBarLabel.Font = Enum.Font.GothamBold
+    ultBarLabel.Parent = mainFrame
+    
+    local ultValueLabel = Instance.new("TextLabel")
+    ultValueLabel.Name = "UltValueLabel"
+    ultValueLabel.Size = UDim2.new(1, -20, 0, 20)
+    ultValueLabel.Position = UDim2.new(0, 10, 0, 335)
+    ultValueLabel.BackgroundTransparency = 1
+    ultValueLabel.Text = "?/100"
+    ultValueLabel.TextColor3 = Color3.new(1, 1, 1)
+    ultValueLabel.TextScaled = true
+    ultValueLabel.Font = Enum.Font.Gotham
+    ultValueLabel.Parent = mainFrame
+    
+    local ultBarBg = Instance.new("Frame")
+    ultBarBg.Name = "UltBarBackground"
+    ultBarBg.Size = UDim2.new(1, -20, 0, 18)
+    ultBarBg.Position = UDim2.new(0, 10, 0, 365)
+    ultBarBg.BackgroundColor3 = Color3.fromRGB(25, 15, 45)
+    ultBarBg.BorderSizePixel = 0
+    ultBarBg.Parent = mainFrame
+    
+    local ultBarBgCorner = Instance.new("UICorner")
+    ultBarBgCorner.CornerRadius = UDim.new(0, 9)
+    ultBarBgCorner.Parent = ultBarBg
+    
+    local ultBarBgStroke = Instance.new("UIStroke")
+    ultBarBgStroke.Color = Color3.fromRGB(60, 50, 80)
+    ultBarBgStroke.Thickness = 1
+    ultBarBgStroke.Transparency = 0.5
+    ultBarBgStroke.Parent = ultBarBg
+    
+    local ultBarFill = Instance.new("Frame")
+    ultBarFill.Name = "UltBarFill"
+    ultBarFill.Size = UDim2.new(0, 0, 1, -2)
+    ultBarFill.Position = UDim2.new(0, 1, 0, 1)
+    ultBarFill.BackgroundColor3 = Color3.fromRGB(100, 180, 255)
+    ultBarFill.BorderSizePixel = 0
+    ultBarFill.Parent = ultBarBg
+    
+    local ultBarFillCorner = Instance.new("UICorner")
+    ultBarFillCorner.CornerRadius = UDim.new(0, 8)
+    ultBarFillCorner.Parent = ultBarFill
+    
+    local ultGradient = Instance.new("UIGradient")
+    ultGradient.Color = ColorSequence.new{
+        ColorSequenceKeypoint.new(0, Color3.fromRGB(120, 200, 255)),
+        ColorSequenceKeypoint.new(1, Color3.fromRGB(80, 160, 255))
+    }
+    ultGradient.Rotation = 90
+    ultGradient.Parent = ultBarFill
+    
+    playerGui_Main = mainFrame
+    return screenGui
+end
+
+local function createHighlight(player)
+    if player == localPlayer or not player.Character then return end
+    
+    local character = player.Character
+    local highlight = Instance.new("Highlight")
+    highlight.Name = "PlayerHighlight"
+    highlight.Adornee = character
+    highlight.FillColor = Color3.new(0, 1, 0) -- Green
+    highlight.OutlineColor = Color3.new(0, 0.8, 0)
+    highlight.FillTransparency = 0.5
+    highlight.OutlineTransparency = 0
+    highlight.Parent = character
+    
+    highlightedPlayers[player] = highlight
+end
+
+local function removeHighlight(player)
+    if highlightedPlayers[player] then
+        highlightedPlayers[player]:Destroy()
+        highlightedPlayers[player] = nil
+    end
+end
+
+local function updateSelectedHighlight(player)
+    if highlightedPlayers[player] then
+        highlightedPlayers[player].FillColor = Color3.new(1, 0, 0) -- Red
+        highlightedPlayers[player].OutlineColor = Color3.new(0.8, 0, 0)
+    end
+end
+
+local function resetHighlights()
+    for player, highlight in pairs(highlightedPlayers) do
+        if player ~= selectedPlayer then
+            highlight.FillColor = Color3.new(0, 1, 0) -- Green
+            highlight.OutlineColor = Color3.new(0, 0.8, 0)
+        end
+    end
+end
+
+local function updateGui(player)
+    if not playerGui_Main or not player then return end
+    
+    local playerNameLabel = playerGui_Main:FindFirstChild("PlayerNameLabel")
+    local healthLabel = playerGui_Main:FindFirstChild("HealthLabel")
+    local avatarImage = playerGui_Main:FindFirstChild("AvatarFrame"):FindFirstChild("AvatarImage")
+    local characterNameLabel = playerGui_Main:FindFirstChild("CharacterNameLabel")
+    local ultValueLabel = playerGui_Main:FindFirstChild("UltValueLabel")
+    local ultBarFill = playerGui_Main:FindFirstChild("UltBarBackground"):FindFirstChild("UltBarFill")
+
+    if playerNameLabel then
+        playerNameLabel.Text = string.upper(player.Name)
+    end
+    
+    local health = 100
+    if player.Character and player.Character:FindFirstChild("Humanoid") then
+        health = math.floor(player.Character.Humanoid.Health)
+    end
+    if healthLabel then
+        healthLabel.Text = "HEALTH " .. health .. "/100"
+    end
+    
+    if avatarImage then
+        local userId = player.UserId
+        avatarImage.Image = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. userId .. "&width=150&height=150&format=png"
+    end
+    
+    local characterName = "UNKNOWN"
+    local movesetValue = player:GetAttribute("Moveset")
+    if movesetValue then
+        characterName = tostring(movesetValue)
+    end
+    if characterNameLabel then
+        characterNameLabel.Text = string.upper(characterName)
+    end
+    
+    local ultimate = 0
+    local ultimateValue = player:GetAttribute("Ultimate")
+    if ultimateValue then
+        ultimate = math.floor(tonumber(ultimateValue) or 0)
+    end
+    if ultValueLabel then
+        ultValueLabel.Text = ultimate .. "/100"
+    end
+    if ultBarFill then
+        local fillPercentage = math.clamp(ultimate / 100, 0, 1)
+        ultBarFill:TweenSize(UDim2.new(fillPercentage, 0, 1, 0), "Out", "Quad", 0.3, true)
+    end
+end
+
+-- Handle player click
+local function onPlayerClick(player)
+    if player == localPlayer then return end
+    
+    selectedPlayer = player
+    resetHighlights()
+    updateSelectedHighlight(player)
+    
+    if playerGui_Main then
+        playerGui_Main.Visible = true
+        updateGui(player)
+    end
+end
+
+-- Ray casting to detect player clicks
+local function castRayFromMouse()
+    local mouse = localPlayer:GetMouse()
+    local unitRay = camera:ScreenPointToRay(mouse.X, mouse.Y)
+    
+    local raycastParams = RaycastParams.new()
+    raycastParams.FilterType = Enum.RaycastFilterType.Blacklist
+    raycastParams.FilterDescendantsInstances = {localPlayer.Character}
+    
+    local raycastResult = workspace:Raycast(unitRay.Origin, unitRay.Direction * 1000, raycastParams)
+    
+    if raycastResult then
+        local hit = raycastResult.Instance
+        local character = hit.Parent
+        
+        if character:FindFirstChild("Humanoid") then
+            local player = Players:GetPlayerFromCharacter(character)
+            if player then
+                onPlayerClick(player)
+            end
+        end
+    end
+end
+
+-- Handle mouse click
+local function onMouseClick()
+    castRayFromMouse()
+end
+
+-- Setup highlights for all players
+local function setupHighlights()
+    for _, player in pairs(Players:GetPlayers()) do
+        if player ~= localPlayer and player.Character then
+            createHighlight(player)
+        end
+    end
+end
+
+-- Handle player added
+local function onPlayerAdded(player)
+    if player == localPlayer then return end
+    
+    local function onCharacterAdded(character)
+        wait(1) -- Wait for character to fully load
+        createHighlight(player)
+    end
+    
+    if player.Character then
+        onCharacterAdded(player.Character)
+    end
+    player.CharacterAdded:Connect(onCharacterAdded)
+end
+
+-- Handle player removing
+local function onPlayerRemoving(player)
+    removeHighlight(player)
+    if selectedPlayer == player then
+        selectedPlayer = nil
+        if playerGui_Main then
+            playerGui_Main.Visible = false
+        end
+    end
+end
+
+-- Initialize
+local function initialize()
+    createMainGui()
+    setupHighlights()
+    
+    -- Connect events
+    connections[#connections + 1] = Players.PlayerAdded:Connect(onPlayerAdded)
+    connections[#connections + 1] = Players.PlayerRemoving:Connect(onPlayerRemoving)
+    connections[#connections + 1] = UserInputService.InputBegan:Connect(function(input, gameProcessed)
+        if gameProcessed then return end
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            onMouseClick()
+        end
+    end)
+    
+    -- Setup existing players
+    for _, player in pairs(Players:GetPlayers()) do
+        if player ~= localPlayer then
+            onPlayerAdded(player)
+        end
+    end
+    
+    -- Update GUI continuously for selected player
+    connections[#connections + 1] = RunService.Heartbeat:Connect(function()
+        if selectedPlayer and playerGui_Main and playerGui_Main.Visible then
+            updateGui(selectedPlayer)
+        end
+    end)
+end
+
+-- Start the script
+initialize()
+
+-- Cleanup function
+local function cleanup()
+    for _, connection in pairs(connections) do
+        connection:Disconnect()
+    end
+    connections = {}
+    
+    for player, _ in pairs(highlightedPlayers) do
+        removeHighlight(player)
+    end
+end
+
+-- Connect cleanup to player leaving
+game:BindToClose(cleanup)
