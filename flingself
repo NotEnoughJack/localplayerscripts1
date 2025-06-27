@@ -1,0 +1,16 @@
+for _, obj in ipairs(workspace:GetDescendants())do
+if obj:IsA("BodyVelocity") and obj.Name=="KnockbackForce" then
+obj.Velocity = Vector3.new(300,200,300)
+obj.MaxForce = Vector3.new(99999,99999,99999)
+obj.P = 100000
+print("knockback:", obj:GetFullName())
+end
+end
+workspace.DescendantAdded:Connect(function(obj)
+if obj:IsA("BodyVelocity") and obj.Name=="KnockbackForce" then
+obj.Velocity = Vector3.new(300,200,300)
+obj.MaxForce = Vector3.new(99999,99999,99999)
+obj.P = 100000
+print("knockback2:", obj:GetFullName())
+end
+end)
