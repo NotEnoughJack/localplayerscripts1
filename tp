@@ -1,0 +1,50 @@
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+local RunService = game:GetService("RunService")
+
+local function getHRP()
+	local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+	return character:WaitForChild("HumanoidRootPart")
+end
+
+local function getClosestPlayer()
+	local closestPlayer = nil
+	local shortestDistance = math.huge
+	local myHRP = getHRP()
+
+	for _, player in pairs(Players:GetPlayers()) do
+		if player ~= LocalPlayer and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+			local otherHRP = player.Character.HumanoidRootPart
+			local distance = (myHRP.Position - otherHRP.Position).Magnitude
+
+			if distance < shortestDistance then
+				shortestDistance = distance
+				closestPlayer = player
+			end
+		end
+	end
+
+	return closestPlayer
+end
+
+local function teleportToClosestPlayer()
+	local myHRP = getHRP()
+	local targetPlayer = getClosestPlayer()
+
+	if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+		local targetHRP = targetPlayer.Character.HumanoidRootPart
+		local direction = (targetHRP.Position - myHRP.Position).Unit
+		local newPosition = targetHRP.Position - direction * 10
+
+		myHRP.CFrame = CFrame.new(newPosition, targetHRP.Position)
+	end
+end
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+	if gameProcessed then return end
+	if input.KeyCode == Enum.KeyCode.P then
+		teleportToClosestPlayer()
+	end
+end)
