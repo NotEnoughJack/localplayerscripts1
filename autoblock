@@ -1,0 +1,12 @@
+local f=true--autoblock
+local g=true--evade dumbass shit (purple ect) (Really buggy)
+local a,b,c,d,e=game:GetService("Players"),game:GetService("RunService"),game:GetService("VirtualInputManager"),game:GetService("Workspace"),game:GetService("Players").LocalPlayer
+local h,i,j,k={"CombatTrail","LapseBlue","HandTrail","Shock","BallFire","Reserve","Doors","TwoFold","Rabbit","Spawn","DivineAttack","Throw","FocusStrike","DrillImpact","Barrage","Mucus","MucusFire","DismantleFly","HitGlow"},{"DomainBurst","Domain","RushWind","HotHands","WorldSlash","LapseBlueMax","Purple","ReversalRedMax"},{},{}
+for _,v in ipairs(h)do j[v]=1 end for _,v in ipairs(i)do k[v]=1 end
+local l,m,n,o,p,q,r,s=nil,false,0,0,0.1,0,2.5,14.5
+local function t()local u=e.Character if u then l=u:FindFirstChild("HumanoidRootPart")or u:FindFirstChild("Torso")or u:FindFirstChild("UpperTorso")end end
+t()e.CharacterAdded:Connect(t)
+b.Heartbeat:Connect(function(u)if not l then return end local v=tick()q=q+u if q<p then return end q=q-p local w,x=false,false
+if g then for _,y in ipairs(d:GetChildren())do if k[y.Name]and(l.Position-y.Position).Magnitude<=75 and(v-o)>=2 then o=v local z=(l.Position-y.Position).Unit*-45 l.CFrame=CFrame.new(l.Position+z)break end end end
+if f then for _,y in ipairs(d:GetChildren())do if j[y.Name]then local A=(l.Position-y.Position).Magnitude if y.Name~="CombatTrail"or A>1 then if A>=r and A<=s then w=true break end end end end end
+if w then n=v if not m then pcall(function()c:SendKeyEvent(true,Enum.KeyCode.F,false,game)end)m=true end elseif m and(v-n)>=0.2 then pcall(function()c:SendKeyEvent(false,Enum.KeyCode.F,false,game)end)m=false end end)
