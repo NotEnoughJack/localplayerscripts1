@@ -106,6 +106,7 @@ AddScriptToggle(Tabs.Animations, "MVP2", "MVP - Stand Proud", "https://raw.githu
 AddScriptToggle(Tabs.Animations, "MVP3", "MVP - King Of Curses", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Sukuna%20-%20King%20Of%20Curses.txt")
 AddScriptToggle(Tabs.Animations, "MVP4", "MVP - Watch Your Head", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/GojoAmanai.txt")
 
+loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/extrav3'))()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/extrav2'))()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/extra'))()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/antivoid'))()
