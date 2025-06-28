@@ -1,0 +1,47 @@
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "NotificationGui"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+
+local function createBanner(message)
+    local banner = Instance.new("TextLabel")
+    banner.Size = UDim2.new(1, 0, 0, 50)
+    banner.Position = UDim2.new(0, 0, 0, 0)
+    banner.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    banner.BackgroundTransparency = 0.3
+    banner.TextColor3 = Color3.new(1, 1, 1)
+    banner.TextStrokeTransparency = 0.6
+    banner.Font = Enum.Font.GothamBold
+    banner.TextScaled = true
+    banner.Text = message
+    banner.Parent = ScreenGui
+    banner.ZIndex = 10
+
+    banner.Position = UDim2.new(0, 0, -0.1, 0)
+    banner:TweenPosition(UDim2.new(0, 0, 0, 0), "Out", "Quad", 0.3, true)
+
+    task.wait(3.5)
+
+    banner:TweenPosition(UDim2.new(0, 0, -0.1, 0), "In", "Quad", 0.3, true)
+    task.wait(0.3)
+    banner:Destroy()
+end
+
+local function onPlayerAdded(player)
+    player.Chatted:Connect(function(msg)
+        if msg:sub(1, 6):lower() == "!noti " then
+            local text = msg:sub(7)
+            if text ~= "" then
+                createBanner(text)
+            end
+        end
+    end)
+end
+
+for _, player in ipairs(Players:GetPlayers()) do
+    onPlayerAdded(player)
+end
+Players.PlayerAdded:Connect(onPlayerAdded)
