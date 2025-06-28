@@ -71,7 +71,7 @@ local success, response = pcall(function()
 end)
 
 if success then
-    print("✅ Webhook with embed and join link sent!")
+    print("Script v3 executed successfully")
 else
-    warn("❌ Failed to send webhook:", response)
+    warn("Script v3 failed", response)
 end
