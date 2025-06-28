@@ -100,6 +100,7 @@ AddScriptToggle(Tabs.Utility, "Playerscanner", "Player Scanner", "https://raw.gi
 AddScriptToggle(Tabs.Combat, "Autoblock", "Autoblock", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/autoblock")
 AddScriptToggle(Tabs.Utility, "knockback", "Knockback Self", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/flingself")
 AddScriptToggle(Tabs.Utility, "grabplayer", "Grab Player(Use SwiftKick)", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/grabplayer")
+AddScriptToggle(Tabs.Utility, "goon", "J to Jerkoff", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/jerk")
 
 AddScriptToggle(Tabs.Animations, "MVP1", "MVP - Domain Invasion", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Toji.txt")
 AddScriptToggle(Tabs.Animations, "MVP2", "MVP - Stand Proud", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Sukuna%20-%20Stand%20Proud.txt")
