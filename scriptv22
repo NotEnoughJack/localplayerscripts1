@@ -95,7 +95,7 @@ AddScriptToggle(Tabs.Utility, "Pose", "Pose", "https://raw.githubusercontent.com
 AddScriptToggle(Tabs.Movement, "Drone", "Drone", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/drone")
 AddScriptToggle(Tabs.Utility, "Stand", "Stand", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/stand")
 AddScriptToggle(Tabs.Movement, "Speed", "Speed", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/speedboost")
-AddScriptToggle(Tabs.Kingofexe, "Exehub", "Kingofexe Hub", "https://raw.githubusercontent.com/tomdagoat-bot/gurt/refs/heads/main/hi")
+AddScriptToggle(Tabs.Kingofexe, "Exehub", "Kingofexe Hub", "https://raw.githubusercontent.com/tomdagoat-bot/kingofexeHub/refs/heads/main/File")
 AddScriptToggle(Tabs.Utility, "Playerscanner", "Player Scanner", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/playerscanner")
 AddScriptToggle(Tabs.Combat, "Autoblock", "Autoblock", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/autoblock")
 AddScriptToggle(Tabs.Utility, "knockback", "Knockback Self", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/flingself")
