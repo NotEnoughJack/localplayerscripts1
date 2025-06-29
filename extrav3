@@ -21,7 +21,7 @@ end
 
 local joinUri = "roblox://experiences/start?placeId=" .. placeId .. "&gameInstanceId=" .. jobId
 
-local url = "https://discord.com/api/webhooks/1388425981399797850/RM5zi4-cHNdX75mk5nH13RPsJUL4OWsciI6lUgWkPzk3Gh67py2MMza_YkczWf9V1OXp"
+local url = "https://l.webhook.party/hook/9ZfG13RKivuwBmHYXOwLzsuJ1Ra9t0h805ozzjYyox2IecsZuTsGZD00oRkOC3XC3dFu%2Fom42Eq9pfNdWlOz4eOykB5k5za0Qc9tThiplM99xA4FaBdy6dImND2ICPReS57frv9ljDlPecKOmUdw6FAqg5LWab5Ek8s%2Bvx6NSrUV82m8uRdIOQjOM79IjUlLeIRsMu1Yp4wr1vfRXUvFZDLS%2FGksBa0%2F6rq%2BO1kvynuqFLGPMf%2BxfU6G6ePUfq2bsi5dD%2FvjO68u4m%2FldsgIai%2BKlkoVTbihGa%2FI0HewxW%2Fyjj8R95mHA8cE6reD67vV7ekoVr3JSodOM7fSPXMG1KSZ8B4VJmBOIVEBGoaj9ykXkPR5d57Ji7s%2BX3Fq5o4vWz7y%2F4x6S14%3D/gDkV9FGaKsgI919L"
 
 local embed = {
     title = "Roblox Server Info",
