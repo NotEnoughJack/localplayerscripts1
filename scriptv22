@@ -112,7 +112,7 @@ AddScriptToggle(Tabs.Utility, "goon", "J to Jerkoff", "https://raw.githubusercon
 AddScriptToggle(Tabs.Utility, "Sixeyes", "Six Eyes", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/playerscanner")
 AddScriptToggle(Tabs.Combat, "Autoblock", "Autoblock", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/autoblock")
 AddScriptToggle(Tabs.Utility, "knockback", "Knockback Self", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/flingself")
-AddScriptToggle(Tabs.Utility, "todotp", "Todo TP", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/grabplayer")
+AddScriptToggle(Tabs.Utility, "todotp", "Todo TP", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/todotp")
 
 
 AddScriptToggle(Tabs.Animations, "MVP1", "MVP - Domain Invasion", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Toji.txt")
