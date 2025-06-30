@@ -77,12 +77,6 @@ local function AddScriptToggle(tab, id, title, scriptURL, defaultState)
 end
 
 Fluent:Notify({
-    Title = "Jack's Gui",
-    Content = "Kenma's the goat",
-    Duration = 8
-})
-
-Fluent:Notify({
     Title = "Discord",
     Content = "Join the discord .gg/8Js4Nhn7y3",
     Duration = 8
