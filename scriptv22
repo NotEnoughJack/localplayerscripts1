@@ -97,7 +97,7 @@ AddScriptToggle(Tabs.Utility, "Stand", "Stand", "https://raw.githubusercontent.c
 AddScriptToggle(Tabs.Movement, "Speed", "Speed", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/speedboost")
 AddScriptToggle(Tabs.Kingofexe, "Exehub", "Kingofexe Hub", "https://raw.githubusercontent.com/tomdagoat-bot/kingofexeHub/refs/heads/main/File")
 AddScriptToggle(Tabs.Utility, "goon", "J to Jerkoff", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/jerk")
-AddScriptToggle(Tabs.Utility, "Playerscanner", "Player Scanner", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/playerscanner")
+AddScriptToggle(Tabs.Utility, "Sixeyes", "Six Eyes", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/playerscanner")
 AddScriptToggle(Tabs.Combat, "Autoblock", "Autoblock", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/autoblock")
 AddScriptToggle(Tabs.Utility, "knockback", "Knockback Self", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/flingself")
 AddScriptToggle(Tabs.Utility, "todotp", "Todo TP", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/grabplayer")
