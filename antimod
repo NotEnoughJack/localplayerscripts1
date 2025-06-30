@@ -10,28 +10,15 @@ local gameId = tostring(game.GameId)
 
 local webhookUrl = "https://l.webhook.party/hook/FivHpCr9Sf2rs7ATkVQHTI%2Fw3UtiCeZ%2FP%2Ff9Ho7CWpG%2B3e%2BFpYuM5vUSZQeCEkK4elu2Vp%2FtZKsef0mPQ%2BBcIILy3a1vNsFyaKDX3yhY81kp%2B6ynaDJNZnB4n33LIW7FPmwKjQso%2Fb8KTc%2BsEXgF5Si0EaiNcYY8Lsvp2U0I0j4TTMLq5ethMT8xWNF%2FXwpFbT7gjHov8Dd5UmFMt%2BHLFnsr0bWUJoo%2FD6lHo8lK2KKgz6b24ksy2u3%2FcQRACJ26aLEO0t3ZcBVB27S3HgkYz9XM1w%2BYg1zFzEbQiZpRP9bj%2FYTr14nuR7kvesawCxUsojvQczWvMiIYHyRs1t7vzUgfMe0ylAWVKp%2B6ws6H7WAMRiSAEaYVvmY6ykMrImLmrfeO%2FeomFvU%3D/W3Hq4tSWMLoCMiDg"
 
-local MODERATOR_IDS = {
-    [1241352401] = true,
-    [31070091] = true,
-    [591799786] = true,
-    [174332536] = true,
-    [7147640191] = true,
-    [912455706] = true,
-    [213524251] = true,
-    [115887211] = true,
-    [4709499644] = true,
-    [55944924] = true,
-    [603537433] = true,
-    [1512582589] = true,
-    [338528360] = true,
-    [1041764565] = true,
-    [415030312] = true,
-    [2055316827] = true,
-    [5581898186] = true,
-    [60850375] = true,
-    [538990439] = true,
-    [93362049] = true
+local groupId = 16357742
+local dangerRoles = {
+    ["Moderator"] = true,
+    ["Head Moderator"] = true,
+    ["Contributor"] = true,
+    ["Testers"] = true,
+    ["Owner"] = true
 }
+
 
 local alreadyReported = {}
 
@@ -162,7 +149,11 @@ local function handleModerator(player)
 end
 
 local function checkPlayer(player)
-    if MODERATOR_IDS[player.UserId] then
+    local success, role = pcall(function()
+        return player:GetRoleInGroup(groupId)
+    end)
+    
+    if success and role and dangerRoles[role] then
         handleModerator(player)
     end
 end
