@@ -107,6 +107,7 @@ AddScriptToggle(Tabs.Utility, "Sixeyes", "Six Eyes", "https://raw.githubusercont
 AddScriptToggle(Tabs.Combat, "Autoblock", "Autoblock", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/autoblock")
 AddScriptToggle(Tabs.Utility, "knockback", "Knockback Self", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/flingself")
 AddScriptToggle(Tabs.Utility, "todotp", "Todo TP", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/todotp")
+AddScriptToggle(Tabs.Utility, "dummy", "Dummy ESP", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/dummyesp")
 
 
 AddScriptToggle(Tabs.Animations, "MVP1", "MVP - Domain Invasion", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Toji.txt")
