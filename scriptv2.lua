@@ -33,9 +33,10 @@ local function AddScriptToggle(tab, id, title, scriptURL, defaultState)
     end)
 end
 
+
 Fluent:Notify({
     Title = "Discord",
-    Content = "Join the discord .gg/8Js4Nhn7y3",
+    Content = "Join the discord .gg/8Js4Nhn7y3 for newer scripts like Todo TP and Six eyes",
     Duration = 8
 })
 
