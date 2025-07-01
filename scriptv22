@@ -88,7 +88,6 @@ AddScriptToggle(Tabs.Movement, "Fly", "Fly X", "https://raw.githubusercontent.co
 AddScriptToggle(Tabs.Movement, "Teleport", "Teleport", "https://raw.githubusercontent.com/gyyfyu/test2/refs/heads/main/no%20key%20system/teleport.lua")
 AddScriptToggle(Tabs.Combat, "SimpleDomain", "Simple Domain", "https://raw.githubusercontent.com/gyyfyu/test2/refs/heads/main/no%20key%20system/simple%20domain.lua")
 AddScriptToggle(Tabs.Combat, "Lockon", "Lock on", "https://raw.githubusercontent.com/gyyfyu/test2/refs/heads/main/no%20key%20system/lockon.lua")
-AddScriptToggle(Tabs.Combat, "HitboxExpander", "HitBox Expander", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/hitbox")
 AddScriptToggle(Tabs.Movement, "SuperTZE", "Super TZE", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/supertze")
 AddScriptToggle(Tabs.Combat, "Blackhole", "Blackhole", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/blackhole")
 AddScriptToggle(Tabs.Combat, "AntiBlackhole", "Anti Blackhole", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/antiblackhole")
