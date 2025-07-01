@@ -1,53 +1,78 @@
-local Players = game:GetService("Players")
-local UserInputService = game:GetService("UserInputService")
-local RunService = game:GetService("RunService")
+getgenv().CustomSpeed = getgenv().CustomSpeed or {}
 
-local LocalPlayer = Players.LocalPlayer
-local CHARACTER = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
-local HRP = CHARACTER:WaitForChild("HumanoidRootPart")
+if getgenv().CustomSpeed.Enabled then
+    getgenv().CustomSpeed.Enabled = false
 
-local SPEED = 5 
-local INTERVAL = 0.03 
+    if getgenv().CustomSpeed.InputBeganConnection then
+        getgenv().CustomSpeed.InputBeganConnection:Disconnect()
+        getgenv().CustomSpeed.InputBeganConnection = nil
+    end
+    if getgenv().CustomSpeed.InputEndedConnection then
+        getgenv().CustomSpeed.InputEndedConnection:Disconnect()
+        getgenv().CustomSpeed.InputEndedConnection = nil
+    end
 
-local keysDown = {}
+    if getgenv().CustomSpeed.LoopThread then
+        getgenv().CustomSpeed.LoopThread:Disconnect()
+        getgenv().CustomSpeed.LoopThread = nil
+    end
 
-UserInputService.InputBegan:Connect(function(input, processed)
-	if processed then return end
-	if input.KeyCode == Enum.KeyCode.W or input.KeyCode == Enum.KeyCode.A 
-	or input.KeyCode == Enum.KeyCode.S or input.KeyCode == Enum.KeyCode.D then
-		keysDown[input.KeyCode] = true
-	end
-end)
+    getgenv().CustomSpeed.KeysDown = nil
 
-UserInputService.InputEnded:Connect(function(input)
-	if input.KeyCode == Enum.KeyCode.W or input.KeyCode == Enum.KeyCode.A 
-	or input.KeyCode == Enum.KeyCode.S or input.KeyCode == Enum.KeyCode.D then
-		keysDown[input.KeyCode] = nil
-	end
-end)
+    print("Speed Disabled")
+else
+    getgenv().CustomSpeed.Enabled = true
 
-task.spawn(function()
-	while true do
-		if next(keysDown) ~= nil then
-			local direction = Vector3.zero
+    local Players = game:GetService("Players")
+    local UserInputService = game:GetService("UserInputService")
+    local RunService = game:GetService("RunService")
 
-			if keysDown[Enum.KeyCode.W] then
-				direction += HRP.CFrame.LookVector
-			end
-			if keysDown[Enum.KeyCode.S] then
-				direction -= HRP.CFrame.LookVector
-			end
-			if keysDown[Enum.KeyCode.A] then
-				direction -= HRP.CFrame.RightVector
-			end
-			if keysDown[Enum.KeyCode.D] then
-				direction += HRP.CFrame.RightVector
-			end
+    local LocalPlayer = Players.LocalPlayer
+    local CHARACTER = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    local HRP = CHARACTER:WaitForChild("HumanoidRootPart")
 
-			direction = direction.Unit
-			HRP.CFrame = HRP.CFrame + direction * SPEED
-		end
+    local SPEED = 5
+    local INTERVAL = 0.03
 
-		task.wait(INTERVAL)
-	end
-end)
+    local keysDown = {}
+    getgenv().CustomSpeed.KeysDown = keysDown
+
+    getgenv().CustomSpeed.InputBeganConnection = UserInputService.InputBegan:Connect(function(input, processed)
+        if processed then return end
+        if input.KeyCode == Enum.KeyCode.W or input.KeyCode == Enum.KeyCode.A 
+            or input.KeyCode == Enum.KeyCode.S or input.KeyCode == Enum.KeyCode.D then
+            keysDown[input.KeyCode] = true
+        end
+    end)
+
+    getgenv().CustomSpeed.InputEndedConnection = UserInputService.InputEnded:Connect(function(input)
+        if input.KeyCode == Enum.KeyCode.W or input.KeyCode == Enum.KeyCode.A 
+            or input.KeyCode == Enum.KeyCode.S or input.KeyCode == Enum.KeyCode.D then
+            keysDown[input.KeyCode] = nil
+        end
+    end)
+
+    getgenv().CustomSpeed.LoopThread = RunService.Heartbeat:Connect(function()
+        if next(keysDown) ~= nil then
+            local direction = Vector3.zero
+
+            if keysDown[Enum.KeyCode.W] then
+                direction += HRP.CFrame.LookVector
+            end
+            if keysDown[Enum.KeyCode.S] then
+                direction -= HRP.CFrame.LookVector
+            end
+            if keysDown[Enum.KeyCode.A] then
+                direction -= HRP.CFrame.RightVector
+            end
+            if keysDown[Enum.KeyCode.D] then
+                direction += HRP.CFrame.RightVector
+            end
+
+            direction = direction.Unit
+            HRP.CFrame = HRP.CFrame + direction * SPEED * INTERVAL * 60
+        end
+    end)
+
+    print("Speed Enabled")
+end
