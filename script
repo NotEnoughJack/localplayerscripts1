@@ -89,8 +89,8 @@ SaveManager:BuildConfigSection(Tabs.Settings)
 Window:SelectTab(1)
 
 Fluent:Notify({
-    Title = "Kenma's Scripts",
-    Content = "Join the discord .gg/jjshub",
+    Title = "Discord",
+    Content = "Join the discord .gg/8Js4Nhn7y3",
     Duration = 8
 })
 
