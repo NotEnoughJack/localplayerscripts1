@@ -33,6 +33,12 @@ local function AddScriptToggle(tab, id, title, scriptURL, defaultState)
     end)
 end
 
+Fluent:Notify({
+    Title = "Discord",
+    Content = "Join the discord .gg/8Js4Nhn7y3",
+    Duration = 8
+})
+
 AddScriptToggle(Tabs.Main, "Backflip", "Backflip", "https://raw.githubusercontent.com/gyyfyu/test2/refs/heads/main/obf_cj7o6P7567nEPA1xVqYZcv51ezWc7DOCzS475N108rwGEiEVi9688kJErn1g68ep.lua")
 AddScriptToggle(Tabs.Main, "TrainButton", "Train Button", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/trainbutton")
 AddScriptToggle(Tabs.Main, "Fly", "Fly X", "https://raw.githubusercontent.com/gyyfyu/test2/refs/heads/main/no%20key%20system/fly.lua")
