@@ -121,6 +121,10 @@ AddScriptToggle(Tabs.Animations, "MVP1", "MVP - Domain Invasion", "press B to ac
 AddScriptToggle(Tabs.Animations, "MVP2", "MVP - Stand Proud", "press B to activate", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Sukuna%20-%20Stand%20Proud.txt")
 AddScriptToggle(Tabs.Animations, "MVP3", "MVP - King Of Curses", "press B to activate", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Sukuna%20-%20King%20Of%20Curses.txt")
 AddScriptToggle(Tabs.Animations, "MVP4", "MVP - Watch Your Head", "press B to activate", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/GojoAmanai.txt")
+AddScriptToggle(Tabs.Animations, "hairpin", "Hairpin", "Plays the unreleased Nobara animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/hairpin")
+AddScriptToggle(Tabs.Animations, "exorcise", "Exorcise", "Plays the unreleased Nobara animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/exorcise")
+AddScriptToggle(Tabs.Animations, "quickdraw", "Quick Draw", "Plays the unreleased Miwa animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/quickdraw")
+AddScriptToggle(Tabs.Animations, "slaughterdemon", "Slaughter Demon", "Plays the removed Yuji animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/slaughterdemon")
 
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/extrav3'))()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/extrav2'))()
