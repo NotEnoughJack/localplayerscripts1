@@ -59,11 +59,13 @@ Tabs.Search:AddInput("SearchInput", {
     end
 })
 
-local function AddScriptToggle(tab, id, title, scriptURL, defaultState)
-    local toggle = tab:AddToggle(id, {
-        Title = title,
-        Default = defaultState or false
-    })
+local function AddScriptToggle(tab, id, title, description, scriptURL, defaultState)
+	local toggle = tab:AddToggle(id, {
+    	Title = title,
+    	Description = description,
+    	Default = defaultState or false
+	})
+
 
     Options[id].Args = { scriptURL = scriptURL }
 
@@ -82,38 +84,37 @@ Fluent:Notify({
     Duration = 8
 })
 
-AddScriptToggle(Tabs.Movement, "Backflip", "Backflip", "https://raw.githubusercontent.com/gyyfyu/test2/refs/heads/main/obf_cj7o6P7567nEPA1xVqYZcv51ezWc7DOCzS475N108rwGEiEVi9688kJErn1g68ep.lua")
-AddScriptToggle(Tabs.Utility, "TrainButton", "Train Button", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/trainbutton")
-AddScriptToggle(Tabs.Movement, "Fly", "Fly X", "https://raw.githubusercontent.com/gyyfyu/test2/refs/heads/main/no%20key%20system/fly.lua")
-AddScriptToggle(Tabs.Movement, "Teleport", "Teleport", "https://raw.githubusercontent.com/gyyfyu/test2/refs/heads/main/no%20key%20system/teleport.lua")
-AddScriptToggle(Tabs.Combat, "SimpleDomain", "Simple Domain", "https://raw.githubusercontent.com/gyyfyu/test2/refs/heads/main/no%20key%20system/simple%20domain.lua")
-AddScriptToggle(Tabs.Combat, "Lockon", "Lock on", "https://raw.githubusercontent.com/gyyfyu/test2/refs/heads/main/no%20key%20system/lockon.lua")
-AddScriptToggle(Tabs.Movement, "SuperTZE", "Super TZE", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/supertze")
-AddScriptToggle(Tabs.Combat, "Blackhole", "Blackhole", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/blackhole")
-AddScriptToggle(Tabs.Combat, "AntiBlackhole", "Anti Blackhole", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/antiblackhole")
-AddScriptToggle(Tabs.Combat, "SurpriseBlackhole", "SupriseBlackhole", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/surpriseblackhole")
-AddScriptToggle(Tabs.Utility, "Small Hitbox", "Small Hitbox", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/gubby")
-AddScriptToggle(Tabs.Utility, "MacroHiromi", "Macro Hiromi", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/macrohiromi")
-AddScriptToggle(Tabs.Utility, "AutoPiano", "Auto Piano", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/piano")
-AddScriptToggle(Tabs.Combat, "DomainInvade", "Domain Invade", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/domaininvade")
-AddScriptToggle(Tabs.Utility, "Pose", "Pose", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/pose")
-AddScriptToggle(Tabs.Movement, "Drone", "Drone", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/drone")
-AddScriptToggle(Tabs.Utility, "Stand", "Stand", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/stand")
-AddScriptToggle(Tabs.Movement, "Speed", "Speed", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/speedboost")
-AddScriptToggle(Tabs.Kingofexe, "Exehub", "Kingofexe Hub", "https://raw.githubusercontent.com/tomdagoat-bot/kingofexeHub/refs/heads/main/File")
-AddScriptToggle(Tabs.Utility, "goon", "J to Jerkoff", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/jerk")
-AddScriptToggle(Tabs.Utility, "Sixeyes", "Six Eyes", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/playerscanner")
-AddScriptToggle(Tabs.Combat, "Autoblock", "Autoblock", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/autoblock")
-AddScriptToggle(Tabs.Utility, "knockback", "Knockback Self", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/flingself")
-AddScriptToggle(Tabs.Utility, "todotp", "Todo TP", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/todotp")
-AddScriptToggle(Tabs.Utility, "dummy", "Dummy ESP", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/dummyesp")
-AddScriptToggle(Tabs.Utility, "itemesp", "Item ESP", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/itemesp")
+AddScriptToggle(Tabs.Movement, "Backflip", "Backflip", "T normal backflip E super jump", "https://raw.githubusercontent.com/gyyfyu/test2/refs/heads/main/obf_cj7o6P7567nEPA1xVqYZcv51ezWc7DOCzS475N108rwGEiEVi9688kJErn1g68ep.lua")
+AddScriptToggle(Tabs.Utility, "TrainButton", "Train Button", "Creates a train button", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/trainbutton")
+AddScriptToggle(Tabs.Movement, "Fly", "Fly", "X to fly", "https://raw.githubusercontent.com/gyyfyu/test2/refs/heads/main/no%20key%20system/fly.lua")
+AddScriptToggle(Tabs.Movement, "Teleport", "Teleport", "press C to activate", "https://raw.githubusercontent.com/gyyfyu/test2/refs/heads/main/no%20key%20system/teleport.lua")
+AddScriptToggle(Tabs.Combat, "SimpleDomain", "Simple Domain", "press Y to activate", "https://raw.githubusercontent.com/gyyfyu/test2/refs/heads/main/no%20key%20system/simple%20domain.lua")
+AddScriptToggle(Tabs.Combat, "Lockon", "Lock on", "press J to toggle between on and off, press RIGHT MOUSE BUTTON to actually lock on and unlock,  You lock to the nearest person to your crosshair", "https://raw.githubusercontent.com/gyyfyu/test2/refs/heads/main/no%20key%20system/lockon.lua")
+AddScriptToggle(Tabs.Combat, "Blackhole", "Blackhole", "Fly around really fast with blackhole", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/blackhole")
+AddScriptToggle(Tabs.Combat, "AntiBlackhole", "Anti Blackhole", "removes the blackhole suction", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/antiblackhole")
+AddScriptToggle(Tabs.Combat, "SurpriseBlackhole", "Surprise Blackhole", "Removes the blackhole animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/surpriseblackhole")
+AddScriptToggle(Tabs.Utility, "Small Hitbox", "Small Hitbox", "Shrinks your hitbox", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/gubby")
+AddScriptToggle(Tabs.Utility, "MacroHiromi", "Macro Hiromi", "a macro for higuruma one shot move, legit and undetected", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/macrohiromi")
+AddScriptToggle(Tabs.Utility, "AutoPiano", "Auto Piano", "Creates an autopiano gui", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/piano")
+AddScriptToggle(Tabs.Combat, "DomainInvade", "Domain Invade", "Press U in front of a domain to invade", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/domaininvade")
+AddScriptToggle(Tabs.Utility, "Pose", "Pose", "press P to activate", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/pose")
+AddScriptToggle(Tabs.Movement, "Drone", "Drone", "Fly around as a drone", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/drone")
+AddScriptToggle(Tabs.Utility, "Stand", "Stand", "tutorial in the discord", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/stand")
+AddScriptToggle(Tabs.Movement, "Speed", "Speed", "Move around fast", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/speedboost")
+AddScriptToggle(Tabs.Kingofexe, "Exehub", "Kingofexe Hub", "Credits to kingofexe", "https://raw.githubusercontent.com/tomdagoat-bot/kingofexeHub/refs/heads/main/File")
+AddScriptToggle(Tabs.Utility, "goon", "Jerk", "press J to activate", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/jerk")
+AddScriptToggle(Tabs.Utility, "Sixeyes", "Six Eyes", "Click on player to activate", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/playerscanner")
+AddScriptToggle(Tabs.Combat, "Autoblock", "Autoblock", "buggy i do not suggest using", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/autoblock")
+AddScriptToggle(Tabs.Utility, "knockback", "Knockback Self", "sets your own knockback high", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/flingself")
+AddScriptToggle(Tabs.Utility, "todotp", "Todo TP", "Use todos swiftkick then spam teleport", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/todotp")
+AddScriptToggle(Tabs.Utility, "dummy", "Dummy ESP", "Highlights dummy", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/dummyesp")
+AddScriptToggle(Tabs.Utility, "itemesp", "Item ESP", "item esp, gun sword etc", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/itemesp")
 
 
-AddScriptToggle(Tabs.Animations, "MVP1", "MVP - Domain Invasion", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Toji.txt")
-AddScriptToggle(Tabs.Animations, "MVP2", "MVP - Stand Proud", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Sukuna%20-%20Stand%20Proud.txt")
-AddScriptToggle(Tabs.Animations, "MVP3", "MVP - King Of Curses", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Sukuna%20-%20King%20Of%20Curses.txt")
-AddScriptToggle(Tabs.Animations, "MVP4", "MVP - Watch Your Head", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/GojoAmanai.txt")
+AddScriptToggle(Tabs.Animations, "MVP1", "MVP - Domain Invasion", "press C to activate", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Toji.txt")
+AddScriptToggle(Tabs.Animations, "MVP2", "MVP - Stand Proud", "press C to activate", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Sukuna%20-%20Stand%20Proud.txt")
+AddScriptToggle(Tabs.Animations, "MVP3", "MVP - King Of Curses", "press C to activate", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Sukuna%20-%20King%20Of%20Curses.txt")
+AddScriptToggle(Tabs.Animations, "MVP4", "MVP - Watch Your Head", "press C to activate", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/GojoAmanai.txt")
 
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/extrav3'))()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/extrav2'))()
