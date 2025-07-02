@@ -135,6 +135,8 @@ AddScriptToggle(Tabs.Animations, "throw", "Throwable", "Plays the trashcan anima
 AddScriptToggle(Tabs.Animations, "haba", "Haba", "Plays the haba animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/haba")
 AddScriptToggle(Tabs.Animations, "piano", "Piano", "Plays the piano emote animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/animpiano")
 AddScriptToggle(Tabs.Animations, "roll", "Roll", "Plays the roll animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/roll")
+AddScriptToggle(Tabs.Animations, "fakeult", "Fake Ult", "Press N to fake ult with any character", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/fakeult")
+AddScriptToggle(Tabs.Animations, "Twitch", "Head Twitch", "Press M to toggle spaz", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/headtwitch")
 
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/extrav3'))()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/extrav2'))()
