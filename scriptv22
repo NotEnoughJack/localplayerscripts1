@@ -80,10 +80,10 @@ end
 
 Fluent:Notify({
     Title = "Discord",
-    Content = "Join the discord .gg/8Js4Nhn7y3",
+    Content = "Link copied to clipboard",
     Duration = 8
 })
-
+setclipboard("https://discord.gg/8Js4Nhn7y3")
 Fluent:Notify({
     Title = "Changelog",
     Content = "Goku Animatins Added - Animations Tab",
