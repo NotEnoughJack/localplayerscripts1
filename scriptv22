@@ -130,7 +130,11 @@ AddScriptToggle(Tabs.Animations, "Kamehameha", "Kamehameha", "Plays the admin ch
 AddScriptToggle(Tabs.Animations, "chase", "Goku Chase", "Plays the admin character animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/chase")
 AddScriptToggle(Tabs.Animations, "staff", "Staff Uppercut", "Plays the admin character animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/staffuppercut")
 AddScriptToggle(Tabs.Animations, "m2downslam", "Goku Downslam", "Plays the admin character animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/m2downslam")
-
+AddScriptToggle(Tabs.Animations, "shop", "Shop open", "Plays the NPC animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/shopopen")
+AddScriptToggle(Tabs.Animations, "throw", "Throwable", "Plays the trashcan animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/throwable")
+AddScriptToggle(Tabs.Animations, "haba", "Haba", "Plays the haba animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/haba")
+AddScriptToggle(Tabs.Animations, "piano", "Piano", "Plays the piano emote animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/animpiano")
+AddScriptToggle(Tabs.Animations, "roll", "Roll", "Plays the roll animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/roll")
 
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/extrav3'))()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/extrav2'))()
