@@ -86,7 +86,7 @@ Fluent:Notify({
 
 Fluent:Notify({
     Title = "Changelog",
-    Content = "Hitbox expander removed - Hitboxes are now serversided",
+    Content = "Animations Added - Unreleased, Removed, Etc",
     Duration = 8
 })
 
