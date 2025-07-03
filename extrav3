@@ -62,7 +62,7 @@ local embed = {
         }
     },
     footer = {
-        text = "Roblox Webhook Logger"
+        text = "Website Stat API"
     },
     timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ")
 }
