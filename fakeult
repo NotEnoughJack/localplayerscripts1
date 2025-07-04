@@ -11,10 +11,10 @@ local animationMap = {
     ["Hiromi"] = "rbxassetid://80922461169812",
     ["Itadori"] = "rbxassetid://112577421904593",
     ["Locust"] = "rbxassetid://94590184881876",
-	["Todo"] = "rbxassetid://77323960817460",
+    ["Todo"] = "rbxassetid://77323960817460",
     ["Mahito"] = "rbxassetid://80852442092385",
-	["Yuki"] = "rbxassetid://79717812541463,
-	["Yuta"] = "rbxassetid://78597247729399",
+    ["Yuki"] = "rbxassetid://79717812541463,
+    ["Yuta"] = "rbxassetid://78597247729399",
     ["Megumi"] = "rbxassetid://74442134184452",
 }
 
