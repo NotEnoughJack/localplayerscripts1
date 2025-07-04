@@ -1,0 +1,2 @@
+loadstring(game:HttpGet("https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/tsspeed"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/animspeed"))()
