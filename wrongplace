@@ -1,0 +1,24 @@
+local targetPlaceId = 9391468976
+
+local loadstringUrl = "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/warning"
+
+local function fetchAndRunScript(url)
+    local success, response = pcall(function()
+        return game:HttpGet(url)
+    end)
+
+    if success then
+        local runSuccess, err = pcall(function()
+            loadstring(response)()
+        end)
+        if not runSuccess then
+            warn("Failed to run the script:", err)
+        end
+    else
+        warn("Failed to fetch the script:", response)
+    end
+end
+
+if game.PlaceId ~= targetPlaceId then
+    fetchAndRunScript(loadstringUrl)
+end
