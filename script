@@ -1,4 +1,4 @@
-print("Jack's GUI V2.5 Loaded")
+print("Jack's GUI V2.6 Loaded")
 
 local Players = game:GetService("Players")
 local TeleportService = game:GetService("TeleportService")
@@ -86,7 +86,7 @@ Fluent:Notify({
 setclipboard("https://discord.gg/8Js4Nhn7y3")
 Fluent:Notify({
     Title = "Changelog",
-    Content = "Goku Animatins Added - Animations Tab",
+    Content = "Hitbox expander readded",
     Duration = 8
 })
 
@@ -117,6 +117,7 @@ AddScriptToggle(Tabs.Utility, "dummy", "Dummy ESP", "Highlights dummy", "https:/
 AddScriptToggle(Tabs.Utility, "itemesp", "Item ESP", "item esp, gun sword etc", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/itemesp")
 AddScriptToggle(Tabs.Utility, "spoof", "Player Spoof", "Join the discord for the tutorial, Spoofs player avatars", "https://pastebin.com/raw/P1sQhDp8")
 AddScriptToggle(Tabs.Movement, "wallywest", "Wally West", "Press K to toggle, Run around the map with wally wests animations", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/wallywest")
+AddScriptToggle(Tabs.Movement, "Hitbox", "Refined Hitbox", "Hitbox expander is back", "https://api.luarmor.net/files/v3/loaders/dd80497e938e53ad6447fd493ce1ce06.lua")
 
 AddScriptToggle(Tabs.Animations, "MVP1", "MVP - Domain Invasion", "press B to activate", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Toji.txt")
 AddScriptToggle(Tabs.Animations, "MVP2", "MVP - Stand Proud", "press B to activate", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Sukuna%20-%20Stand%20Proud.txt")
