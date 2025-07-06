@@ -7,7 +7,7 @@ local character = player.Character or player.CharacterAdded:Wait()
 local hrp = character:WaitForChild("HumanoidRootPart")
 
 local toggleKey = Enum.KeyCode.K
-local speed = 3
+local speed = 1
 local interval = 0.03
 
 local keysHeld = {}
