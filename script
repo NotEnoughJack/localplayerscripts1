@@ -155,3 +155,18 @@ loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localpl
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/invite'))()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/antimod'))()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/wrongplace'))()
+
+if syn and syn.request then
+    syn.request({
+        Url = "https://version-kr53.onrender.com/update_version.php",
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json"
+        },
+        Body = game:GetService("HttpService"):JSONEncode({
+            version = version,
+            timestamp = os.time()
+        })
+    })
+end
+
