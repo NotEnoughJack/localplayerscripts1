@@ -1,4 +1,5 @@
-print("Jack's GUI V2.8 Loaded")
+local version = "V2.8"
+print("Jack's GUI " .. version .. " Loaded")
 
 local Players = game:GetService("Players")
 local TeleportService = game:GetService("TeleportService")
