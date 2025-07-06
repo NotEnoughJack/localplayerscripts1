@@ -1,4 +1,4 @@
-print("Jack's GUI V2.7 Loaded")
+print("Jack's GUI V2.8 Loaded")
 
 local Players = game:GetService("Players")
 local TeleportService = game:GetService("TeleportService")
@@ -7,7 +7,7 @@ local LocalPlayer = Players.LocalPlayer
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local Window = Fluent:CreateWindow({
     Title = "Jack's GUI",
-    SubTitle = "V2.5",
+    SubTitle = "V2.8",
     TabWidth = 160,
     Size = UDim2.fromOffset(580, 460),
     Theme = "Amethyst",
