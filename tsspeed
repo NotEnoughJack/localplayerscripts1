@@ -1,0 +1,49 @@
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local hrp = character:WaitForChild("HumanoidRootPart")
+
+local toggleKey = Enum.KeyCode.K
+local speed = 1
+local interval = 0.03
+
+local keysHeld = {}
+local enabled = false
+
+UserInputService.InputBegan:Connect(function(input, gp)
+	if gp then return end
+	if input.KeyCode == toggleKey then
+		enabled = not enabled
+		print("[Speed Boost]", enabled and "Enabled" or "Disabled")
+	elseif input.KeyCode == Enum.KeyCode.W or input.KeyCode == Enum.KeyCode.A or input.KeyCode == Enum.KeyCode.S or input.KeyCode == Enum.KeyCode.D then
+		keysHeld[input.KeyCode] = true
+	end
+end)
+
+UserInputService.InputEnded:Connect(function(input, gp)
+	if gp then return end
+	if keysHeld[input.KeyCode] then
+		keysHeld[input.KeyCode] = nil
+	end
+end)
+
+RunService.Heartbeat:Connect(function()
+	if not enabled then return end
+	if next(keysHeld) == nil then return end
+
+	local cam = workspace.CurrentCamera
+	local direction = Vector3.zero
+
+	if keysHeld[Enum.KeyCode.W] then direction += cam.CFrame.LookVector end
+	if keysHeld[Enum.KeyCode.S] then direction -= cam.CFrame.LookVector end
+	if keysHeld[Enum.KeyCode.A] then direction -= cam.CFrame.RightVector end
+	if keysHeld[Enum.KeyCode.D] then direction += cam.CFrame.RightVector end
+
+	if direction.Magnitude > 0 then
+		direction = direction.Unit
+		hrp.CFrame = hrp.CFrame + direction * speed
+	end
+end)

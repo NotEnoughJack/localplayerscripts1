@@ -1,101 +1,172 @@
-local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
-local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
-local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+local version = "V2.9"
+print("Jack's GUI " .. version .. " Loaded")
 
+local Players = game:GetService("Players")
+local TeleportService = game:GetService("TeleportService")
+local LocalPlayer = Players.LocalPlayer
+
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local Window = Fluent:CreateWindow({
-    Title = "Kenma gui " .. Fluent.Version,
-    SubTitle = "by NotEnoughJack",
+    Title = "Jack's GUI",
+    SubTitle = "V2.9",
     TabWidth = 160,
     Size = UDim2.fromOffset(580, 460),
-    Acrylic = false,
-    Theme = "Dark",
+    Theme = "Amethyst",
     MinimizeKey = Enum.KeyCode.LeftControl
 })
 
 local Tabs = {
-    Main = Window:AddTab({ Title = "Main", Icon = "" }),
-    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+    Main = Window:AddTab({ Title = "Main", Icon = "layout" }),
+    Movement = Window:AddTab({ Title = "Movement", Icon = "rocket" }),
+    Combat = Window:AddTab({ Title = "Combat", Icon = "sword" }),
+    Utility = Window:AddTab({ Title = "Utility", Icon = "settings" }),
+    Animations = Window:AddTab({ Title = "Animations", Icon = "film" }),
+    Kingofexe = Window:AddTab({ Title = "Kingofexe", Icon = "crown" }),
+    Search = Window:AddTab({ Title = "Search", Icon = "search" })
 }
 
-local ButtonData = {
-    { Title = "Backflip", Description = "T For Normal E For Super", ScriptPath = "gyyfyu/test2/refs/heads/main/obf_cj7o6P7567nEPA1xVqYZcv51ezWc7DOCzS475N108rwGEiEVi9688kJErn1g68ep.lua" },
-    { Title = "Train Button", Description = "Creates a button on screen for train", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/trainbutton" },
-    { Title = "Fly", Description = "X To Fly", ScriptPath = "gyyfyu/test2/refs/heads/main/no%20key%20system/fly.lua" },
-    { Title = "Teleport", Description = "Press C To Activate", ScriptPath = "gyyfyu/test2/refs/heads/main/no%20key%20system/teleport.lua" },
-    { Title = "Simple Domain", Description = "Press Y To Activate", ScriptPath = "gyyfyu/test2/refs/heads/main/no%20key%20system/simple%20domain.lua" },
-    { Title = "Lock on", Description = "Press J To Toggle, RMB to lock", ScriptPath = "gyyfyu/test2/refs/heads/main/no%20key%20system/lockon.lua" },
-    { Title = "HitBox Expander", Description = "Makes FrontDash Better", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/hitbox" },
-    { Title = "SuperTZE", Description = "Press Y To Fly", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/supertze" },
-    { Title = "Blackhole", Description = "Moves backhole", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/blackhole" },
-    { Title = "Anti Blackhole", Description = "Blackhole doesn't suck player into it", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/antiblackhole" },
-    { Title = "Surprise Blackhole", Description = "Removes blackhole animation", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/surpriseblackhole" },
-    { Title = "Box Morph", Description = "Serversided", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/gubby" },
-    { Title = "Macro Hiromi", Description = "Automatically Dodges Hiromi", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/macrohiromi" },
-    { Title = "Auto Piano", Description = "Auto plays songs", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/piano" },
-    { Title = "Domain Invade", Description = "Stand Infront of Domain and Press U", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/domaininvade" },
-    { Title = "Pose", Description = "Press P to look awesome", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/pose" },
-    { Title = "Drone", Description = "Automatically turns you to a drone", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/drone" },
-    { Title = "Stand", Description = "Usage Tutorial In Kenma's discord", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/stand" },
-    { Title = "Speed", Description = "Boosts speed by teleportation", ScriptPath = "NotEnoughJack/localplayerscripts/refs/heads/main/speedboost" },
-    { Title = "MVP - Domain Invasion", Description = "Press B", ScriptPath = "keatoscripts/JJS/refs/heads/main/Toji.txt" },
-    { Title = "MVP - Stand Proud", Description = "Press B", ScriptPath = "keatoscripts/JJS/refs/heads/main/Sukuna%20-%20Stand%20Proud.txt" },
-    { Title = "MVP - King Of Curses", Description = "Press B", ScriptPath = "keatoscripts/JJS/refs/heads/main/Sukuna%20-%20King%20Of%20Curses.txt" },
-    { Title = "MVP - Watch Your Head", Description = "Press B", ScriptPath = "keatoscripts/JJS/refs/heads/main/GojoAmanai.txt" },
-}
+local Options = Fluent.Options
+local SearchResults = {}
 
-local function AddButton(button)
-    Tabs.Main:AddButton({
-        Title = button.Title,
-        Description = button.Description,
-        Callback = function()
-            Window:Dialog({
-                Title = button.Title,
-                Content = button.Description,
-                Buttons = {
-                    {
-                        Title = "Confirm",
-                        Callback = function()
-                            loadstring(game:HttpGet("https://raw.githubusercontent.com/" .. button.ScriptPath))()
-                        end
-                    },
-                    {
-                        Title = "Cancel",
-                        Callback = function()
-                            print("Cancelled the dialog.")
-                        end
-                    }
-                }
+local function ShowSearchResults(query)
+    for _, opt in ipairs(SearchResults) do
+        Tabs.Search:RemoveOption(opt)
+    end
+    SearchResults = {}
+
+    for id, opt in pairs(Options) do
+        if opt.Title and string.find(string.lower(opt.Title), string.lower(query)) and opt.Args and opt.Args.scriptURL then
+            local toggle = Tabs.Search:AddToggle(id .. "_search", {
+                Title = opt.Title,
+                Default = opt.Value
             })
+            toggle:OnChanged(function()
+                if toggle.Value then
+                    loadstring(game:HttpGet(opt.Args.scriptURL))()
+                else
+                    print(opt.Title .. " disabled")
+                end
+            end)
+            table.insert(SearchResults, toggle)
         end
-    })
+    end
 end
 
-for _, button in ipairs(ButtonData) do
-    AddButton(button)
+Tabs.Search:AddInput("SearchInput", {
+    Title = "Search Scripts...",
+    Placeholder = "Type to search...",
+    OnChanged = function(text)
+        ShowSearchResults(text)
+    end
+})
+
+local function AddScriptToggle(tab, id, title, description, scriptURL, defaultState)
+	local toggle = tab:AddToggle(id, {
+    	Title = title,
+    	Description = description,
+    	Default = defaultState or false
+	})
+
+
+    Options[id].Args = { scriptURL = scriptURL }
+
+    toggle:OnChanged(function()
+        if Options[id].Value then
+            loadstring(game:HttpGet(scriptURL))()
+        else
+            print(title .. " disabled")
+        end
+    end)
 end
-
-SaveManager:SetLibrary(Fluent)
-InterfaceManager:SetLibrary(Fluent)
-
-SaveManager:IgnoreThemeSettings()
-SaveManager:SetIgnoreIndexes({})
-
-InterfaceManager:SetFolder("FluentScriptHub")
-SaveManager:SetFolder("FluentScriptHub/specific-game")
-
-InterfaceManager:BuildInterfaceSection(Tabs.Settings)
-SaveManager:BuildConfigSection(Tabs.Settings)
-
-Window:SelectTab(1)
 
 Fluent:Notify({
-    Title = "Kenma's Scripts",
-    Content = "Join the discord .gg/jjshub",
+    Title = "Discord",
+    Content = "Link copied to clipboard",
+    Duration = 8
+})
+setclipboard("https://discord.gg/8Js4Nhn7y3")
+Fluent:Notify({
+    Title = "Changelog",
+    Content = "Fixed hitbox shrinker and drone, Remade wallywest",
     Duration = 8
 })
 
-SaveManager:LoadAutoloadConfig()
-loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/extra'))()
-loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/extrav2'))()
+AddScriptToggle(Tabs.Movement, "Backflip", "Backflip", "T normal backflip E super jump", "https://raw.githubusercontent.com/gyyfyu/test2/refs/heads/main/obf_cj7o6P7567nEPA1xVqYZcv51ezWc7DOCzS475N108rwGEiEVi9688kJErn1g68ep.lua")
+AddScriptToggle(Tabs.Main, "TrainButton", "Train Button", "Creates a train button", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/trainbutton")
+AddScriptToggle(Tabs.Movement, "Fly", "Fly", "X to fly", "https://raw.githubusercontent.com/gyyfyu/test2/refs/heads/main/no%20key%20system/fly.lua")
+AddScriptToggle(Tabs.Movement, "Teleport", "Teleport", "press C to activate", "https://raw.githubusercontent.com/gyyfyu/test2/refs/heads/main/no%20key%20system/teleport.lua")
+AddScriptToggle(Tabs.Main, "SimpleDomain", "Simple Domain", "press Y to activate", "https://raw.githubusercontent.com/gyyfyu/test2/refs/heads/main/no%20key%20system/simple%20domain.lua")
+AddScriptToggle(Tabs.Combat, "Lockon", "Lock on", "press J to toggle between on and off, press RIGHT MOUSE BUTTON to actually lock on and unlock,  You lock to the nearest person to your crosshair", "https://raw.githubusercontent.com/gyyfyu/test2/refs/heads/main/no%20key%20system/lockon.lua")
+AddScriptToggle(Tabs.Combat, "Blackhole", "Blackhole", "Fly around really fast with blackhole", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/blackhole")
+AddScriptToggle(Tabs.Utility, "AntiBlackhole", "Anti Blackhole", "removes the blackhole suction", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/antiblackhole")
+AddScriptToggle(Tabs.Combat, "SurpriseBlackhole", "Surprise Blackhole", "Removes the blackhole animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/surpriseblackhole")
+AddScriptToggle(Tabs.Utility, "Small Hitbox", "Small Hitbox", "Shrinks your hitbox", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/gubby")
+AddScriptToggle(Tabs.Main, "MacroHiromi", "Macro Hiromi", "a macro for higuruma one shot move, legit and undetected", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/macrohiromi")
+AddScriptToggle(Tabs.Utility, "AutoPiano", "Auto Piano", "Creates an autopiano gui", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/piano")
+AddScriptToggle(Tabs.Utility, "DomainInvade", "Domain Invade", "Press U in front of a domain to invade", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/domaininvade")
+AddScriptToggle(Tabs.Utility, "Pose", "Pose", "press P to activate", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/pose")
+AddScriptToggle(Tabs.Movement, "Drone", "Drone", "Fly around as a drone", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/drone")
+AddScriptToggle(Tabs.Utility, "Stand", "Stand", "tutorial in the discord", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/stand")
+AddScriptToggle(Tabs.Movement, "Speed", "Speed", "Move around fast", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/speedboost")
+AddScriptToggle(Tabs.Kingofexe, "Exehub", "Kingofexe Hub", "Credits to kingofexe", "https://raw.githubusercontent.com/tomdagoat-bot/kingofexeHub/refs/heads/main/File")
+AddScriptToggle(Tabs.Utility, "goon", "Jerk", "press J to activate", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/jerk")
+AddScriptToggle(Tabs.Main, "Sixeyes", "Six Eyes", "Click on player to activate", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/playerscanner")
+AddScriptToggle(Tabs.Combat, "Autoblock", "Autoblock", "buggy i do not suggest using", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/autoblock")
+AddScriptToggle(Tabs.Utility, "knockback", "Knockback Self", "sets your own knockback high", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/flingself")
+AddScriptToggle(Tabs.Utility, "todotp", "Todo TP", "Use todos swiftkick then spam teleport", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/todotp")
+AddScriptToggle(Tabs.Main, "dummy", "Dummy ESP", "Highlights dummy", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/dummyesp")
+AddScriptToggle(Tabs.Main, "itemesp", "Item ESP", "item esp, gun sword etc", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/itemesp")
+AddScriptToggle(Tabs.Utility, "spoof", "Player Spoof", "Join the discord for the tutorial, Spoofs player avatars", "https://pastebin.com/raw/P1sQhDp8")
+AddScriptToggle(Tabs.Movement, "wallywest", "Wally West", "N to speed up, M to slow down", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/wallywest")
+AddScriptToggle(Tabs.Combat, "Hitbox", "Refined Hitbox", "Hitbox expander is back", "https://api.luarmor.net/files/v3/loaders/dd80497e938e53ad6447fd493ce1ce06.lua")
+AddScriptToggle(Tabs.Main, "Serverhop", "Server Hop", "Rejoins into a different random server", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/serverhop")
+AddScriptToggle(Tabs.Main, "NDC", "No dash cooldown", "Only works with side dash", "https://api.luarmor.net/files/v3/loaders/b9539acb02865f098f534aa0ded69c8b.lua")
+
+
+
+
+AddScriptToggle(Tabs.Animations, "MVP1", "MVP - Domain Invasion", "press B to activate", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Toji.txt")
+AddScriptToggle(Tabs.Animations, "MVP2", "MVP - Stand Proud", "press B to activate", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Sukuna%20-%20Stand%20Proud.txt")
+AddScriptToggle(Tabs.Animations, "MVP3", "MVP - King Of Curses", "press B to activate", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Sukuna%20-%20King%20Of%20Curses.txt")
+AddScriptToggle(Tabs.Animations, "MVP4", "MVP - Watch Your Head", "press B to activate", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/GojoAmanai.txt")
+AddScriptToggle(Tabs.Animations, "hairpin", "Hairpin", "Plays the unreleased Nobara animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/hairpin")
+AddScriptToggle(Tabs.Animations, "exorcise", "Exorcise", "Plays the unreleased Nobara animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/exorcise")
+AddScriptToggle(Tabs.Animations, "quickdraw", "Quick Draw", "Plays the unreleased Miwa animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/quickdraw")
+AddScriptToggle(Tabs.Animations, "slaughterdemon", "Slaughter Demon", "Plays the removed Yuji animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/slaughterdemon")
+AddScriptToggle(Tabs.Animations, "gokutransform", "Goku Transformation", "Plays the admin character animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/gokutransformation")
+AddScriptToggle(Tabs.Animations, "Kamehameha", "Kamehameha", "Plays the admin character animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/kamehameha")
+AddScriptToggle(Tabs.Animations, "chase", "Goku Chase", "Plays the admin character animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/chase")
+AddScriptToggle(Tabs.Animations, "staff", "Staff Uppercut", "Plays the admin character animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/staffuppercut")
+AddScriptToggle(Tabs.Animations, "m2downslam", "Goku Downslam", "Plays the admin character animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/m2downslam")
+AddScriptToggle(Tabs.Animations, "shop", "Shop open", "Plays the NPC animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/shopopen")
+AddScriptToggle(Tabs.Animations, "throw", "Throwable", "Plays the trashcan animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/throwable")
+AddScriptToggle(Tabs.Animations, "haba", "Haba", "Plays the haba animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/haba")
+AddScriptToggle(Tabs.Animations, "piano", "Piano", "Plays the piano emote animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/animpiano")
+AddScriptToggle(Tabs.Animations, "roll", "Roll", "Plays the roll animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/roll")
+AddScriptToggle(Tabs.Animations, "fakeult", "Fake Ult", "Press N to fake ult with any character", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/fakeult")
+AddScriptToggle(Tabs.Animations, "Twitch", "Head Twitch", "Press M to toggle spaz", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/headtwitch")
+
+
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/extrav3'))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/extrav2'))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/extra'))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/antivoid'))()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/noti'))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/invite'))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/antimod'))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/wrongplace'))()
+
+if syn and syn.request then
+    syn.request({
+        Url = "https://version-kr53.onrender.com/update_version.php",
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json"
+        },
+        Body = game:GetService("HttpService"):JSONEncode({
+            version = version,
+            timestamp = os.time()
+        })
+    })
+end
+

@@ -1,3 +1,46 @@
+
+getgenv().CustomSpeed = getgenv().CustomSpeed or {}
+
+local state = getgenv().CustomSpeed
+
+if state.Enabled then
+    state.Enabled = false
+    print("[Speed] Disabling...")
+
+    if state.InputBeganConnection then
+        state.InputBeganConnection:Disconnect()
+        state.InputBeganConnection = nil
+    end
+
+    if state.InputEndedConnection then
+        state.InputEndedConnection:Disconnect()
+        state.InputEndedConnection = nil
+    end
+
+    if state.MovementConnection then
+        state.MovementConnection:Disconnect()
+        state.MovementConnection = nil
+    end
+
+    state.KeysDown = nil
+
+    print("[Speed] Disabled")
+    return
+end
+
+print("[Speed] Enabling...")
+state.Enabled = true
+
+if state.InputBeganConnection then
+    state.InputBeganConnection:Disconnect()
+end
+if state.InputEndedConnection then
+    state.InputEndedConnection:Disconnect()
+end
+if state.MovementConnection then
+    state.MovementConnection:Disconnect()
+end
+
 local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
@@ -6,48 +49,51 @@ local LocalPlayer = Players.LocalPlayer
 local CHARACTER = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
 local HRP = CHARACTER:WaitForChild("HumanoidRootPart")
 
-local SPEED = 5 
-local INTERVAL = 0.03 
+local SPEED = 5
+local INTERVAL = 0.03
 
 local keysDown = {}
+state.KeysDown = keysDown
 
-UserInputService.InputBegan:Connect(function(input, processed)
-	if processed then return end
-	if input.KeyCode == Enum.KeyCode.W or input.KeyCode == Enum.KeyCode.A 
-	or input.KeyCode == Enum.KeyCode.S or input.KeyCode == Enum.KeyCode.D then
-		keysDown[input.KeyCode] = true
-	end
+state.InputBeganConnection = UserInputService.InputBegan:Connect(function(input, processed)
+    if processed then return end
+    if input.KeyCode == Enum.KeyCode.W or input.KeyCode == Enum.KeyCode.A 
+    or input.KeyCode == Enum.KeyCode.S or input.KeyCode == Enum.KeyCode.D then
+        keysDown[input.KeyCode] = true
+    end
 end)
 
-UserInputService.InputEnded:Connect(function(input)
-	if input.KeyCode == Enum.KeyCode.W or input.KeyCode == Enum.KeyCode.A 
-	or input.KeyCode == Enum.KeyCode.S or input.KeyCode == Enum.KeyCode.D then
-		keysDown[input.KeyCode] = nil
-	end
+state.InputEndedConnection = UserInputService.InputEnded:Connect(function(input)
+    if input.KeyCode == Enum.KeyCode.W or input.KeyCode == Enum.KeyCode.A 
+    or input.KeyCode == Enum.KeyCode.S or input.KeyCode == Enum.KeyCode.D then
+        keysDown[input.KeyCode] = nil
+    end
 end)
 
-task.spawn(function()
-	while true do
-		if next(keysDown) ~= nil then
-			local direction = Vector3.zero
+state.MovementConnection = RunService.Heartbeat:Connect(function()
+    if not state.Enabled then return end
 
-			if keysDown[Enum.KeyCode.W] then
-				direction += HRP.CFrame.LookVector
-			end
-			if keysDown[Enum.KeyCode.S] then
-				direction -= HRP.CFrame.LookVector
-			end
-			if keysDown[Enum.KeyCode.A] then
-				direction -= HRP.CFrame.RightVector
-			end
-			if keysDown[Enum.KeyCode.D] then
-				direction += HRP.CFrame.RightVector
-			end
+    if next(keysDown) ~= nil then
+        local direction = Vector3.zero
 
-			direction = direction.Unit
-			HRP.CFrame = HRP.CFrame + direction * SPEED
-		end
+        if keysDown[Enum.KeyCode.W] then
+            direction += HRP.CFrame.LookVector
+        end
+        if keysDown[Enum.KeyCode.S] then
+            direction -= HRP.CFrame.LookVector
+        end
+        if keysDown[Enum.KeyCode.A] then
+            direction -= HRP.CFrame.RightVector
+        end
+        if keysDown[Enum.KeyCode.D] then
+            direction += HRP.CFrame.RightVector
+        end
 
-		task.wait(INTERVAL)
-	end
+        if direction.Magnitude > 0 then
+            direction = direction.Unit
+            HRP.CFrame = HRP.CFrame + direction * SPEED
+        end
+    end
 end)
+
+print("[Speed] Enabled")

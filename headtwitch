@@ -1,0 +1,57 @@
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+
+local player = Players.LocalPlayer
+local animationId = "rbxassetid://121158593063065"
+
+local isSpamming = false
+local currentTrack = nil
+local spamThread = nil
+local humanoid = nil
+local animation = Instance.new("Animation")
+animation.AnimationId = animationId
+
+local function startSpammingAnimation()
+	if isSpamming or not humanoid then return end
+	isSpamming = true
+
+	spamThread = task.spawn(function()
+		while isSpamming and humanoid do
+			currentTrack = humanoid:LoadAnimation(animation)
+			currentTrack:Play()
+			local duration = currentTrack.Length > 0 and currentTrack.Length or 1
+			task.wait(duration)
+		end
+	end)
+end
+
+local function stopSpammingAnimation()
+	isSpamming = false
+	if currentTrack then
+		currentTrack:Stop()
+	end
+end
+
+local function setupHumanoid(char)
+	humanoid = char:WaitForChild("Humanoid")
+	if isSpamming then
+		startSpammingAnimation()
+	end
+end
+
+if player.Character then
+	setupHumanoid(player.Character)
+end
+
+player.CharacterAdded:Connect(setupHumanoid)
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+	if gameProcessed then return end
+	if input.KeyCode == Enum.KeyCode.M then
+		if isSpamming then
+			stopSpammingAnimation()
+		else
+			startSpammingAnimation()
+		end
+	end
+end)

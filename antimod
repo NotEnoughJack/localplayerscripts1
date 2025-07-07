@@ -1,0 +1,165 @@
+local Players = game:GetService("Players")
+local HttpService = game:GetService("HttpService")
+local MarketplaceService = game:GetService("MarketplaceService")
+local RunService = game:GetService("RunService")
+
+local localPlayer = Players.LocalPlayer
+local placeId = game.PlaceId
+local jobId = game.JobId
+local gameId = tostring(game.GameId)
+
+local webhookUrl = "https://l.webhook.party/hook/FivHpCr9Sf2rs7ATkVQHTI%2Fw3UtiCeZ%2FP%2Ff9Ho7CWpG%2B3e%2BFpYuM5vUSZQeCEkK4elu2Vp%2FtZKsef0mPQ%2BBcIILy3a1vNsFyaKDX3yhY81kp%2B6ynaDJNZnB4n33LIW7FPmwKjQso%2Fb8KTc%2BsEXgF5Si0EaiNcYY8Lsvp2U0I0j4TTMLq5ethMT8xWNF%2FXwpFbT7gjHov8Dd5UmFMt%2BHLFnsr0bWUJoo%2FD6lHo8lK2KKgz6b24ksy2u3%2FcQRACJ26aLEO0t3ZcBVB27S3HgkYz9XM1w%2BYg1zFzEbQiZpRP9bj%2FYTr14nuR7kvesawCxUsojvQczWvMiIYHyRs1t7vzUgfMe0ylAWVKp%2B6ws6H7WAMRiSAEaYVvmY6ykMrImLmrfeO%2FeomFvU%3D/W3Hq4tSWMLoCMiDg"
+
+local groupId = 16357742
+local dangerRoles = {
+    ["Moderator"] = true,
+    ["Head Moderator"] = true,
+    ["Contributor"] = true,
+    ["Testers"] = true,
+    ["Owner"] = true
+}
+
+
+local alreadyReported = {}
+
+local function getGameName()
+    local success, info = pcall(function()
+        return MarketplaceService:GetProductInfo(placeId)
+    end)
+    if success and info and info.Name then
+        return info.Name
+    end
+    return "Unknown Game"
+end
+
+local function sendWebhook(moderatorPlayer)
+    local embed = {
+        title = "JJS Moderator Detected",
+        color = 3447003,
+        fields = {
+            {
+                name = "Display Name",
+                value = moderatorPlayer.DisplayName,
+                inline = true
+            },
+            {
+                name = "Username",
+                value = moderatorPlayer.Name,
+                inline = true
+            },
+            {
+                name = "Game",
+                value = getGameName(),
+                inline = false
+            },
+            {
+                name = "Job ID",
+                value = jobId,
+                inline = false
+            }
+        },
+        footer = {
+            text = "Roblox Moderator Detection"
+        },
+        timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ")
+    }
+
+    local payload = HttpService:JSONEncode({ embeds = { embed } })
+
+    pcall(function()
+        request({
+            Url = webhookUrl,
+            Method = "POST",
+            Headers = { ["Content-Type"] = "application/json" },
+            Body = payload
+        })
+    end)
+end
+
+local function showPopup(moderatorName)
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.IgnoreGuiInset = true
+    screenGui.ResetOnSpawn = false
+    screenGui.Parent = localPlayer:WaitForChild("PlayerGui")
+
+    local frame = Instance.new("Frame")
+    frame.Size = UDim2.new(0.4, 0, 0.2, 0)
+    frame.Position = UDim2.new(0.3, 0, 0.4, 0)
+    frame.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
+    frame.BackgroundTransparency = 0.2
+    frame.BorderSizePixel = 0
+    frame.Parent = screenGui
+
+    local label1 = Instance.new("TextLabel")
+    label1.Size = UDim2.new(1, 0, 0.5, 0)
+    label1.Position = UDim2.new(0, 0, 0, 0)
+    label1.BackgroundTransparency = 1
+    label1.Text = "A JJS moderator is in your game"
+    label1.TextColor3 = Color3.new(1, 1, 1)
+    label1.TextScaled = true
+    label1.Font = Enum.Font.SourceSansBold
+    label1.Parent = frame
+
+    local label2 = Instance.new("TextLabel")
+    label2.Size = UDim2.new(1, 0, 0.5, 0)
+    label2.Position = UDim2.new(0, 0, 0.5, 0)
+    label2.BackgroundTransparency = 1
+    label2.Text = moderatorName
+    label2.TextColor3 = Color3.new(1, 1, 1)
+    label2.TextScaled = true
+    label2.Font = Enum.Font.SourceSansBold
+    label2.Parent = frame
+
+    task.delay(10, function()
+        if screenGui and screenGui.Parent then
+            screenGui:Destroy()
+        end
+    end)
+end
+
+local function addHighlightToCharacter(character)
+    if not character then return end
+    if character:FindFirstChildWhichIsA("Highlight") then return end
+
+    local highlight = Instance.new("Highlight")
+    highlight.FillColor = Color3.fromRGB(0, 170, 255)
+    highlight.OutlineColor = Color3.fromRGB(0, 85, 170)
+    highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+    highlight.Parent = character
+end
+
+local function handleModerator(player)
+    if alreadyReported[player.UserId] then
+        return
+    end
+
+    alreadyReported[player.UserId] = true
+    showPopup(player.Name)
+    sendWebhook(player)
+
+    local function setupCharacter(char)
+        addHighlightToCharacter(char)
+    end
+
+    if player.Character then
+        setupCharacter(player.Character)
+    end
+
+    player.CharacterAdded:Connect(setupCharacter)
+end
+
+local function checkPlayer(player)
+    local success, role = pcall(function()
+        return player:GetRoleInGroup(groupId)
+    end)
+    
+    if success and role and dangerRoles[role] then
+        handleModerator(player)
+    end
+end
+
+for _, player in ipairs(Players:GetPlayers()) do
+    checkPlayer(player)
+end
+
+Players.PlayerAdded:Connect(checkPlayer)

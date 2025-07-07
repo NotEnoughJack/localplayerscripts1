@@ -1,0 +1,210 @@
+game.workspace.Effects.DescendantAdded:Connect(function(descendant)
+    if descendant.Name == "Hitsphere" then
+        descendant.Size = Vector3.new(40,40,40)
+        descendant.Transparency = 1
+    end
+end)
+
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local UserInputService = game:GetService("UserInputService")
+local TweenService = game:GetService("TweenService")
+local Camera = workspace.CurrentCamera
+local currentTarget = nil
+
+local ScreenGui = Instance.new("ScreenGui")
+local OuterFrame = Instance.new("Frame")
+local ImageBackground = Instance.new("ImageLabel") 
+local ScrollingFrame = Instance.new("ScrollingFrame")
+local UIListLayout = Instance.new("UIListLayout")
+
+ScreenGui.Parent = game:GetService("CoreGui")
+
+OuterFrame.Size = UDim2.new(0.17, 0, 0.6, 0)
+OuterFrame.Position = UDim2.new(0.35, 914, 0.2, 189)
+OuterFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+OuterFrame.BorderSizePixel = 0
+OuterFrame.Parent = ScreenGui
+
+ImageBackground.Size = UDim2.new(1, 0, 1, 0)
+ImageBackground.Position = UDim2.new(0, 0, 0, 0)
+ImageBackground.Image = "rbxassetid://128622868560474"
+ImageBackground.BackgroundTransparency = 1
+ImageBackground.Parent = OuterFrame
+
+ScrollingFrame.Size = UDim2.new(1, -40, 1, -40)
+ScrollingFrame.Position = UDim2.new(0, 20, 0, 20)
+ScrollingFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+ScrollingFrame.BorderSizePixel = 0
+ScrollingFrame.ScrollBarThickness = 0
+ScrollingFrame.Parent = OuterFrame
+ScrollingFrame.Transparency = 0.4
+
+UIListLayout.Parent = ScrollingFrame
+UIListLayout.Padding = UDim.new(0, 10)
+UIListLayout.FillDirection = Enum.FillDirection.Vertical
+UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+
+local SpectatingLabel = Instance.new("TextLabel")
+SpectatingLabel.Size = UDim2.new(0, 400, 0, 50)
+SpectatingLabel.Position = UDim2.new(0.5, -0, 0, 140)
+SpectatingLabel.AnchorPoint = Vector2.new(0.5, 0)
+SpectatingLabel.BackgroundTransparency = 1
+SpectatingLabel.TextColor3 = Color3.new(1, 1, 1)
+SpectatingLabel.TextStrokeTransparency = 0.6
+SpectatingLabel.TextStrokeColor3 = Color3.new(0, 0, 0)
+SpectatingLabel.Font = Enum.Font.GothamBold
+SpectatingLabel.TextSize = 50
+SpectatingLabel.Text = ""
+SpectatingLabel.Visible = false
+SpectatingLabel.Parent = ScreenGui
+SpectatingLabel.FontFace = Font.new("rbxasset://fonts/families/AccanthisADFStd.json", Enum.FontWeight.Bold, Enum.FontStyle.Italic)
+
+local uiStroke = Instance.new("UIStroke")
+uiStroke.Thickness = 3.8
+uiStroke.Color = Color3.fromRGB(19, 56, 56)
+uiStroke.Parent = SpectatingLabel
+
+local function AddPlayerRow(player)
+    local RowFrame = Instance.new("Frame")
+    local UserPic = Instance.new("ImageLabel")
+    local UserName = Instance.new("TextLabel")
+    local StreakLabel = Instance.new("TextLabel")
+    local SpectateButton = Instance.new("TextButton")
+
+    RowFrame.Size = UDim2.new(1, 0, 0, 50)
+    RowFrame.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+    RowFrame.BorderSizePixel = 0
+    RowFrame.Parent = ScrollingFrame
+    RowFrame.Transparency = 0.7
+
+    UserPic.Size = UDim2.new(0, 40, 0, 40)
+    UserPic.Position = UDim2.new(0, 5, 0.5, -20)
+    UserPic.BackgroundTransparency = 1
+    UserPic.Image = "rbxthumb://type=AvatarHeadShot&id=" .. player.UserId .. "&w=48&h=48"
+    UserPic.Parent = RowFrame
+
+    UserName.Size = UDim2.new(0.6, -50, 1, 0)
+    UserName.Position = UDim2.new(0, 50, 0, 0)
+    UserName.BackgroundTransparency = 1
+    UserName.Text = player.DisplayName
+    UserName.TextSize = 18
+    UserName.Font = Enum.Font.SourceSans
+    UserName.TextColor3 = Color3.fromRGB(200, 200, 200)
+    UserName.TextXAlignment = Enum.TextXAlignment.Left
+    UserName.Parent = RowFrame
+
+    StreakLabel.Size = UDim2.new(0.2, -10, 1, 0)
+    StreakLabel.Position = UDim2.new(0.6, 0, 0, 0)
+    StreakLabel.BackgroundTransparency = 1
+    StreakLabel.Text = "Loading..."
+    StreakLabel.TextSize = 18
+    StreakLabel.Font = Enum.Font.SourceSans
+    StreakLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+    StreakLabel.TextXAlignment = Enum.TextXAlignment.Right
+    StreakLabel.Parent = RowFrame
+
+    SpectateButton.Size = UDim2.new(0.2, -10, 1, 0)
+    SpectateButton.Position = UDim2.new(0.8, 0, 0, 0)
+    SpectateButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+    SpectateButton.Text = "🔥"
+    SpectateButton.TextSize = 18
+    SpectateButton.Font = Enum.Font.SourceSansBold
+    SpectateButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    SpectateButton.Parent = RowFrame
+    SpectateButton.Transparency = 0.7
+
+    local function UpdateStreak()
+        if player:FindFirstChild("leaderstats") and player.leaderstats:FindFirstChild("Kills") then
+            StreakLabel.Text = tostring(player.leaderstats.Kills.Value)
+        else
+            StreakLabel.Text = "0"
+        end
+    end
+
+    UpdateStreak()
+    if player:FindFirstChild("leaderstats") and player.leaderstats:FindFirstChild("Kills") then
+        player.leaderstats.Kills.Changed:Connect(UpdateStreak)
+    end
+
+    SpectateButton.MouseButton1Click:Connect(function()
+        if currentTarget == player then
+            Camera.CameraSubject = LocalPlayer.Character:FindFirstChild("Humanoid")
+            currentTarget = nil
+            SpectatingLabel.Visible = false
+            SpectatingLabel.Text = ""
+        else
+            if player.Character and player.Character:FindFirstChild("Humanoid") then
+                Camera.CameraSubject = player.Character.Humanoid
+                currentTarget = player
+                SpectatingLabel.Text = "SPECTATING: " .. string.upper(player.DisplayName)
+
+                SpectatingLabel.Visible = true
+            end
+        end
+    end)
+
+    RowFrame.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 then
+            if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                local targetHRP = player.Character.HumanoidRootPart
+                local backPosition = targetHRP.Position - (targetHRP.CFrame.LookVector * 4) -- Teleport behind clicked player
+
+                LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(backPosition, targetHRP.Position)
+            end
+        end
+    end)
+end
+
+for _, player in pairs(Players:GetPlayers()) do
+    AddPlayerRow(player)
+end
+
+Players.PlayerAdded:Connect(function(player)
+    AddPlayerRow(player)
+end)
+
+Players.PlayerRemoving:Connect(function(player)
+    for _, child in pairs(ScrollingFrame:GetChildren()) do
+        if child:IsA("Frame") and child:FindFirstChild("TextLabel") and child.TextLabel.Text == player.DisplayName then
+            child:Destroy()
+            break
+        end
+    end
+end)
+
+local function AddDraggingFunctionality(DragPoint, Main)
+    local Dragging, DragInput, MousePos, FramePos = false
+    DragPoint.InputBegan:Connect(function(Input)
+        if Input.UserInputType == Enum.UserInputType.MouseButton1 then
+            Dragging = true
+            MousePos = Input.Position
+            FramePos = Main.Position
+
+            Input.Changed:Connect(function()
+                if Input.UserInputState == Enum.UserInputState.End then
+                    Dragging = false
+                end
+            end)
+        end
+    end)
+
+    DragPoint.InputChanged:Connect(function(Input)
+        if Input.UserInputType == Enum.UserInputType.MouseMovement then
+            DragInput = Input
+        end
+    end)
+
+    UserInputService.InputChanged:Connect(function(Input)
+        if Input == DragInput and Dragging then
+            local Delta = Input.Position - MousePos
+            TweenService:Create(Main, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                Position = UDim2.new(FramePos.X.Scale, FramePos.X.Offset + Delta.X, FramePos.Y.Scale, FramePos.Y.Offset + Delta.Y)
+            }):Play()
+        end
+    end)
+end
+
+AddDraggingFunctionality(OuterFrame, OuterFrame)
+

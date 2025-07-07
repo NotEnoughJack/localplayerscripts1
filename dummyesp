@@ -1,0 +1,50 @@
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
+
+local CharactersFolder = workspace:WaitForChild("Characters")
+
+local DUMMY_NAME = "Dummy"
+
+local FILL_COLOR = Color3.new(0, 0, 0)
+local OUTLINE_COLOR = Color3.new(0, 0, 0)
+
+local function ensureHighlight(model)
+    if not model then return end
+    if not model:IsA("Model") then return end
+    if model:FindFirstChildWhichIsA("Highlight") then
+        return
+    end
+
+    local h = Instance.new("Highlight")
+    h.FillColor = FILL_COLOR
+    h.OutlineColor = OUTLINE_COLOR
+    h.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+    h.Parent = model
+end
+
+local function watchDummy(dummy)
+    ensureHighlight(dummy)
+
+    coroutine.wrap(function()
+        while dummy.Parent do
+            ensureHighlight(dummy)
+            task.wait(1)
+        end
+    end)()
+end
+
+local function checkForExistingDummy()
+    local dummy = CharactersFolder:FindFirstChild(DUMMY_NAME)
+    if dummy then
+        watchDummy(dummy)
+    end
+end
+
+CharactersFolder.ChildAdded:Connect(function(child)
+    if child.Name == DUMMY_NAME then
+        watchDummy(child)
+    end
+end)
+
+checkForExistingDummy()

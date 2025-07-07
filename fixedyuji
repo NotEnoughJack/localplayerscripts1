@@ -1,0 +1,102 @@
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local TweenService = game:GetService("TweenService")
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+local DECAL_IMAGE_ID = "rbxassetid://139393607372440"
+
+local function createScreenDecal()
+    local screenGui = Instance.new("ScreenGui")
+    screenGui.Name = "ExplosionDecalGui"
+    screenGui.ResetOnSpawn = false
+    screenGui.Parent = playerGui
+
+    local imageLabel = Instance.new("ImageLabel")
+    imageLabel.Name = "DecalImage"
+    imageLabel.Size = UDim2.new(1, 0, 1, 0)
+    imageLabel.Position = UDim2.new(0, 0, 0, 0)
+    imageLabel.BackgroundTransparency = 1
+    imageLabel.Image = DECAL_IMAGE_ID
+    imageLabel.ImageTransparency = 0
+    imageLabel.Parent = screenGui
+
+    return imageLabel, screenGui
+end
+
+local function fadeOutDecal(imageLabel)
+    local tweenInfo = TweenInfo.new(2, Enum.EasingStyle.Linear)
+    local goal = { ImageTransparency = 1 }
+    local tween = TweenService:Create(imageLabel, tweenInfo, goal)
+    tween:Play()
+    tween.Completed:Wait()
+end
+
+local function explodePlayer()
+    local character = player.Character
+    if character then
+        local humanoid = character:FindFirstChildOfClass("Humanoid")
+        local hrp = character:FindFirstChild("HumanoidRootPart")
+        if humanoid and hrp then
+            local explosion = Instance.new("Explosion")
+            explosion.Position = hrp.Position
+            explosion.BlastRadius = 10
+            explosion.BlastPressure = 500000
+            explosion.Parent = workspace
+            humanoid.Health = 0
+        end
+    end
+end
+
+UserInputService.InputBegan:Connect(function(input, processed)
+    if processed then return end
+    if input.KeyCode == Enum.KeyCode.Four then
+        local imageLabel, screenGui = createScreenDecal()
+        fadeOutDecal(imageLabel)
+        screenGui:Destroy()
+        explodePlayer()
+    end
+end)
+
+local moveset = player.PlayerGui.Main:WaitForChild("Moveset")
+for _, move in ipairs(moveset:GetChildren()) do
+    if move.Name ~= "Manji Kick" and move:IsA("Frame") then
+        move:Destroy()
+    end
+end
+
+if moveset:FindFirstChild("Manji Kick") then
+    moveset["Manji Kick"].ItemName.Text = "Heart Attack"
+end
+
+player.PlayerGui.Main.Ultimate.Title.Text = ""
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+local limbsToRemove = {
+    "Left Arm",
+    "Right Arm",
+    "Left Leg",
+    "Right Leg",
+    "LeftUpperArm",
+    "LeftLowerArm",
+    "LeftHand",
+    "RightUpperArm",
+    "RightLowerArm",
+    "RightHand",
+    "LeftUpperLeg",
+    "LeftLowerLeg",
+    "LeftFoot",
+    "RightUpperLeg",
+    "RightLowerLeg",
+    "RightFoot"
+}
+
+for _, limbName in ipairs(limbsToRemove) do
+    local limb = character:FindFirstChild(limbName)
+    if limb then
+        limb:Destroy()
+    end
+end
+

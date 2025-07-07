@@ -1,0 +1,2 @@
+local NotificationLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/IceMinisterq/Notification-Library/Main/Library.lua"))()
+NotificationLibrary:SendNotification("Warning", "This script was made for and tested in Jujutsu shenanigans and may not work as intended in other games", 10)
