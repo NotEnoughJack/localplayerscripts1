@@ -1,7 +1,7 @@
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 
-local allowedAnimationId = "rbxassetid://17656896351"
+local allowedAnimationId = "rbxassetid://75390215999547"
 
 local character = player.Character or player.CharacterAdded:Wait()
 local humanoid = character:WaitForChild("Humanoid")
