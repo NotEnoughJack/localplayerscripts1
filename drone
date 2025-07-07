@@ -5,7 +5,7 @@ local UIS = game:GetService("UserInputService")
 
 local player = Players.LocalPlayer
 local droneAccessoryID = 17865400476
-local allowedAnimationId = "rbxassetid://17656896351"
+local allowedAnimationId = "rbxassetid://75390215999547"
 
 local speed = 80
 local smoothness = 0.2
