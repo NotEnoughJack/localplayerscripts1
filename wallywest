@@ -1,2 +1,133 @@
-loadstring(game:HttpGet("https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/tsspeed"))()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/animspeed"))()
+getgenv().CustomSpeed = getgenv().CustomSpeed or {}
+local state = getgenv().CustomSpeed
+
+if state.Enabled then
+    state.Enabled = false
+    print("[Speed] Disabling...")
+
+    if state.InputBeganConnection then state.InputBeganConnection:Disconnect() end
+    if state.InputEndedConnection then state.InputEndedConnection:Disconnect() end
+    if state.MovementConnection then state.MovementConnection:Disconnect() end
+
+    if state.DashTrack and state.DashTrack.IsPlaying then state.DashTrack:Stop() end
+    if state.PostDashTrack and state.PostDashTrack.IsPlaying then state.PostDashTrack:Stop() end
+
+    state.InputBeganConnection = nil
+    state.InputEndedConnection = nil
+    state.MovementConnection = nil
+    state.KeysDown = nil
+    state.IsAnimating = false
+
+    print("[Speed] Disabled")
+    return
+end
+
+print("[Speed] Enabling...")
+state.Enabled = true
+
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local HRP = character:WaitForChild("HumanoidRootPart")
+
+local SPEED = 0.9
+state.Speed = SPEED 
+local SPEED_STEP = 0.1
+local SPEED_MIN = 0.1
+local SPEED_MAX = 5
+
+local dashAnimId = "rbxassetid://75686211329107"
+local postDashAnimId = "rbxassetid://100081544058065"
+
+local dashAnim = Instance.new("Animation")
+dashAnim.AnimationId = dashAnimId
+local dashTrack = humanoid:LoadAnimation(dashAnim)
+state.DashTrack = dashTrack
+
+local postDashAnim = Instance.new("Animation")
+postDashAnim.AnimationId = postDashAnimId
+local postDashTrack = humanoid:LoadAnimation(postDashAnim)
+state.PostDashTrack = postDashTrack
+
+state.IsAnimating = false
+local keysDown = {}
+state.KeysDown = keysDown
+
+state.InputBeganConnection = UserInputService.InputBegan:Connect(function(input, processed)
+	if processed then return end
+
+	local key = input.KeyCode
+	if key == Enum.KeyCode.K then return end 
+
+	if key == Enum.KeyCode.W or key == Enum.KeyCode.A or key == Enum.KeyCode.S or key == Enum.KeyCode.D then
+		keysDown[key] = true
+	elseif key == Enum.KeyCode.N then
+		state.Speed = math.clamp(state.Speed + SPEED_STEP, SPEED_MIN, SPEED_MAX)
+		print("[Speed] Increased to:", state.Speed)
+	elseif key == Enum.KeyCode.M then
+		state.Speed = math.clamp(state.Speed - SPEED_STEP, SPEED_MIN, SPEED_MAX)
+		print("[Speed] Decreased to:", state.Speed)
+	end
+end)
+
+state.InputEndedConnection = UserInputService.InputEnded:Connect(function(input)
+	local key = input.KeyCode
+	if key == Enum.KeyCode.W or key == Enum.KeyCode.A or key == Enum.KeyCode.S or key == Enum.KeyCode.D then
+		keysDown[key] = nil
+
+		if next(keysDown) == nil then
+			if dashTrack.IsPlaying then dashTrack:Stop() end
+			if postDashTrack.IsPlaying then postDashTrack:Stop() end
+			state.IsAnimating = false
+		end
+	end
+end)
+
+local function isPathClear(origin, direction, distance)
+	local params = RaycastParams.new()
+	params.FilterDescendantsInstances = {character}
+	params.FilterType = Enum.RaycastFilterType.Blacklist
+
+	local result = workspace:Raycast(origin, direction.Unit * distance, params)
+	return not result 
+end
+
+state.MovementConnection = RunService.Heartbeat:Connect(function()
+	if not state.Enabled then return end
+	if next(keysDown) == nil then return end
+
+	local direction = Vector3.zero
+	local camera = workspace.CurrentCamera
+
+	if keysDown[Enum.KeyCode.W] then direction += camera.CFrame.LookVector end
+	if keysDown[Enum.KeyCode.S] then direction -= camera.CFrame.LookVector end
+	if keysDown[Enum.KeyCode.A] then direction -= camera.CFrame.RightVector end
+	if keysDown[Enum.KeyCode.D] then direction += camera.CFrame.RightVector end
+
+	if direction.Magnitude > 0 then
+		direction = direction.Unit
+		local offset = direction * state.Speed
+		local newPos = HRP.Position + offset
+
+		if isPathClear(HRP.Position, direction, state.Speed) then
+			HRP.CFrame = HRP.CFrame + offset
+
+			-- Handle animation
+			if not state.IsAnimating then
+				state.IsAnimating = true
+				dashTrack:Play()
+
+				dashTrack.Stopped:Connect(function()
+					if state.Enabled and next(keysDown) ~= nil then
+						postDashTrack:Play()
+					end
+				end)
+			end
+		end
+	end
+end)
+
