@@ -1,0 +1,6 @@
+workspace.Characters.DescendantAdded:Connect(function(descendant)
+    if descendant.Name == "InSkill" or descendant.Name == "NoJump" or descendant.Name == "NoSprint" or descendant.Name == "Block" or descendant.Name == "Stun" or descendant.Name == "Knockback" or descendant.Name == "Wakeup" or descendant.Name == "Hold" then
+if descendant.Parent.Parent.Name == game.Players.LocalPlayer.Character.Name then
+task.wait()
+descendant:Destroy()
+end
