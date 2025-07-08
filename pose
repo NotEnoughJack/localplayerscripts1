@@ -8,10 +8,10 @@ local humanoid = character:WaitForChild("Humanoid")
 local rootPart = character:WaitForChild("HumanoidRootPart")
 
 local animationIds = {
-    "rbxassetid://112072539845954",
-    "rbxassetid://138425417551609",
-    "rbxassetid://85457808070175",
-    "rbxassetid://70899744676322"
+    "rbxassetid://91496614952968",
+    "rbxassetid://102765720260431",
+    "rbxassetid://91428863336534",
+    "rbxassetid://140557689031802"
 }
 
 local animations = {}
