@@ -6,7 +6,7 @@ local character = player.Character or player.CharacterAdded:Wait()
 local humanoid = character:WaitForChild("Humanoid")
 
 local animation = Instance.new("Animation")
-animation.AnimationId = "rbxassetid://14801008075"
+animation.AnimationId = "rbxassetid://132725601768618"
 
 local animationTrack = humanoid:LoadAnimation(animation)
 
