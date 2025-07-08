@@ -1,4 +1,4 @@
-local version = "V2.9"
+local version = "V2.10"
 print("Jack's GUI " .. version .. " Loaded")
 
 local Players = game:GetService("Players")
@@ -8,7 +8,7 @@ local LocalPlayer = Players.LocalPlayer
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local Window = Fluent:CreateWindow({
     Title = "Jack's GUI",
-    SubTitle = "V2.9",
+    SubTitle = "V2.10",
     TabWidth = 160,
     Size = UDim2.fromOffset(580, 460),
     Theme = "Amethyst",
@@ -21,7 +21,7 @@ local Tabs = {
     Combat = Window:AddTab({ Title = "Combat", Icon = "sword" }),
     Utility = Window:AddTab({ Title = "Utility", Icon = "settings" }),
     Animations = Window:AddTab({ Title = "Animations", Icon = "film" }),
-    Kingofexe = Window:AddTab({ Title = "Kingofexe", Icon = "crown" }),
+    Fun = Window:AddTab({ Title = "Fun", Icon = "crown" }),
     Search = Window:AddTab({ Title = "Search", Icon = "search" })
 }
 
@@ -92,32 +92,32 @@ Fluent:Notify({
 })
 
 AddScriptToggle(Tabs.Movement, "Backflip", "Backflip", "T normal backflip E super jump", "https://raw.githubusercontent.com/gyyfyu/test2/refs/heads/main/obf_cj7o6P7567nEPA1xVqYZcv51ezWc7DOCzS475N108rwGEiEVi9688kJErn1g68ep.lua")
-AddScriptToggle(Tabs.Main, "TrainButton", "Train Button", "Creates a train button", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/trainbutton")
+AddScriptToggle(Tabs.Utility, "TrainButton", "Train Button", "Creates a train button", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/trainbutton")
 AddScriptToggle(Tabs.Movement, "Fly", "Fly", "X to fly", "https://raw.githubusercontent.com/gyyfyu/test2/refs/heads/main/no%20key%20system/fly.lua")
 AddScriptToggle(Tabs.Movement, "Teleport", "Teleport", "press C to activate", "https://raw.githubusercontent.com/gyyfyu/test2/refs/heads/main/no%20key%20system/teleport.lua")
-AddScriptToggle(Tabs.Main, "SimpleDomain", "Simple Domain", "press Y to activate", "https://raw.githubusercontent.com/gyyfyu/test2/refs/heads/main/no%20key%20system/simple%20domain.lua")
+AddScriptToggle(Tabs.Utility, "SimpleDomain", "Simple Domain", "press Y to activate", "https://raw.githubusercontent.com/gyyfyu/test2/refs/heads/main/no%20key%20system/simple%20domain.lua")
 AddScriptToggle(Tabs.Combat, "Lockon", "Lock on", "press J to toggle between on and off, press RIGHT MOUSE BUTTON to actually lock on and unlock,  You lock to the nearest person to your crosshair", "https://raw.githubusercontent.com/gyyfyu/test2/refs/heads/main/no%20key%20system/lockon.lua")
 AddScriptToggle(Tabs.Combat, "Blackhole", "Blackhole", "Fly around really fast with blackhole", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/blackhole")
 AddScriptToggle(Tabs.Utility, "AntiBlackhole", "Anti Blackhole", "removes the blackhole suction", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/antiblackhole")
 AddScriptToggle(Tabs.Combat, "SurpriseBlackhole", "Surprise Blackhole", "Removes the blackhole animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/surpriseblackhole")
-AddScriptToggle(Tabs.Utility, "Small Hitbox", "Small Hitbox", "Shrinks your hitbox", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/gubby")
-AddScriptToggle(Tabs.Main, "MacroHiromi", "Macro Hiromi", "a macro for higuruma one shot move, legit and undetected", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/macrohiromi")
-AddScriptToggle(Tabs.Utility, "AutoPiano", "Auto Piano", "Creates an autopiano gui", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/piano")
-AddScriptToggle(Tabs.Utility, "DomainInvade", "Domain Invade", "Press U in front of a domain to invade", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/domaininvade")
-AddScriptToggle(Tabs.Utility, "Pose", "Pose", "press P to activate", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/pose")
+AddScriptToggle(Tabs.Combat, "Small Hitbox", "Small Hitbox", "Shrinks your hitbox", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/gubby")
+AddScriptToggle(Tabs.Utility, "MacroHiromi", "Macro Hiromi", "a macro for higuruma one shot move, legit and undetected", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/macrohiromi")
+AddScriptToggle(Tabs.Fun, "AutoPiano", "Auto Piano", "Creates an autopiano gui", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/piano")
+AddScriptToggle(Tabs.Fun, "DomainInvade", "Domain Invade", "Press U in front of a domain to invade", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/domaininvade")
+AddScriptToggle(Tabs.Fun, "Pose", "Pose", "press P to activate", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/pose")
 AddScriptToggle(Tabs.Movement, "Drone", "Drone", "Fly around as a drone", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/drone")
-AddScriptToggle(Tabs.Utility, "Stand", "Stand", "tutorial in the discord", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/stand")
+AddScriptToggle(Tabs.Fun, "Stand", "Stand", "tutorial in the discord", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/stand")
 AddScriptToggle(Tabs.Movement, "Speed", "Speed", "Move around fast", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/speedboost")
-AddScriptToggle(Tabs.Kingofexe, "Exehub", "Kingofexe Hub", "Credits to kingofexe", "https://raw.githubusercontent.com/tomdagoat-bot/kingofexeHub/refs/heads/main/File")
-AddScriptToggle(Tabs.Utility, "goon", "Jerk", "press J to activate", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/jerk")
-AddScriptToggle(Tabs.Main, "Sixeyes", "Six Eyes", "Click on player to activate", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/playerscanner")
+AddScriptToggle(Tabs.Fun, "Exehub", "Kingofexe Hub", "Credits to kingofexe", "https://raw.githubusercontent.com/tomdagoat-bot/kingofexeHub/refs/heads/main/File")
+AddScriptToggle(Tabs.Fun, "goon", "Jerk", "press J to activate", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/jerk")
+AddScriptToggle(Tabs.Utility, "Sixeyes", "Six Eyes", "Click on player to activate", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/playerscanner")
 AddScriptToggle(Tabs.Combat, "Autoblock", "Autoblock", "buggy i do not suggest using", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/autoblock")
-AddScriptToggle(Tabs.Utility, "knockback", "Knockback Self", "sets your own knockback high", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/flingself")
-AddScriptToggle(Tabs.Utility, "todotp", "Todo TP", "Use todos swiftkick then spam teleport", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/todotp")
+AddScriptToggle(Tabs.Fun, "knockback", "Knockback Self", "sets your own knockback high", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/flingself")
+AddScriptToggle(Tabs.Main, "todotp", "Todo TP", "Use todos swiftkick then spam teleport", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/todotp")
 AddScriptToggle(Tabs.Main, "dummy", "Dummy ESP", "Highlights dummy", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/dummyesp")
 AddScriptToggle(Tabs.Main, "itemesp", "Item ESP", "item esp, gun sword etc", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/itemesp")
-AddScriptToggle(Tabs.Utility, "spoof", "Player Spoof", "Join the discord for the tutorial, Spoofs player avatars", "https://pastebin.com/raw/P1sQhDp8")
-AddScriptToggle(Tabs.Movement, "wallywest", "Wally West", "N to speed up, M to slow down", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/wallywest")
+AddScriptToggle(Tabs.Main, "spoof", "Player Spoof", "Join the discord for the tutorial, Spoofs player avatars", "https://pastebin.com/raw/P1sQhDp8")
+AddScriptToggle(Tabs.Fun, "wallywest", "Wally West", "N to speed up, M to slow down", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/wallywest")
 AddScriptToggle(Tabs.Combat, "Hitbox", "Refined Hitbox", "Hitbox expander is back", "https://api.luarmor.net/files/v3/loaders/dd80497e938e53ad6447fd493ce1ce06.lua")
 AddScriptToggle(Tabs.Main, "Serverhop", "Server Hop", "Rejoins into a different random server", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/serverhop")
 AddScriptToggle(Tabs.Main, "NDC", "No dash cooldown", "Only works with side dash", "https://api.luarmor.net/files/v3/loaders/b9539acb02865f098f534aa0ded69c8b.lua")
