@@ -122,6 +122,7 @@ AddScriptToggle(Tabs.Combat, "Hitbox", "Refined Hitbox", "Hitbox expander is bac
 AddScriptToggle(Tabs.Main, "Serverhop", "Server Hop", "Rejoins into a different random server", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/serverhop")
 AddScriptToggle(Tabs.Main, "NDC", "No dash cooldown", "Only works with side dash", "https://api.luarmor.net/files/v3/loaders/b9539acb02865f098f534aa0ded69c8b.lua")
 AddScriptToggle(Tabs.Main, "Gokumoveset", "Goku Moveset", "Serverside Goku Moveset", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/goku")
+AddScriptToggle(Tabs.Movement, "Sidestep", "Side step", "X to backdash C to randomly sidedash", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/sidestep")
 
 
 
