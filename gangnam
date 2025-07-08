@@ -1,0 +1,50 @@
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+local humanoid
+local loopAnimTrack
+local animPlaying = false
+
+local animationId = "rbxassetid://140557689031802"
+local loopAnimation = Instance.new("Animation")
+loopAnimation.AnimationId = animationId
+
+local function setupCharacter(char)
+	character = char
+	humanoid = character:WaitForChild("Humanoid")
+
+	if loopAnimTrack then
+		loopAnimTrack:Stop()
+		loopAnimTrack = nil
+		animPlaying = false
+	end
+end
+
+player.CharacterAdded:Connect(setupCharacter)
+if player.Character then
+	setupCharacter(player.Character)
+end
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+	if gameProcessed or input.UserInputType ~= Enum.UserInputType.Keyboard then return end
+
+	if input.KeyCode == Enum.KeyCode.L then
+		if not humanoid then return end
+
+		if animPlaying then
+			if loopAnimTrack then
+				loopAnimTrack:Stop()
+				loopAnimTrack = nil
+			end
+			animPlaying = false
+		else
+			loopAnimTrack = humanoid:LoadAnimation(loopAnimation)
+			loopAnimTrack.Looped = true
+			loopAnimTrack:Play()
+			animPlaying = true
+		end
+	end
+end)
