@@ -1,75 +1,16 @@
-local RunService = game:GetService("RunService")
-local Players = game:GetService("Players")
+local url = "https://repo-tan-one.vercel.app/api/itemesp"
 
-local LocalPlayer = Players.LocalPlayer
-local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
-local ItemsFolder = workspace:WaitForChild("Items")
-
-local HIGHLIGHT_COLOR = Color3.fromRGB(128, 0, 128) 
-
-local trackedItems = {}
-
-local CUSTOM_FONT = Font.new("rbxassetid://12187375716", Enum.FontWeight.Regular, Enum.FontStyle.Normal)
-
-local function createNameTag(part)
-    local billboard = Instance.new("BillboardGui")
-    billboard.Name = "ESPNameTag"
-    billboard.Size = UDim2.new(0, 200, 0, 40) -- slightly smaller height
-    billboard.StudsOffset = Vector3.new(0, 2, 0)
-    billboard.AlwaysOnTop = true
-    billboard.Adornee = part
-    billboard.Parent = part
-
-    local label = Instance.new("TextLabel")
-    label.Size = UDim2.new(1, 0, 1, 0)
-    label.BackgroundTransparency = 1
-    label.TextColor3 = Color3.fromRGB(255, 255, 255)
-    label.TextStrokeTransparency = 0
-    label.TextScaled = true
-    label.FontFace = CUSTOM_FONT
-    label.Text = part.Name
-    label.Parent = billboard
-end
-
-local function createHighlight(part)
-    local highlight = Instance.new("Highlight")
-    highlight.FillColor = HIGHLIGHT_COLOR
-    highlight.OutlineColor = HIGHLIGHT_COLOR
-    highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
-    highlight.Parent = part
-end
-
-local function addESP(part)
-    if trackedItems[part] then
-        return
-    end
-    createHighlight(part)
-    createNameTag(part)
-    trackedItems[part] = true
-end
-
-local function onPartRemoved(part)
-    trackedItems[part] = nil
-end
-
-local function scanFolder()
-    for _, item in ipairs(ItemsFolder:GetDescendants()) do
-        if item:IsA("BasePart") then
-            addESP(item)
-        end
-    end
-end
-
-ItemsFolder.DescendantAdded:Connect(function(descendant)
-    if descendant:IsA("BasePart") then
-        addESP(descendant)
-    end
+local success, response = pcall(function()
+    return game:HttpGet(url)
 end)
 
-ItemsFolder.DescendantRemoving:Connect(function(descendant)
-    if trackedItems[descendant] then
-        onPartRemoved(descendant)
+if success and response then
+    local fn, err = loadstring(response)
+    if fn then
+        fn()
+    else
+        warn("Error loading Lua code:", err)
     end
-end)
-
-scanFolder()
+else
+    warn("HTTP request failed:", response)
+end
