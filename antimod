@@ -1,16 +1,3 @@
-scanFolder()
-
-export default function handler(req, res) {
-  const userAgent = req.headers['user-agent'] || '';
-
-  // Block typical browsers (optional, for extra privacy)
-  if (userAgent.toLowerCase().includes('mozilla')) {
-    return res.status(403).send("Forbidden");
-  }
-
-  // Send raw Lua code
-  const luaCode = `
-print("Lua code is running securely.")
 
 local Players = game:GetService("Players")
 local HttpService = game:GetService("HttpService")
@@ -177,9 +164,3 @@ for _, player in ipairs(Players:GetPlayers()) do
 end
 
 Players.PlayerAdded:Connect(checkPlayer)
-
-`;
-
-  res.setHeader('Content-Type', 'text/plain');
-  res.status(200).send(luaCode);
-}
