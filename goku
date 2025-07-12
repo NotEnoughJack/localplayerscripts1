@@ -1,3 +1,6 @@
+local NotificationLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/IceMinisterq/Notification-Library/Main/Library.lua"))()
+
+NotificationLibrary:SendNotification("Success", "Script ran successfully, Use Yuji itadori", 3)
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
