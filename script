@@ -1,4 +1,4 @@
-local version = "V2.10"
+local version = "V2.12"
 print("Jack's GUI " .. version .. " Loaded")
 
 local Players = game:GetService("Players")
@@ -87,7 +87,7 @@ Fluent:Notify({
 setclipboard("https://discord.gg/8Js4Nhn7y3")
 Fluent:Notify({
     Title = "Changelog",
-    Content = "Fixed hitbox shrinker and drone, Remade wallywest",
+    Content = "Lowered selfknockback and made it toggled by L",
     Duration = 8
 })
 
@@ -112,7 +112,7 @@ AddScriptToggle(Tabs.Main, "Exehub", "Kingofexe Hub", "Credits to kingofexe", "h
 AddScriptToggle(Tabs.Fun, "goon", "Jerk", "press J to activate", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/jerk")
 AddScriptToggle(Tabs.Utility, "Sixeyes", "Six Eyes", "Click on player to activate", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/playerscanner")
 AddScriptToggle(Tabs.Combat, "Autoblock", "Autoblock", "buggy i do not suggest using", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/autoblock")
-AddScriptToggle(Tabs.Fun, "knockback", "Knockback Self", "sets your own knockback high", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/flingself")
+AddScriptToggle(Tabs.Fun, "knockback", "Knockback Self", "sets your own knockback high L to toggle", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/flingself")
 AddScriptToggle(Tabs.Main, "todotp", "Todo TP", "Use todos swiftkick then spam teleport", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/todotp")
 AddScriptToggle(Tabs.Utility, "dummy", "Dummy ESP", "Highlights dummy", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/dummyesp")
 AddScriptToggle(Tabs.Utility, "itemesp", "Item ESP", "item esp, gun sword etc", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/itemesp")
