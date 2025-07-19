@@ -1,7 +1,7 @@
 local TweenService = game:GetService("TweenService")
 local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
 local RunService = game:GetService("RunService")
+local LocalPlayer = Players.LocalPlayer
 
 local targetRemote = workspace.Map.Destructible.Model.StationControl.Handle.Train
 
@@ -20,9 +20,55 @@ local function createCircleGui()
     circleButton.Size = UDim2.new(0, 100, 0, 100)
     circleButton.Position = UDim2.new(0.87, -50, 0.5, -450)
     circleButton.AnchorPoint = Vector2.new(0.5, 0.5)
-    circleButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0) 
+    circleButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0) -- red default
+    circleButton.BackgroundTransparency = 0.2
     circleButton.Text = ""
-    circleButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+    circleButton.FontFace = Font.fromId(12187375716)
+    circleButton.TextColor3 = Color3.new(1, 1, 1)
+
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 12)
+    corner.Parent = circleButton
+
+    local stroke = Instance.new("UIStroke")
+    stroke.Thickness = 2
+    stroke.Color = Color3.fromRGB(255, 255, 255)
+    stroke.Parent = circleButton
+
+    circleButton.MouseEnter:Connect(function()
+        if not (workspace:FindFirstChild("Map")
+            and workspace.Map:FindFirstChild("Destructible")
+            and workspace.Map.Destructible:FindFirstChild("Model")
+            and workspace.Map.Destructible.Model:FindFirstChild("StationControl")
+            and workspace.Map.Destructible.Model.StationControl:FindFirstChild("ButtonTrain")
+            and workspace.Map.Destructible.Model.StationControl.ButtonTrain:FindFirstChild("Button")
+            and workspace.Map.Destructible.Model.StationControl.ButtonTrain.Button:FindFirstChild("Button")
+            and workspace.Map.Destructible.Model.StationControl.ButtonTrain.Button.Button:IsA("ProximityPrompt")
+            and workspace.Map.Destructible.Model.StationControl.ButtonTrain.Button.Button.Enabled) then
+            circleButton.BackgroundColor3 = Color3.fromRGB(200, 0, 0)
+        end
+    end)
+
+    circleButton.MouseLeave:Connect(function()
+        circleButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+    end)
+
+    local countdownLabel = Instance.new("TextLabel")
+    countdownLabel.Size = UDim2.new(1, 0, 1, 0)
+    countdownLabel.Position = UDim2.new(0, 0, 0, 0)
+    countdownLabel.BackgroundTransparency = 1
+    countdownLabel.TextColor3 = Color3.new(1, 1, 1)
+    countdownLabel.FontFace = Font.fromId(12187375716)
+    countdownLabel.TextScaled = true
+    local padding = Instance.new("UIPadding")
+    padding.PaddingTop = UDim.new(0, 10)
+    padding.PaddingBottom = UDim.new(0, 10)
+    padding.PaddingLeft = UDim.new(0, 10)
+    padding.PaddingRight = UDim.new(0, 10)
+    padding.Parent = countdownLabel
+
+    countdownLabel.Text = ""
+    countdownLabel.Parent = circleButton
 
     local function clickAnimation()
         local downTween = TweenService:Create(circleButton, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
@@ -43,6 +89,10 @@ local function createCircleGui()
         targetRemote:FireServer()
     end)
 
+    local countdownRunning = false
+    local countdownStartTime = 0
+    local totalCountdown = 180 -- 3 minutes
+
     RunService.RenderStepped:Connect(function()
         local prompt = workspace:FindFirstChild("Map") 
             and workspace.Map:FindFirstChild("Destructible") 
@@ -52,10 +102,30 @@ local function createCircleGui()
             and workspace.Map.Destructible.Model.StationControl.ButtonTrain:FindFirstChild("Button") 
             and workspace.Map.Destructible.Model.StationControl.ButtonTrain.Button:FindFirstChild("Button")
 
-        if prompt and prompt:IsA("ProximityPrompt") and prompt.Enabled then
-            circleButton.BackgroundColor3 = Color3.fromRGB(91, 154, 76) 
+        local promptActive = prompt and prompt:IsA("ProximityPrompt") and prompt.Enabled
+
+        if promptActive then
+            circleButton.BackgroundColor3 = Color3.fromRGB(91, 154, 76)
+            countdownLabel.Text = ""
+            countdownRunning = false
         else
-            circleButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0) 
+            circleButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+            if not countdownRunning then
+                countdownStartTime = tick()
+                countdownRunning = true
+            end
+
+            local elapsed = tick() - countdownStartTime
+            local remaining = math.max(0, totalCountdown - math.floor(elapsed))
+            local minutes = math.floor(remaining / 60)
+            local seconds = remaining % 60
+
+            countdownLabel.Text = string.format("%d:%02d", minutes, seconds)
+
+            if remaining <= 0 then
+                countdownRunning = false
+                countdownLabel.Text = "0:00"
+            end
         end
     end)
 
