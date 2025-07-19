@@ -1,16 +1,36 @@
-for _, obj in ipairs(workspace:GetDescendants())do
-if obj:IsA("BodyVelocity") and obj.Name=="KnockbackForce" then
-obj.Velocity = Vector3.new(300,200,300)
-obj.MaxForce = Vector3.new(99999,99999,99999)
-obj.P = 100000
-print("knockback:", obj:GetFullName())
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local toggled = false
+
+-- Set this to a lower knockback velocity
+local customVelocity = Vector3.new(50, 30, 50)
+
+local function applyCustomKnockback(obj)
+    if toggled and obj:IsA("BodyVelocity") and obj.Name == "KnockbackForce" then
+        obj.Velocity = customVelocity
+        obj.MaxForce = Vector3.new(99999, 99999, 99999)
+        obj.P = 100000
+        print("Custom knockback applied to:", obj:GetFullName())
+    end
 end
+
+for _, obj in ipairs(workspace:GetDescendants()) do
+    applyCustomKnockback(obj)
 end
+
 workspace.DescendantAdded:Connect(function(obj)
-if obj:IsA("BodyVelocity") and obj.Name=="KnockbackForce" then
-obj.Velocity = Vector3.new(300,200,300)
-obj.MaxForce = Vector3.new(99999,99999,99999)
-obj.P = 100000
-print("knockback2:", obj:GetFullName())
-end
+    applyCustomKnockback(obj)
+end)
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if not gameProcessed and input.KeyCode == Enum.KeyCode.L then
+        toggled = not toggled
+        print("Knockback override toggled", toggled and "ON" or "OFF")
+
+        if toggled then
+            for _, obj in ipairs(workspace:GetDescendants()) do
+                applyCustomKnockback(obj)
+            end
+        end
+    end
 end)
