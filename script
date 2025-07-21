@@ -87,7 +87,7 @@ Fluent:Notify({
 setclipboard("https://discord.gg/8Js4Nhn7y3")
 Fluent:Notify({
     Title = "Changelog",
-    Content = "Anti Counter added in combat",
+    Content = "Anti Counter added in combat and anti domain in utility",
     Duration = 8
 })
 
@@ -125,6 +125,8 @@ AddScriptToggle(Tabs.Main, "Gokumoveset", "Goku Moveset", "Serverside Goku Moves
 AddScriptToggle(Tabs.Movement, "Sidestep", "Side step", "X to backdash C to randomly sidedash", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/sidestep")
 AddScriptToggle(Tabs.Combat, "surprisecharles", "Surprise Charles", "Stops the charles ult animation from playing", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/surprisecharles")
 AddScriptToggle(Tabs.Combat, "anticounter", "Anti Counter", "Teleports away when someone counters", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/anticounter")
+AddScriptToggle(Tabs.Utility, "antidomain", "Anti domain", "Teleports away when someone uses a domain", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/antidomain")
+
 
 AddScriptToggle(Tabs.Animations, "MVP1", "MVP - Domain Invasion", "press B to activate", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Toji.txt")
 AddScriptToggle(Tabs.Animations, "MVP2", "MVP - Stand Proud", "press B to activate", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Sukuna%20-%20Stand%20Proud.txt")
