@@ -118,7 +118,6 @@ AddScriptToggle(Tabs.Utility, "dummy", "Dummy ESP", "Highlights dummy", "https:/
 AddScriptToggle(Tabs.Utility, "itemesp", "Item ESP", "item esp, gun sword etc", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/itemesp")
 AddScriptToggle(Tabs.Main, "spoof", "Player Spoof", "Join the discord for the tutorial, Spoofs player avatars", "https://pastebin.com/raw/P1sQhDp8")
 AddScriptToggle(Tabs.Fun, "wallywest", "Wally West", "N to speed up, M to slow down", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/wallywest")
-AddScriptToggle(Tabs.Combat, "Hitbox", "Refined Hitbox", "Hitbox expander is back", "https://api.luarmor.net/files/v3/loaders/dd80497e938e53ad6447fd493ce1ce06.lua")
 AddScriptToggle(Tabs.Utility, "Serverhop", "Server Hop", "Rejoins into a different random server", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/serverhop")
 AddScriptToggle(Tabs.Utility, "NDC", "No dash cooldown", "Only works with side dash", "https://api.luarmor.net/files/v3/loaders/b9539acb02865f098f534aa0ded69c8b.lua")
 AddScriptToggle(Tabs.Main, "Gokumoveset", "Goku Moveset", "Serverside Goku Moveset", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/goku")
