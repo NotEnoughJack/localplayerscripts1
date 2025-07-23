@@ -21,7 +21,8 @@ local Tabs = {
     Combat = Window:AddTab({ Title = "Combat", Icon = "sword" }),
     Utility = Window:AddTab({ Title = "Utility", Icon = "settings" }),
     Animations = Window:AddTab({ Title = "Animations", Icon = "film" }),
-    Fun = Window:AddTab({ Title = "Fun", Icon = "crown" }),
+    Achievements = Window:AddTab({ Title = "Achievements", Icon = "crown" }),
+    Fun = Window:AddTab({ Title = "Fun", Icon = "party-popper" }),
     Search = Window:AddTab({ Title = "Search", Icon = "search" })
 }
 
@@ -87,7 +88,7 @@ Fluent:Notify({
 setclipboard("https://discord.gg/8Js4Nhn7y3")
 Fluent:Notify({
     Title = "Changelog",
-    Content = "Anti Counter added in combat and anti domain in utility",
+    Content = "New Achievements tab",
     Duration = 8
 })
 
@@ -125,7 +126,10 @@ AddScriptToggle(Tabs.Movement, "Sidestep", "Side step", "X to backdash C to rand
 AddScriptToggle(Tabs.Combat, "surprisecharles", "Surprise Charles", "Stops the charles ult animation from playing", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/surprisecharles")
 AddScriptToggle(Tabs.Combat, "anticounter", "Anti Counter", "Teleports away when someone counters", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/anticounter")
 AddScriptToggle(Tabs.Utility, "antidomain", "Anti domain", "Teleports away when someone uses a domain", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/antidomain")
-
+AddScriptToggle(Tabs.Achievements, "spaceshenanigans", "Space Shenanigans", "Give you the Space Shenanigans Achievement", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/spaceshenanigans")
+AddScriptToggle(Tabs.Achievements, "betavision", "Betavision", "Give you the Betavision Achievement", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/betavision")
+AddScriptToggle(Tabs.Achievements, "sealed", "Sealed", "Give you the Sealed Achievement", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/sealed")
+AddScriptToggle(Tabs.Achievements, "committed", "Committed", "Give you the Committed to the peace Achievement", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/committed")
 
 AddScriptToggle(Tabs.Animations, "MVP1", "MVP - Domain Invasion", "press B to activate", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Toji.txt")
 AddScriptToggle(Tabs.Animations, "MVP2", "MVP - Stand Proud", "press B to activate", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Sukuna%20-%20Stand%20Proud.txt")
