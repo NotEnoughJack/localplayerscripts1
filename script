@@ -8,7 +8,7 @@ local LocalPlayer = Players.LocalPlayer
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local Window = Fluent:CreateWindow({
     Title = "Jack's GUI",
-    SubTitle = "V2.10",
+    SubTitle = "V2.12 ",
     TabWidth = 160,
     Size = UDim2.fromOffset(580, 460),
     Theme = "Amethyst",
@@ -160,17 +160,4 @@ loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localpl
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/wrongplace'))()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/antimod'))()
 
-if syn and syn.request then
-    syn.request({
-        Url = "https://version-kr53.onrender.com/update_version.php",
-        Method = "POST",
-        Headers = {
-            ["Content-Type"] = "application/json"
-        },
-        Body = game:GetService("HttpService"):JSONEncode({
-            version = version,
-            timestamp = os.time()
-        })
-    })
-end
 
