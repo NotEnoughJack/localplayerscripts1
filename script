@@ -1,4 +1,4 @@
-local version = "V2.10"
+local version = "V2.12"
 print("Jack's GUI " .. version .. " Loaded")
 
 local Players = game:GetService("Players")
@@ -8,7 +8,7 @@ local LocalPlayer = Players.LocalPlayer
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local Window = Fluent:CreateWindow({
     Title = "Jack's GUI",
-    SubTitle = "V2.10",
+    SubTitle = "V2.12 ",
     TabWidth = 160,
     Size = UDim2.fromOffset(580, 460),
     Theme = "Amethyst",
@@ -87,7 +87,7 @@ Fluent:Notify({
 setclipboard("https://discord.gg/8Js4Nhn7y3")
 Fluent:Notify({
     Title = "Changelog",
-    Content = "Fixed hitbox shrinker and drone, Remade wallywest",
+    Content = "Anti Counter added in combat and anti domain in utility",
     Duration = 8
 })
 
@@ -112,20 +112,19 @@ AddScriptToggle(Tabs.Main, "Exehub", "Kingofexe Hub", "Credits to kingofexe", "h
 AddScriptToggle(Tabs.Fun, "goon", "Jerk", "press J to activate", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/jerk")
 AddScriptToggle(Tabs.Utility, "Sixeyes", "Six Eyes", "Click on player to activate", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/playerscanner")
 AddScriptToggle(Tabs.Combat, "Autoblock", "Autoblock", "buggy i do not suggest using", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/autoblock")
-AddScriptToggle(Tabs.Fun, "knockback", "Knockback Self", "sets your own knockback high", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/flingself")
+AddScriptToggle(Tabs.Fun, "knockback", "Knockback Self", "sets your own knockback high L to toggle", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/flingself")
 AddScriptToggle(Tabs.Main, "todotp", "Todo TP", "Use todos swiftkick then spam teleport", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/todotp")
 AddScriptToggle(Tabs.Utility, "dummy", "Dummy ESP", "Highlights dummy", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/dummyesp")
 AddScriptToggle(Tabs.Utility, "itemesp", "Item ESP", "item esp, gun sword etc", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/itemesp")
 AddScriptToggle(Tabs.Main, "spoof", "Player Spoof", "Join the discord for the tutorial, Spoofs player avatars", "https://pastebin.com/raw/P1sQhDp8")
 AddScriptToggle(Tabs.Fun, "wallywest", "Wally West", "N to speed up, M to slow down", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/wallywest")
-AddScriptToggle(Tabs.Combat, "Hitbox", "Refined Hitbox", "Hitbox expander is back", "https://api.luarmor.net/files/v3/loaders/dd80497e938e53ad6447fd493ce1ce06.lua")
 AddScriptToggle(Tabs.Utility, "Serverhop", "Server Hop", "Rejoins into a different random server", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/serverhop")
 AddScriptToggle(Tabs.Utility, "NDC", "No dash cooldown", "Only works with side dash", "https://api.luarmor.net/files/v3/loaders/b9539acb02865f098f534aa0ded69c8b.lua")
 AddScriptToggle(Tabs.Main, "Gokumoveset", "Goku Moveset", "Serverside Goku Moveset", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/goku")
 AddScriptToggle(Tabs.Movement, "Sidestep", "Side step", "X to backdash C to randomly sidedash", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/sidestep")
 AddScriptToggle(Tabs.Combat, "surprisecharles", "Surprise Charles", "Stops the charles ult animation from playing", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/surprisecharles")
-
-
+AddScriptToggle(Tabs.Combat, "anticounter", "Anti Counter", "Teleports away when someone counters", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/anticounter")
+AddScriptToggle(Tabs.Utility, "antidomain", "Anti domain", "Teleports away when someone uses a domain", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/antidomain")
 
 
 AddScriptToggle(Tabs.Animations, "MVP1", "MVP - Domain Invasion", "press B to activate", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Toji.txt")
@@ -150,27 +149,15 @@ AddScriptToggle(Tabs.Animations, "fakeult", "Fake Ult", "Press N to fake ult wit
 AddScriptToggle(Tabs.Animations, "Twitch", "Head Twitch", "Press M to toggle spaz", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/headtwitch")
 AddScriptToggle(Tabs.Animations, "Gangnam", "Gangnam", "Press L to toggle the gangnam dance", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/gangnam")
 
-
+loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/extrav4'))()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/extrav3'))()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/extrav2'))()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/extra'))()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/antivoid'))()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/noti'))()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/invite'))()
-loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/antimod'))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/function'))()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/wrongplace'))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/antimod'))()
 
-if syn and syn.request then
-    syn.request({
-        Url = "https://version-kr53.onrender.com/update_version.php",
-        Method = "POST",
-        Headers = {
-            ["Content-Type"] = "application/json"
-        },
-        Body = game:GetService("HttpService"):JSONEncode({
-            version = version,
-            timestamp = os.time()
-        })
-    })
-end
 

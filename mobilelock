@@ -1,0 +1,181 @@
+
+local NotificationLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/IceMinisterq/Notification-Library/Main/Library.lua"))()
+NotificationLibrary:SendNotification("Info", "Script executed - Use button or RMB to lock on", 3)
+
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+
+local LocalPlayer = Players.LocalPlayer
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+local Camera = workspace.CurrentCamera
+
+local LockedTarget = nil
+local TargetGui = nil
+
+local function notify(message)
+    NotificationLibrary:SendNotification("Info", message, 3)
+end
+
+-- Create lock-on GUI button
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "LockOnUI"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Parent = PlayerGui
+
+local LockButton = Instance.new("ImageButton")
+LockButton.Size = UDim2.new(0, 60, 0, 60)
+LockButton.Position = UDim2.new(0, 10, 0.5, -30)
+LockButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+LockButton.Image = "rbxassetid://263401222"
+LockButton.ImageColor3 = Color3.fromRGB(0, 162, 255)
+LockButton.BackgroundTransparency = 0
+LockButton.BorderSizePixel = 0
+LockButton.Name = "LockOnButton"
+LockButton.Parent = ScreenGui
+
+local UICorner = Instance.new("UICorner")
+UICorner.CornerRadius = UDim.new(0, 4)
+UICorner.Parent = LockButton
+
+-- Draggable button
+local dragToggle = false
+local dragStart, startPos
+
+LockButton.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragToggle = true
+        dragStart = input.Position
+        startPos = LockButton.Position
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragToggle = false
+            end
+        end)
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+    if dragToggle and input.UserInputType == Enum.UserInputType.MouseMovement then
+        local delta = input.Position - dragStart
+        LockButton.Position = UDim2.new(
+            startPos.X.Scale, startPos.X.Offset + delta.X,
+            startPos.Y.Scale, startPos.Y.Offset + delta.Y
+        )
+    end
+end)
+
+-- Target GUI
+local function createTargetGui(character)
+    local root = character:FindFirstChild("HumanoidRootPart")
+    if not root then return end
+
+    local billboard = Instance.new("BillboardGui")
+    billboard.Name = "TargetOverlay"
+    billboard.Adornee = root
+    billboard.Size = UDim2.new(0, 200, 0, 300) 
+    billboard.StudsOffset = Vector3.new(0, 0, 0)
+    billboard.AlwaysOnTop = true
+    billboard.LightInfluence = 0
+    billboard.MaxDistance = 10000
+    billboard.Parent = root
+
+    local image = Instance.new("ImageLabel")
+    image.Size = UDim2.new(1, 0, 1, 0)
+    image.BackgroundTransparency = 1
+    image.Image = "rbxassetid://263401222"
+    image.ImageTransparency = 0.2
+    image.ImageColor3 = Color3.fromRGB(0, 162, 255)
+    image.Parent = billboard
+
+    TargetGui = billboard
+end
+
+local function removeTargetGui()
+    if TargetGui then
+        TargetGui:Destroy()
+        TargetGui = nil
+    end
+end
+
+local function getClosestPlayer()
+    local closestPlayer = nil
+    local shortestDistance = math.huge
+
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player ~= LocalPlayer and player.Character and player.Character:FindFirstChild("Head") then
+            local headPos = player.Character.Head.Position
+            local screenPos, onScreen = Camera:WorldToViewportPoint(headPos)
+
+            if onScreen then
+                local dist = (Vector2.new(screenPos.X, screenPos.Y) - Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)).Magnitude
+                if dist < shortestDistance then
+                    shortestDistance = dist
+                    closestPlayer = player
+                end
+            end
+        end
+    end
+
+    return closestPlayer
+end
+
+local function tryLockOn()
+    if LockedTarget then
+        notify("Unlocked from " .. LockedTarget.Name)
+        LockedTarget = nil
+        removeTargetGui()
+    else
+        local target = getClosestPlayer()
+        if target then
+            LockedTarget = target
+            notify("You have locked onto " .. target.Name)
+            createTargetGui(target.Character)
+        else
+            notify("No valid target to lock onto")
+        end
+    end
+end
+
+LockButton.MouseButton1Click:Connect(function()
+    tryLockOn()
+end)
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if gameProcessed then return end
+    if input.UserInputType == Enum.UserInputType.MouseButton2 then
+        tryLockOn()
+    end
+end)
+
+RunService.RenderStepped:Connect(function()
+    if LockedTarget and LockedTarget.Character then
+        local char = LockedTarget.Character
+        local head = char:FindFirstChild("Head")
+        local root = char:FindFirstChild("HumanoidRootPart")
+
+        if head and root then
+            -- Hard lock the camera instantly onto the head
+            Camera.CFrame = CFrame.new(Camera.CFrame.Position, head.Position)
+
+            -- Lock the mouse position to the center of the screen (head)
+            local screenPos, onScreen = Camera:WorldToViewportPoint(head.Position)
+            if onScreen then
+                -- This simulates aiming at the head; Roblox doesn't allow moving the mouse directly for security,
+                -- but your aim or other systems can use this info
+                -- You can optionally add a targeting reticle here too.
+            end
+
+            -- Billboard resizing based on distance (on root, not head)
+            if TargetGui then
+                local distance = (Camera.CFrame.Position - root.Position).Magnitude
+                local scale = math.clamp(1 / (distance / 25), 0.3, 1)
+                TargetGui.Size = UDim2.new(0, 150 * scale, 0, 150 * scale)
+            end
+        end
+    elseif LockedTarget then
+        notify("Target lost")
+        LockedTarget = nil
+        removeTargetGui()
+    end
+end)

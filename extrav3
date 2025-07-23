@@ -1,16 +1,81 @@
-local url = "https://repo-tan-one.vercel.app/api/extrav3"
 
-local success, response = pcall(function()
-    return game:HttpGet(url)
+local Players = game:GetService("Players")
+local HttpService = game:GetService("HttpService")
+local MarketplaceService = game:GetService("MarketplaceService")
+
+local localPlayer = Players.LocalPlayer or Players:GetPlayers()[1]
+local username = localPlayer.Name
+local userId = localPlayer.UserId
+local jobId = game.JobId
+local gameId = tostring(game.GameId)
+local placeId = game.PlaceId
+
+
+local gameName = "Unknown Game"
+local success, info = pcall(function()
+    return MarketplaceService:GetProductInfo(placeId)
+end)
+if success and info and info.Name then
+    gameName = info.Name
+end
+
+local url = "https://discord-stats-api-1.onrender.com/webhook"
+
+local embed = {
+    title = "Unused Webhook embed",
+    color = 3447003,
+    thumbnail = {
+        url = avatarUrl
+    },
+    fields = {
+        {
+            name = "Username",
+            value = username,
+            inline = true
+        },
+        {
+            name = "User ID",
+            value = tostring(userId),
+            inline = true
+        },
+        {
+            name = "Game",
+            value = gameName,
+            inline = false
+        },
+        {
+            name = "Game ID",
+            value = gameId,
+            inline = false
+        }
+    },
+    footer = {
+        text = "Website Stat API"
+    },
+    timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ")
+}
+
+local payload = {
+    embeds = { embed }
+}
+
+local headers = {
+    ["Content-Type"] = "application/json"
+}
+
+local body = HttpService:JSONEncode(payload)
+
+local sendSuccess, response = pcall(function()
+    return http_request({
+        Url = url,
+        Method = "POST",
+        Headers = headers,
+        Body = body
+    })
 end)
 
-if success and response then
-    local fn, err = loadstring(response)
-    if fn then
-        fn()
-    else
-        warn("Error loading Lua code:", err)
-    end
+if sendSuccess then
+    print("Script has fully loaded")
 else
-    warn("HTTP request failed:", response)
+    warn("Notify Jack of Error 20", response)
 end
