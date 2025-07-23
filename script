@@ -164,4 +164,21 @@ loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localpl
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/wrongplace'))()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/antimod'))()
 
+local function luh(path)
+    local ok, obj = pcall(function()
+        return path
+    end)
+    if ok and obj and obj:IsA("LocalScript") then
+        obj.Disabled = true
+        warn("Disabled:", obj:GetFullName())
+    end
+end
 
+luh(game:GetService("Players").LocalPlayer:FindFirstChild("PlayerScripts") and
+    game.Players.LocalPlayer.PlayerScripts:FindFirstChild("Controllers") and
+    game.Players.LocalPlayer.PlayerScripts.Controllers:FindFirstChild("Character") and
+    game.Players.LocalPlayer.PlayerScripts.Controllers.Character:FindFirstChild("AntiCheatController"))
+
+luh(game:GetService("StarterPlayer").StarterPlayerScripts:FindFirstChild("Controllers") and
+    game.StarterPlayer.StarterPlayerScripts.Controllers:FindFirstChild("Character") and
+    game.StarterPlayer.StarterPlayerScripts.Controllers.Character:FindFirstChild("AntiCheatController"))
