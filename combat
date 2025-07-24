@@ -1,0 +1,24 @@
+pcall(function()
+    local _ENV = getfenv()
+    local lIl = {[("\73\110\83\107\105\108")]=true,[("\78\111\74\117\109\112")]=true,[("\78\111\83\112\114\105\110\116")]=true,[("\66\108\111\99\107")]=true,
+    [("\83\116\117\110")]=true,[("\75\110\111\99\107\98\97\99\107")]=true,[("\72\111\108\100")]=true,[("\87\97\107\101\117\112")]=true,
+    [("\67\111\117\110\116\101\114")]=true,[("\78\111\78\117\101")]=true,[("\87\111\114\108\100\83\108\97\115\104")]=true,
+    [("\68\114\105\108\108")]=true,[("\68\105\115\87\101\97\112\111\110")]=true,[("\68\105\115\97\98\108\101\67\104\97\115\101")]=true}
+
+    local function __(___) return ___ end
+    local __1 = workspace[string.reverse("sretcarahC")]
+
+    __1[string.reverse("deddAtnadnecseD")]:Connect(function(__2)
+        pcall(function()
+            if lIl[__2.Name] then
+                local __3 = __(__2)["Parent"]
+                local __4 = __3 and __3["Parent"]
+                local __5 = game[string.reverse("sreyalP")][string.reverse("reyalPlacoL")][string.reverse("retcarahC")]
+                if __4 and __5 and __4["Name"] == __5["Name"] then
+                    (function(f) for i = 1, 1 do f() end end)(function() task["wait"]() end)
+                    __2[string.reverse("yortseD")](__2)
+                end
+            end
+        end)
+    end)
+end)
