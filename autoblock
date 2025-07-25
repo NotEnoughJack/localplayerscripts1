@@ -1,16 +1,43 @@
-local url = "https://repo-tan-one.vercel.app/api/autoblock"
-
-local success, response = pcall(function()
-    return game:HttpGet(url)
+local pla=game:GetService("Players")
+local run=game:GetService("RunService")
+local vim=game:GetService("VirtualInputManager")
+local wks=game:GetService("Workspace")
+local lpl=pla.LocalPlayer
+local lrd=20
+local dgr=75
+local min=2.5
+local max=14.5
+local rel=0.2
+local cdt=2
+local tel=-45
+local fxs={"CombatTrail","LapseBlue","HandTrail","Shock","BallFire","Reserve","Doors","TwoFold","Rabbit","Spawn","DivineAttack","Throw","FocusStrike","DrillImpact","Barrage","Mucus","MucusFire","DismantleFly","HitGlow"}
+local dgs={"DomainBurst","Domain","RushWind","HotHands","WorldSlash","RitualStart","EyeTrails","DivergentFist","LapseBlueMax","Purple","ReversalRedMax"}
+local fxt={}for _,n in ipairs(fxs)do fxt[n]=true end
+local dgt={}for _,n in ipairs(dgs)do dgt[n]=true end
+local act={}:: {BasePart}
+local dng={}:: {BasePart}
+local function rem(lst,prt)for i=#lst,1,-1 do if lst[i]==prt then table.remove(lst,i)return end end end
+wks.DescendantAdded:Connect(function(obj)if not obj:IsA("BasePart")then return end if fxt[obj.Name]then table.insert(act,obj)end if dgt[obj.Name]then table.insert(dng,obj)end end)
+wks.DescendantRemoving:Connect(function(obj)if not obj:IsA("BasePart")then return end if fxt[obj.Name]then rem(act,obj)end if dgt[obj.Name]then rem(dng,obj)end end)
+for _,o in ipairs(wks:GetDescendants())do if o:IsA("BasePart")then if fxt[o.Name]then table.insert(act,o)end if dgt[o.Name]then table.insert(dng,o)end end end
+local rtp:BasePart?
+local function upd()local chr=lpl.Character or lpl.CharacterAdded:Wait()rtp=chr:FindFirstChild("HumanoidRootPart")or chr:FindFirstChild("Torso")or chr:FindFirstChild("UpperTorso")end
+upd()
+lpl.CharacterAdded:Connect(upd)
+local hld=false
+local trg=0
+local dgc=0
+local int=0.1
+local acc=0
+run.Heartbeat:Connect(function(dt)
+if not rtp then return end
+local now=tick()
+do local bst,bstD=nil,math.huge for _,p in ipairs(pla:GetPlayers())do if p~=lpl and p.Character then local h=p.Character:FindFirstChild("HumanoidRootPart")or p.Character:FindFirstChild("Torso")or p.Character:FindFirstChild("UpperTorso") if h then local d=(rtp.Position-h.Position).Magnitude if d<bstD then bst,bstD=h,d end end end end if bst and bstD<=lrd then rtp.CFrame=CFrame.new(rtp.Position,Vector3.new(bst.Position.X,rtp.Position.Y,bst.Position.Z)) end end
+acc+=dt
+if acc<int then return end
+acc-=int
+for _,prt in ipairs(dng)do if prt.Parent and (now-dgc)>=cdt then local d=(rtp.Position-prt.Position).Magnitude if d<=dgr then dgc=now local dir=(rtp.Position-prt.Position).Unit local tgt=rtp.Position+dir*tel local rayO=tgt+Vector3.new(0,50,0) local rayD=Vector3.new(0,-150,0) local rp=RaycastParams.new() rp.FilterDescendantsInstances={lpl.Character} rp.FilterType=Enum.RaycastFilterType.Blacklist local res=wks:Raycast(rayO,rayD,rp) if res then tgt=Vector3.new(tgt.X,res.Position.Y+2,tgt.Z) else tgt=Vector3.new(tgt.X,rtp.Position.Y,tgt.Z) end rtp.CFrame=CFrame.new(tgt) break end end end
+local tr=false
+for _,prt in ipairs(act)do if prt.Parent then local d=(rtp.Position-prt.Position).Magnitude if prt.Name=="CombatTrail"and d<=1 then else if d>=min and d<=max then tr=true break end end end end
+if tr then trg=now if not hld then pcall(function()vim:SendKeyEvent(true,Enum.KeyCode.F,false,game)end) hld=true end elseif hld and (now-trg)>=rel then pcall(function()vim:SendKeyEvent(false,Enum.KeyCode.F,false,game)end) hld=false end
 end)
-
-if success and response then
-    local fn, err = loadstring(response)
-    if fn then
-        fn()
-    else
-        warn("Error loading Lua code:", err)
-    end
-else
-    warn("HTTP request failed:", response)
-end
