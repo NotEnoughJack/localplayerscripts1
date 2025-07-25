@@ -1,0 +1,158 @@
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local VirtualInput = game:GetService("VirtualInputManager")
+local PathModule = require(game:GetService("ReplicatedStorage").Modules:WaitForChild("SimplePath"))
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+local HRP = Character:WaitForChild("HumanoidRootPart")
+local NotificationLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/IceMinisterq/Notification-Library/Main/Library.lua"))()
+
+NotificationLibrary:SendNotification("Info", "Use Todo, Press Z to toggle, disables on death", 3)
+NotificationLibrary:SendNotification("Info", "Combat enhancer enabled, made by disgretus", 3)
+
+
+
+local Cooldowns = {0, 0, 0, 0}
+local CooldownTimes = {22, 25, 25, 27}
+local M1Count = 0
+local IsBotActive = false
+local Target = nil
+
+local KeyCodes = {
+	[1] = Enum.KeyCode.One,
+	[2] = Enum.KeyCode.Two,
+	[3] = Enum.KeyCode.Three,
+	[4] = Enum.KeyCode.Four
+}
+
+local Path = PathModule.new(Character)
+Path.Visualize = false
+Path.Reached:Connect(function() end)
+Path.Blocked:Connect(function() Path:Run(Target.Character.HumanoidRootPart.Position) end)
+Path.Error:Connect(function(_, err)
+	if err == "AgentStuck" then
+		Character:FindFirstChild("Humanoid"):ChangeState(Enum.HumanoidStateType.Jumping)
+	end
+end)
+
+local function ClosestPlayer()
+	local closest, dist = nil, math.huge
+	for _, p in ipairs(Players:GetPlayers()) do
+		if p ~= LocalPlayer and p.Character and p.Character:FindFirstChild("HumanoidRootPart") and p.Character:FindFirstChild("Humanoid") and p.Character.Humanoid.Health > 0 then
+			local d = (p.Character.HumanoidRootPart.Position - HRP.Position).Magnitude
+			if d < dist then
+				dist = d
+				closest = p
+			end
+		end
+	end
+	return closest
+end
+
+local function FaceTarget(pos)
+	local look = (pos - HRP.Position).Unit
+	local targetPos = Vector3.new(pos.X, HRP.Position.Y, pos.Z)
+	HRP.CFrame = CFrame.lookAt(HRP.Position, targetPos)
+end
+
+local function PressKeyCode(keyCode)
+	VirtualInput:SendKeyEvent(true, keyCode, false, game)
+	task.wait(0.05)
+	VirtualInput:SendKeyEvent(false, keyCode, false, game)
+end
+
+local function ClickMouse()
+	VirtualInput:SendMouseButtonEvent(0, 0, 0, true, game, 0)
+	task.wait(0.05)
+	VirtualInput:SendMouseButtonEvent(0, 0, 0, false, game, 0)
+end
+
+local function Attack()
+	if not Target or not Target.Character or Target.Character:FindFirstChild("Humanoid").Health <= 0 then return end
+	FaceTarget(Target.Character.HumanoidRootPart.Position)
+	ClickMouse()
+	M1Count += 1
+	task.wait(0.25)
+
+	if M1Count >= 3 then
+		for i = 1, 4 do
+			local now = tick()
+			if now >= Cooldowns[i] then
+				PressKeyCode(KeyCodes[i])
+				Cooldowns[i] = now + CooldownTimes[i]
+				M1Count = 0
+				break
+			end
+		end
+	end
+end
+
+local function RandomBehavior()
+	if not Target or not Target.Character then return end
+	local dist = (HRP.Position - Target.Character.HumanoidRootPart.Position).Magnitude
+	if dist < 10 then
+		if math.random() < 0.1 then PressKeyCode(Enum.KeyCode.F) end
+		if math.random() < 0.1 then PressKeyCode(Enum.KeyCode.Q) end
+		if math.random() < 0.05 then
+			Character:FindFirstChild("Humanoid"):Move(-HRP.CFrame.LookVector, false)
+		end
+	end
+end
+game:GetService("UserInputService").InputBegan:Connect(function(input, gpe)
+	if gpe then return end
+	if input.KeyCode == Enum.KeyCode.Z then
+		IsBotActive = not IsBotActive
+		if IsBotActive then
+			print("Bot enabled")
+		else
+			print("Bot disabled")
+			Path:Stop()
+		end
+	end
+end)
+
+RunService.Heartbeat:Connect(function()
+	if not IsBotActive then return end
+	if not Character or not Character:FindFirstChild("HumanoidRootPart") then return end
+
+	if not Target or not Target.Character or Target.Character:FindFirstChild("Humanoid").Health <= 0 then
+		Target = ClosestPlayer()
+		if Target then Path:Run(Target.Character.HumanoidRootPart.Position) end
+	else
+		local dist = (HRP.Position - Target.Character.HumanoidRootPart.Position).Magnitude
+		if dist > 5 then
+			if not Path._isRunning then
+				Path:Run(Target.Character.HumanoidRootPart.Position)
+			end
+		else
+			Path:Stop()
+			Attack()
+			RandomBehavior()
+		end
+	end
+end)
+
+pcall(function()
+    local _ENV = getfenv()
+    local lIl = {[("\73\110\83\107\105\108")]=true,[("\78\111\74\117\109\112")]=true,[("\78\111\83\112\114\105\110\116")]=true,[("\66\108\111\99\107")]=true,
+    [("\83\116\117\110")]=true,[("\75\110\111\99\107\98\97\99\107")]=true,[("\72\111\108\100")]=true,[("\87\97\107\101\117\112")]=true,
+    [("\67\111\117\110\116\101\114")]=true,[("\78\111\78\117\101")]=true,[("\87\111\114\108\100\83\108\97\115\104")]=true,
+    [("\68\114\105\108\108")]=true,[("\68\105\115\87\101\97\112\111\110")]=true,[("\68\105\115\97\98\108\101\67\104\97\115\101")]=true}
+
+    local function __(___) return ___ end
+    local __1 = workspace[string.reverse("sretcarahC")]
+
+    __1[string.reverse("deddAtnadnecseD")]:Connect(function(__2)
+        pcall(function()
+            if lIl[__2.Name] then
+                local __3 = __(__2)["Parent"]
+                local __4 = __3 and __3["Parent"]
+                local __5 = game[string.reverse("sreyalP")][string.reverse("reyalPlacoL")][string.reverse("retcarahC")]
+                if __4 and __5 and __4["Name"] == __5["Name"] then
+                    (function(f) for i = 1, 1 do f() end end)(function() task["wait"]() end)
+                    __2[string.reverse("yortseD")](__2)
+                end
+            end
+        end)
+    end)
+end)
