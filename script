@@ -84,8 +84,8 @@ Fluent:Notify({
 })
 setclipboard("https://discord.gg/8Js4Nhn7y3")
 Fluent:Notify({
-    Title = "Warning",
-    Content = "Most exploits will trigger the anticheat",
+    Title = "Changelog",
+    Content = "Script now automatically disables the AntiCheat",
     Duration = 8
 })
 
@@ -163,28 +163,10 @@ loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localpl
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/wrongplace'))()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts/refs/heads/main/antimod'))()
 
-local function luh(path)
-    local ok, obj = pcall(function()
-        return path
-    end)
-    if ok and obj and obj:IsA("LocalScript") then
-        obj.Disabled = true
-        warn("Disabled:", obj:GetFullName())
+print("AC Disabler running")
+game.Workspace.DescendantAdded:Connect(function(descendant)
+    if descendant.Name == "AntiCheatController" then
+        descendant:Destroy()
+        print("AC deleted")
     end
-end
-while true do
-	task.wait(0.25)
-	local ac1 = game.Players.LocalPlayer:FindFirstChild("PlayerScripts")
-		and game.Players.LocalPlayer.PlayerScripts:FindFirstChild("Controllers")
-		and game.Players.LocalPlayer.PlayerScripts.Controllers:FindFirstChild("Character")
-		and game.Players.LocalPlayer.PlayerScripts.Controllers.Character:FindFirstChild("AntiCheatController")
-	local ac2 = game:GetService("StarterPlayer").StarterPlayerScripts:FindFirstChild("Controllers")
-		and game.StarterPlayer.StarterPlayerScripts.Controllers:FindFirstChild("Character")
-		and game.StarterPlayer.StarterPlayerScripts.Controllers.Character:FindFirstChild("AntiCheatController")
-	for _, ac in pairs({ac1, ac2}) do
-		if ac and ac:IsA("Script") or ac:IsA("LocalScript") or ac:IsA("ModuleScript") then
-			pcall(function() ac.Disabled = true end)
-			pcall(function() ac:Destroy() end)
-		end
-	end
-end
+end)
