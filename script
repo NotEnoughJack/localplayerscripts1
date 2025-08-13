@@ -26,6 +26,13 @@ local Tabs = {
 local Options = Fluent.Options
 local SearchResults = {}
 
+local expectedTitle = ("S".."potlight.gg") -- harder to search/replace
+if Window.Config.Title ~= expectedTitle then
+    game:GetService("Players").LocalPlayer:Kick("This script is stolen")
+    return
+end
+
+
 local function ShowSearchResults(query)
     for _, opt in ipairs(SearchResults) do
         Tabs.Search:RemoveOption(opt)
