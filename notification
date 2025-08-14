@@ -1,5 +1,10 @@
 Fluent:Notify({
     Title = "Changelog",
-    Content = "Script now automatically disables the AntiCheat",
+    Content = "Added low gravity",
+    Duration = 8
+})
+Fluent:Notify({
+    Title = "Disclaimer",
+    Content = "This is Spotlight.GG and under any other name is NOT official and is skidded",
     Duration = 8
 })
