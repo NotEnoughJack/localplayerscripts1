@@ -126,7 +126,7 @@ AddScriptToggle(Tabs.Achievements, "sealed", "Sealed", "Give you the Sealed Achi
 AddScriptToggle(Tabs.Achievements, "committed", "Committed", "Give you the Committed to the peace Achievement", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/committed")
 AddScriptToggle(Tabs.Combat, "combatenhancer", "Combat Enhancer", "Made by disgretus", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/combat")
 AddScriptToggle(Tabs.Combat, "autoblackflash", "Auto Blackflash", "adds a button to automatically blackflash", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/autoblackflash")
-AddScriptToggle(Tabs.Combat, "lowgrav", "Low Gravity", "Lowers gravity, Toggle with X", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/lowgravity")
+AddScriptToggle(Tabs.Fun, "lowgrav", "Low Gravity", "Lowers gravity, Toggle with X", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/lowgravity")
 
 
 AddScriptToggle(Tabs.Animations, "MVP1", "MVP - Domain Invasion", "press B to activate", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Toji.txt")
