@@ -1,0 +1,5 @@
+Fluent:Notify({
+    Title = "Changelog",
+    Content = "Script now automatically disables the AntiCheat",
+    Duration = 8
+})
