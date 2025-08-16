@@ -126,8 +126,12 @@ AddScriptToggle(Tabs.Achievements, "sealed", "Sealed", "Give you the Sealed Achi
 AddScriptToggle(Tabs.Achievements, "committed", "Committed", "Give you the Committed to the peace Achievement", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/committed")
 AddScriptToggle(Tabs.Combat, "combatenhancer", "Combat Enhancer", "Made by disgretus", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/combat")
 AddScriptToggle(Tabs.Combat, "autoblackflash", "Auto Blackflash", "adds a button to automatically blackflash", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/autoblackflash")
-AddScriptToggle(Tabs.Fun, "lowgrav", "Low Gravity", "Lowers gravity, Toggle with X", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/lowgravity")
-
+AddScriptToggle(Tabs.Fun, "lowgrav", "Low gravity", "Lowers gravity, Toggle with X", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/lowgravity")
+AddScriptToggle(Tabs.Fun, "sandy", "Sandevistan", "Hold Z to move", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/sandevistan")
+AddScriptToggle(Tabs.Fun, "MBF", "Max blue fling", "Flings people caught in the blue, Press 0 to turn off or reset", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/maxbluefling")
+AddScriptToggle(Tabs.Fun, "MBF", "Lapse blue fling", "Flings people caught in the lapse blue, Press 9 to turn off or reset", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/lapsebluefling")
+AddScriptToggle(Tabs.Fun, "MBS", "Max blue spin", "Spins around destroying everything", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/maxbluespin")
+AddScriptToggle(Tabs.Fun, "MRS", "Max red spin", "Spins around catching people in its R move", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/maxredspin")
 
 AddScriptToggle(Tabs.Animations, "MVP1", "MVP - Domain Invasion", "press B to activate", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Toji.txt")
 AddScriptToggle(Tabs.Animations, "MVP2", "MVP - Stand Proud", "press B to activate", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Sukuna%20-%20Stand%20Proud.txt")
