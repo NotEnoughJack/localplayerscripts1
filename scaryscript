@@ -1,0 +1,18 @@
+local v0=game.Players.LocalPlayer
+local v1=Instance.new("ScreenGui",v0:WaitForChild("PlayerGui"))
+v1.IgnoreGuiInset=true v1.ResetOnSpawn=false
+local v2=Instance.new("ImageLabel",v1)
+v2.Size=UDim2.new(1,0,1,0) v2.BackgroundTransparency=1 v2.Image="rbxassetid://114586755849013" v2.ImageTransparency=0
+local v3=Instance.new("Sound",workspace)
+v3.SoundId="rbxassetid://134659166665541" v3.Looped=true v3.Volume=1 v3:Play()
+
+local rs=game:GetService("RunService")
+while true do
+	v2.ImageTransparency=0
+	wait(2)
+	local t=0
+	while t<1.7 do
+		t=t+rs.Heartbeat:Wait()
+		v2.ImageTransparency=math.clamp(t/1.7,0,1)
+	end
+end
