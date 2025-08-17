@@ -138,6 +138,7 @@ AddScriptToggle(Tabs.Fun, "MBF", "Max blue fling", "Flings people caught in the 
 AddScriptToggle(Tabs.Fun, "MBF", "Lapse blue fling", "Flings people caught in the lapse blue, Press 9 to turn off or reset", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/lapsebluefling")
 AddScriptToggle(Tabs.Fun, "MBS", "Max blue spin", "Spins around destroying everything", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/maxbluespin")
 AddScriptToggle(Tabs.Fun, "MRS", "Max red spin", "Spins around catching people in its R move", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/maxredspin")
+AddScriptToggle(Tabs.Fun, "JScare", "Scariest script", "Made by Xeryt", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/scaryscript")
 
 AddScriptToggle(Tabs.Animations, "MVP1", "MVP - Domain Invasion", "press B to activate", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Toji.txt")
 AddScriptToggle(Tabs.Animations, "MVP2", "MVP - Stand Proud", "press B to activate", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Sukuna%20-%20Stand%20Proud.txt")
