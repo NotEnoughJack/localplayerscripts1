@@ -1,0 +1,15 @@
+local module = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dragonfly5101/Minosr/refs/heads/main/obfuscated.lua"))()
+local P=game.Players.LocalPlayer
+local C=P.Character or P.CharacterAdded:Wait()
+local H=C:WaitForChild("HumanoidRootPart")
+local S=C:Clone()
+S.Name="SassyCloneOfYou"
+S.Parent=workspace
+local T=H.Position
+for _,v in ipairs(S:GetDescendants())do
+if v:IsA("Accessory")or v:IsA("Tool")or v:IsA("Decal")or v:IsA("Texture")then v:Destroy()elseif v:IsA("BasePart")then v.Anchored=true v.CanCollide=false v.Transparency=0.5 v.Color=Color3.fromRGB(0,255,255)end end
+local AH=S:WaitForChild("Humanoid"):WaitForChild("Animator")
+local A=C:WaitForChild("Humanoid"):WaitForChild("Animator")
+A.AnimationPlayed:Connect(function(X)local N=AH:LoadAnimation(X.Animation)N:Play()N.TimePosition=X.TimePosition N.Speed=X.Speed end)
+game:GetService("RunService").Heartbeat:Connect(function()if S.PrimaryPart then S:SetPrimaryPartCFrame(CFrame.new(T,T+H.CFrame.LookVector))end end)
+module.RedStartCFrame(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
