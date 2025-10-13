@@ -1,15 +1,44 @@
 local module = loadstring(game:HttpGet("https://raw.githubusercontent.com/Dragonfly5101/Minosr/refs/heads/main/obfuscated.lua"))()
-local P=game.Players.LocalPlayer
-local C=P.Character or P.CharacterAdded:Wait()
-local H=C:WaitForChild("HumanoidRootPart")
-local S=C:Clone()
-S.Name="SassyCloneOfYou"
-S.Parent=workspace
-local T=H.Position
-for _,v in ipairs(S:GetDescendants())do
-if v:IsA("Accessory")or v:IsA("Tool")or v:IsA("Decal")or v:IsA("Texture")then v:Destroy()elseif v:IsA("BasePart")then v.Anchored=true v.CanCollide=false v.Transparency=0.5 v.Color=Color3.fromRGB(0,255,255)end end
-local AH=S:WaitForChild("Humanoid"):WaitForChild("Animator")
-local A=C:WaitForChild("Humanoid"):WaitForChild("Animator")
-A.AnimationPlayed:Connect(function(X)local N=AH:LoadAnimation(X.Animation)N:Play()N.TimePosition=X.TimePosition N.Speed=X.Speed end)
-game:GetService("RunService").Heartbeat:Connect(function()if S.PrimaryPart then S:SetPrimaryPartCFrame(CFrame.new(T,T+H.CFrame.LookVector))end end)
+local p=game:GetService("Players")
+local r=game:GetService("RunService")
+local l=p.LocalPlayer
+local d=4635806269
+while not l.Character or not l.Character:FindFirstChild("HumanoidRootPart")do 
+	l.CharacterAdded:Wait()
+end
+local c=l.Character
+local h=c:WaitForChild("Humanoid")
+local e=p:GetHumanoidDescriptionFromUserId(d)
+local n=p:CreateHumanoidModelFromDescription(e,Enum.HumanoidRigType.R6)
+n.Parent=workspace
+n:SetPrimaryPartCFrame(c.PrimaryPart.CFrame*CFrame.new(0,1.5,0))
+n.PrimaryPart.Anchored=true
+local H=n:WaitForChild("Humanoid")
+H.DisplayDistanceType="None" -- hides name
+H.NameDisplayDistance=0
+H.DisplayName=""
+local t={}
+h.AnimationPlayed:Connect(function(a)
+	if not a.Animation or not a.Animation.AnimationId then return end
+	local A=Instance.new("Animation")
+	A.AnimationId=a.Animation.AnimationId
+	local C=H:LoadAnimation(A)
+	C.Looped=a.Looped
+	C.TimePosition=a.TimePosition
+	C:Play()
+	t[a]=C
+	a.Stopped:Connect(function()
+		if t[a]then 
+			t[a]:Stop()
+			t[a]=nil
+		end
+	end)
+end)
+r.RenderStepped:Connect(function()
+	if c and n and c.PrimaryPart and n.PrimaryPart then 
+		local P=c.PrimaryPart.CFrame
+		local _,y,_=P:ToOrientation()
+		n:SetPrimaryPartCFrame(CFrame.new(n.PrimaryPart.Position)*CFrame.Angles(0,y,0))
+	end
+end)
 module.RedStartCFrame(game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame)
