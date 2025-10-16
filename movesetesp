@@ -1,0 +1,73 @@
+local rs = game:GetService("RunService")
+local cam = workspace.CurrentCamera
+local font = "rbxassetid://12187375716"
+local enabled = true
+local activeParts = {} 
+local function addBillboard(part)
+	if part:FindFirstChild("NameBillboard") then return end
+	local b = Instance.new("BillboardGui", part)
+	b.Name = "NameBillboard"
+	b.Adornee = part
+	b.Size = UDim2.new(0,200,0,50)
+	b.StudsOffset = Vector3.new(0, part.Size.Y+1, 0)
+	b.AlwaysOnTop = true
+
+	local t = Instance.new("TextLabel", b)
+	t.Size = UDim2.new(1,0,1,0)
+	t.BackgroundTransparency = 1
+	t.Text = part.Name
+	t.TextColor3 = Color3.new(1,1,1)
+	t.TextStrokeTransparency = 0
+	t.FontFace = Font.new(font)
+	t.TextScaled = false
+	t.TextSize = 30
+	activeParts[part] = t
+end
+
+local function showPart(part)
+	part.Transparency = 0.8
+	part.Color = Color3.fromRGB(0,85,255)
+	addBillboard(part)
+end
+
+local function hidePart(part)
+	part.Transparency = 1
+	if part:FindFirstChild("NameBillboard") then
+		part.NameBillboard:Destroy()
+	end
+	activeParts[part] = nil
+end
+
+rs.RenderStepped:Connect(function()
+	if not enabled then return end
+	local camPos = cam.CFrame.Position
+	for part, t in pairs(activeParts) do
+		local dist = (camPos - part.Position).Magnitude
+		if dist <= 200 then -- only update if near camera
+			t.TextSize = math.clamp(250/dist, 15, 60)
+		end
+	end
+end)
+
+for _, part in ipairs(workspace.Logic:GetDescendants()) do
+	if part:IsA("BasePart") then
+		showPart(part)
+	end
+end
+
+workspace.Logic.DescendantAdded:Connect(function(part)
+	if part:IsA("BasePart") and enabled then
+		showPart(part)
+	end
+end)
+
+local function toggle()
+	enabled = not enabled
+	for part, _ in pairs(activeParts) do
+		if enabled then
+			showPart(part)
+		else
+			hidePart(part)
+		end
+	end
+end
