@@ -1,0 +1,60 @@
+local NotificationLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/IceMinisterq/Notification-Library/Main/Library.lua"))()
+local doorsFolder = workspace:WaitForChild("Map"):WaitForChild("Core"):WaitForChild("HalloweenDoors")
+
+local function setupDoor(doorModel)
+    if not doorModel:IsA("Model") then return end
+
+    NotificationLibrary:SendNotification("Info", "Door Detected: " .. doorModel.Name, 3)
+
+    local highlight = Instance.new("Highlight")
+    highlight.Adornee = doorModel
+    highlight.FillColor = Color3.fromRGB(255, 255, 0)
+    highlight.FillTransparency = 0.5
+    highlight.OutlineColor = Color3.fromRGB(255, 255, 0)
+    highlight.Parent = doorModel
+
+    local door = doorModel:FindFirstChild("Door")
+    if door then
+        local pumpkin = door:FindFirstChild("Pumpkin")
+        if pumpkin then
+            local attachment = pumpkin:FindFirstChild("Attachment")
+            if attachment then
+                local billboard = attachment:FindFirstChild("BillboardGui")
+                if billboard then
+                    local timerLabel = billboard:FindFirstChild("Timer")
+                    if timerLabel and timerLabel:IsA("TextLabel") then
+                        billboard.AlwaysOnTop = true
+                        billboard.MaxDistance = math.huge
+                        billboard.Size = UDim2.new(8, 0, 3, 0)
+
+                        timerLabel.TextScaled = true
+                        timerLabel.TextWrapped = true
+
+                        if not timerLabel:FindFirstChild("UITextSizeConstraint") then
+                            local constraint = Instance.new("UITextSizeConstraint")
+                            constraint.MinTextSize = 10
+                            constraint.MaxTextSize = 50
+                            constraint.Parent = timerLabel
+                        end
+
+                        timerLabel.Size = UDim2.new(1, 0, 1, 0)
+                        timerLabel.BackgroundTransparency = 0.3
+
+                        NotificationLibrary:SendNotification("Success", "Attached " .. doorModel.Name, 3)
+                    end
+                end
+            end
+        end
+    end
+end
+
+for _, door in ipairs(doorsFolder:GetChildren()) do
+    setupDoor(door)
+end
+
+doorsFolder.ChildAdded:Connect(function(newDoor)
+    task.wait(0.2)
+    setupDoor(newDoor)
+end)
+
+NotificationLibrary:SendNotification("Info", "Door monitor activated.", 3)
