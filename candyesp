@@ -57,4 +57,4 @@ doorsFolder.ChildAdded:Connect(function(newDoor)
     setupDoor(newDoor)
 end)
 
-NotificationLibrary:SendNotification("Info", "Door monitor activated.", 3)
+NotificationLibrary:SendNotification("Info", "Script ran successfully", 3)
