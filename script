@@ -5,7 +5,7 @@ local LocalPlayer = Players.LocalPlayer
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local Window = Fluent:CreateWindow({
     Title = "Spotlight.gg",
-    SubTitle = "V2.18 ",
+    SubTitle = "V2.20 ",
     TabWidth = 160,
     Size = UDim2.fromOffset(580, 460),
     Theme = "Amethyst",
@@ -86,8 +86,8 @@ Fluent:Notify({
     Duration = 8
 })
 Fluent:Notify({
-    Title = "Changelog",
-    Content = "Added 'Moveset ESP' in Utility",
+    Title = "Spooky Season",
+    Content = "Added 'Candy ESP' in Utility",
     Duration = 8
 })
 
@@ -138,6 +138,7 @@ AddScriptToggle(Tabs.Fun, "MRS", "Max red spin", "Spins around catching people i
 AddScriptToggle(Tabs.Fun, "JScare", "Scariest script", "Made by Xeryt", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/scaryscript")
 AddScriptToggle(Tabs.Combat, "Dred", "Directed Red", "creates a hologram from which the Reversal Red fires letting you shoot from any position. Made by Dragon", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/directedred")
 AddScriptToggle(Tabs.Utility, "Mesp", "Moveset ESP", "Makes any logic block visible", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/movesetesp")
+AddScriptToggle(Tabs.Utility, "Cesp", "Candy ESP", "Notifies and highlights the door for the JJS Halloween Event", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/candyesp")
 
 
 AddScriptToggle(Tabs.Animations, "MVP1", "MVP - Domain Invasion", "press B to activate", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Toji.txt")
