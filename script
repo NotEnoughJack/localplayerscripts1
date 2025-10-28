@@ -5,7 +5,7 @@ local LocalPlayer = Players.LocalPlayer
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local Window = Fluent:CreateWindow({
     Title = "Spotlight.gg",
-    SubTitle = "V2.20 ",
+    SubTitle = "V2.21 ",
     TabWidth = 160,
     Size = UDim2.fromOffset(580, 460),
     Theme = "Amethyst",
@@ -87,7 +87,7 @@ Fluent:Notify({
 })
 Fluent:Notify({
     Title = "Spooky Season",
-    Content = "Added 'Candy ESP' in Utility",
+    Content = "Added 'Candy ESP' and 'instant candy' in Utility",
     Duration = 8
 })
 
