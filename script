@@ -139,6 +139,7 @@ AddScriptToggle(Tabs.Fun, "JScare", "Scariest script", "Made by Xeryt", "https:/
 AddScriptToggle(Tabs.Combat, "Dred", "Directed Red", "creates a hologram from which the Reversal Red fires letting you shoot from any position. Made by Dragon", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/directedred")
 AddScriptToggle(Tabs.Utility, "Mesp", "Moveset ESP", "Makes any logic block visible", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/movesetesp")
 AddScriptToggle(Tabs.Utility, "Cesp", "Candy ESP", "Notifies and highlights the door for the JJS Halloween Event", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/candyesp")
+AddScriptToggle(Tabs.Utility, "icandy", "Instant Candy", "instantly opens the JJS Halloween Event door ", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/instantcandy")
 
 
 AddScriptToggle(Tabs.Animations, "MVP1", "MVP - Domain Invasion", "press B to activate", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Toji.txt")
