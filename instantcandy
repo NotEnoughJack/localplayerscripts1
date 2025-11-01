@@ -1,1 +1,4 @@
 game:GetService("ProximityPromptService").PromptButtonHoldBegan:Connect(function(prompt) prompt.HoldDuration = 0 end)
+game:GetService("ProximityPromptService").PromptShown:Connect(function(p)
+    pcall(function() fireproximityprompt(p) end)
+end)
