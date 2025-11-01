@@ -5,7 +5,7 @@ local LocalPlayer = Players.LocalPlayer
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local Window = Fluent:CreateWindow({
     Title = "Spotlight.gg",
-    SubTitle = "V2.21 ",
+    SubTitle = "V2.35 ",
     TabWidth = 160,
     Size = UDim2.fromOffset(580, 460),
     Theme = "Amethyst",
@@ -87,7 +87,7 @@ Fluent:Notify({
 })
 Fluent:Notify({
     Title = "Spooky Season",
-    Content = "Added 'Candy ESP' and 'instant candy' in Utility",
+    Content = "Removed a bunch of stuff, changed some stuff up, added the full mokou moveset animations.",
     Duration = 8
 })
 
@@ -96,33 +96,23 @@ AddScriptToggle(Tabs.Movement, "Backflip", "Backflip", "T normal backflip E supe
 AddScriptToggle(Tabs.Utility, "TrainButton", "Train Button", "Creates a train button", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/trainbutton")
 AddScriptToggle(Tabs.Movement, "Fly", "Fly", "X to fly", "https://raw.githubusercontent.com/gyyfyu/test2/refs/heads/main/no%20key%20system/fly.lua")
 AddScriptToggle(Tabs.Movement, "Teleport", "Teleport", "press C to activate", "https://raw.githubusercontent.com/gyyfyu/test2/refs/heads/main/no%20key%20system/teleport.lua")
-AddScriptToggle(Tabs.Utility, "SimpleDomain", "Simple Domain", "press Y to activate", "https://raw.githubusercontent.com/gyyfyu/test2/refs/heads/main/no%20key%20system/simple%20domain.lua")
 AddScriptToggle(Tabs.Combat, "Lockon", "Lock on", "press J to toggle between on and off, press RIGHT MOUSE BUTTON to actually lock on and unlock,  You lock to the nearest person to your crosshair", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/lockon")
 AddScriptToggle(Tabs.Combat, "Small Hitbox", "Small Hitbox", "Shrinks your hitbox", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/gubby")
 AddScriptToggle(Tabs.Utility, "MacroHiromi", "Macro Hiromi", "a macro for higuruma one shot move, legit and undetected", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/macrohiromi")
 AddScriptToggle(Tabs.Fun, "AutoPiano", "Auto Piano", "Creates an autopiano gui", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/piano")
-AddScriptToggle(Tabs.Fun, "DomainInvade", "Domain Invade", "Press U in front of a domain to invade", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/domaininvade")
-AddScriptToggle(Tabs.Fun, "Pose", "Pose", "press P to activate", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/pose")
 AddScriptToggle(Tabs.Movement, "Drone", "Drone", "Fly around as a drone", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/drone")
 AddScriptToggle(Tabs.Fun, "Stand", "Stand", "tutorial in the discord", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/stand")
 AddScriptToggle(Tabs.Movement, "Speed", "Speed", "Move around fast", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/speedboost")
-AddScriptToggle(Tabs.Main, "Exehub", "Kingofexe Hub", "Credits to kingofexe", "https://raw.githubusercontent.com/tomdagoat-bot/kingofexeHub/refs/heads/main/File")
 AddScriptToggle(Tabs.Fun, "goon", "Jerk", "press J to activate", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/jerk")
-AddScriptToggle(Tabs.Utility, "Sixeyes", "Six Eyes", "Click on player to activate", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/playerscanner")
 AddScriptToggle(Tabs.Combat, "Autoblock", "Autoblock", "buggy i do not suggest using", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/autoblock")
 AddScriptToggle(Tabs.Fun, "knockback", "Knockback Self", "sets your own knockback high L to toggle", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/flingself")
 AddScriptToggle(Tabs.Main, "todotp", "Todo TP", "Use todos swiftkick then spam teleport", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/todotp")
 AddScriptToggle(Tabs.Utility, "dummy", "Dummy ESP", "Highlights dummy", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/dummyesp")
 AddScriptToggle(Tabs.Utility, "itemesp", "Item ESP", "item esp, gun sword etc", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/itemesp")
 AddScriptToggle(Tabs.Main, "spoof", "Player Spoof", "Join the discord for the tutorial, Spoofs player avatars", "https://pastebin.com/raw/P1sQhDp8")
-AddScriptToggle(Tabs.Fun, "wallywest", "Wally West", "N to speed up, M to slow down", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/wallywest")
-AddScriptToggle(Tabs.Utility, "Serverhop", "Server Hop", "Rejoins into a different random server", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/serverhop")
 AddScriptToggle(Tabs.Utility, "NDC", "No dash cooldown", "Only works with side dash", "https://api.luarmor.net/files/v3/loaders/b9539acb02865f098f534aa0ded69c8b.lua")
 AddScriptToggle(Tabs.Main, "Gokumoveset", "Goku Moveset", "Serverside Goku Moveset", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/goku")
-AddScriptToggle(Tabs.Movement, "Sidestep", "Side step", "X to backdash C to randomly sidedash", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/sidestep")
 AddScriptToggle(Tabs.Combat, "surprisecharles", "Surprise Charles", "Stops the charles ult animation from playing", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/surprisecharles")
-AddScriptToggle(Tabs.Combat, "anticounter", "Anti Counter", "Teleports away when someone counters", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/anticounter")
-AddScriptToggle(Tabs.Utility, "antidomain", "Anti domain", "Teleports away when someone uses a domain", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/antidomain")
 AddScriptToggle(Tabs.Achievements, "spaceshenanigans", "Space Shenanigans", "Give you the Space Shenanigans Achievement", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/spaceshenanigans")
 AddScriptToggle(Tabs.Achievements, "betavision", "Betavision", "Give you the Betavision Achievement", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/betavision")
 AddScriptToggle(Tabs.Achievements, "sealed", "Sealed", "Give you the Sealed Achievement", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/sealed")
@@ -131,15 +121,11 @@ AddScriptToggle(Tabs.Combat, "combatenhancer", "Combat Enhancer", "Made by disgr
 AddScriptToggle(Tabs.Combat, "autoblackflash", "Auto Blackflash", "adds a button to automatically blackflash", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/autoblackflash")
 AddScriptToggle(Tabs.Fun, "lowgrav", "Low gravity", "Lowers gravity, Toggle with X", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/lowgravity")
 AddScriptToggle(Tabs.Fun, "sandy", "Sandevistan", "Hold Z to move", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/sandevistan")
-AddScriptToggle(Tabs.Fun, "MBF", "Max blue fling", "Flings people caught in the blue, Press 0 to turn off or reset", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/maxbluefling")
-AddScriptToggle(Tabs.Fun, "MBF", "Lapse blue fling", "Flings people caught in the lapse blue, Press 9 to turn off or reset", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/lapsebluefling")
-AddScriptToggle(Tabs.Fun, "MBS", "Max blue spin", "Spins around destroying everything", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/maxbluespin")
-AddScriptToggle(Tabs.Fun, "MRS", "Max red spin", "Spins around catching people in its R move", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/maxredspin")
 AddScriptToggle(Tabs.Fun, "JScare", "Scariest script", "Made by Xeryt", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/scaryscript")
 AddScriptToggle(Tabs.Combat, "Dred", "Directed Red", "creates a hologram from which the Reversal Red fires letting you shoot from any position. Made by Dragon", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/directedred")
 AddScriptToggle(Tabs.Utility, "Mesp", "Moveset ESP", "Makes any logic block visible", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/movesetesp")
 AddScriptToggle(Tabs.Utility, "Cesp", "Candy ESP", "Notifies and highlights the door for the JJS Halloween Event", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/candyesp")
-AddScriptToggle(Tabs.Utility, "icandy", "Instant Candy", "instantly opens the JJS Halloween Event door ", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/instantcandy")
+AddScriptToggle(Tabs.Utility, "icandy", "Instant/AutoOpen Candy", "instantly opens the JJS Halloween Event door when you get near it ", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/instantcandy")
 
 
 AddScriptToggle(Tabs.Animations, "MVP1", "MVP - Domain Invasion", "press B to activate", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Toji.txt")
@@ -151,18 +137,46 @@ AddScriptToggle(Tabs.Animations, "exorcise", "Exorcise", "Plays the unreleased N
 AddScriptToggle(Tabs.Animations, "quickdraw", "Quick Draw", "Plays the unreleased Miwa animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/quickdraw")
 AddScriptToggle(Tabs.Animations, "slaughterdemon", "Slaughter Demon", "Plays the removed Yuji animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/slaughterdemon")
 AddScriptToggle(Tabs.Animations, "gokutransform", "Goku Transformation", "Plays the admin character animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/gokutransformation")
-AddScriptToggle(Tabs.Animations, "Kamehameha", "Kamehameha", "Plays the admin character animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/kamehameha")
-AddScriptToggle(Tabs.Animations, "chase", "Goku Chase", "Plays the admin character animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/chase")
-AddScriptToggle(Tabs.Animations, "staff", "Staff Uppercut", "Plays the admin character animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/staffuppercut")
-AddScriptToggle(Tabs.Animations, "m2downslam", "Goku Downslam", "Plays the admin character animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/m2downslam")
 AddScriptToggle(Tabs.Animations, "shop", "Shop open", "Plays the NPC animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/shopopen")
 AddScriptToggle(Tabs.Animations, "throw", "Throwable", "Plays the trashcan animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/throwable")
 AddScriptToggle(Tabs.Animations, "haba", "Haba", "Plays the haba animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/haba")
 AddScriptToggle(Tabs.Animations, "piano", "Piano", "Plays the piano emote animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/animpiano")
 AddScriptToggle(Tabs.Animations, "roll", "Roll", "Plays the roll animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/roll")
 AddScriptToggle(Tabs.Animations, "fakeult", "Fake Ult", "Press N to fake ult with any character", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/fakeult")
-AddScriptToggle(Tabs.Animations, "Twitch", "Head Twitch", "Press M to toggle spaz", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/headtwitch")
+AddScriptToggle(Tabs.Animations, "Twitch", "Head Twitch", "Press M to toggle head spaz", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/headtwitch")
 AddScriptToggle(Tabs.Animations, "Gangnam", "Gangnam", "Press L to toggle the gangnam dance", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/gangnam")
+AddScriptToggle(Tabs.Animations, "mechamarulanding1", "Mechamaru Landing 1", "Plays the animation for Mechamarus landing", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/mechamarulanding1")
+AddScriptToggle(Tabs.Animations, "mechamarulanding2", "Mechamaru Landing 2", "Plays the animation for Mechamarus landing", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/mechamarulanding2")
+AddScriptToggle(Tabs.Animations, "mechamarusuperman", "Mechamaru Superman", "Plays the animation for Mechamarus landing", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/mechamarusuperman")
+AddScriptToggle(Tabs.Animations, "mechamaruarms", "Mechamaru Arms", "Plays the animation for Mechamarus arms", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/mechamaruarms")
+AddScriptToggle(Tabs.Animations, "mweirdheadtweak", "Weird Head Tweak", "Makes your head tweak", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/mweirdheadtweak")
+AddScriptToggle(Tabs.Animations, "Kamehameha", "Kamehameha", "Plays the admin character 'Goku' animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/kamehameha")
+AddScriptToggle(Tabs.Animations, "chase", "Goku Chase", "Plays the admin character 'Goku' animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/chase")
+AddScriptToggle(Tabs.Animations, "staff", "Staff Uppercut", "Plays the admin character 'Goku' animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/staffuppercut")
+AddScriptToggle(Tabs.Animations, "m2downslam", "Goku Downslam", "Plays the admin character 'Goku' animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/m2downslam")
+AddScriptToggle(Tabs.Animations, "mokouawakening", "Mokou Awakening", "Plays the admin spec character 'Mokou' animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/mokouawakening")
+AddScriptToggle(Tabs.Animations, "mokoublock1", "Mokou Block", "Plays the admin spec character 'Mokou' animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/mokoublock1")
+AddScriptToggle(Tabs.Animations, "mokoublock2", "Mokou Block 2", "Plays the admin spec character 'Mokou' animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/mokoublock2")
+AddScriptToggle(Tabs.Animations, "mokoublock3", "Mokou Block 3", "Plays the admin spec character 'Mokou' animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/mokoublock3")
+AddScriptToggle(Tabs.Animations, "mokoudash", "Mokou Dash", "Plays the admin spec character 'Mokou' animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/mokoudash")
+AddScriptToggle(Tabs.Animations, "mokoudownslam", "Mokou Downslam", "Plays the admin spec character 'Mokou' animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/mokoudownslam")
+AddScriptToggle(Tabs.Animations, "mokouuppercut", "Mokou Uppercut", "Plays the admin spec character 'Mokou' animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/mokouuppercut")
+AddScriptToggle(Tabs.Animations, "mokoum1", "Mokou First M1", "Plays the admin spec character 'Mokou' animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/mokoum1")
+AddScriptToggle(Tabs.Animations, "mokoum2", "Mokou Second M1", "Plays the admin spec character 'Mokou' animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/mokoum2")
+AddScriptToggle(Tabs.Animations, "mokoum3", "Mokou Third M1", "Plays the admin spec character 'Mokou' animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/mokoum3")
+AddScriptToggle(Tabs.Animations, "mokoum4", "Mokou Fourth M1", "Plays the admin spec character 'Mokou' animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/mokoum4")
+AddScriptToggle(Tabs.Animations, "mokoumove1", "Mokou Phoenix Maelstrom", "Plays the admin spec character 'Mokou' animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/mokoumove1")
+AddScriptToggle(Tabs.Animations, "mokoumove2", "Mokou Aetherflare Talon", "Plays the admin spec character 'Mokou' animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/mokoumove2")
+AddScriptToggle(Tabs.Animations, "mokoumove3", "Mokou Scorchrise", "Plays the admin spec character 'Mokou' animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/mokoumove3")
+AddScriptToggle(Tabs.Animations, "mokoumove4", "Mokou Hexflare Charm", "Plays the admin spec character 'Mokou' animation", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/mokoumove4")
+
+
+
+
+
+
+
+
 
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/extrav4'))()
 loadstring(game:HttpGet('https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/extrav3'))()
