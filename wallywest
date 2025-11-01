@@ -3,7 +3,6 @@ local state = getgenv().CustomSpeed
 
 if state.Enabled then
     state.Enabled = false
-    print("[Speed] Disabling...")
 
     if state.InputBeganConnection then state.InputBeganConnection:Disconnect() end
     if state.InputEndedConnection then state.InputEndedConnection:Disconnect() end
@@ -18,11 +17,8 @@ if state.Enabled then
     state.KeysDown = nil
     state.IsAnimating = false
 
-    print("[Speed] Disabled")
     return
 end
-
-print("[Speed] Enabling...")
 state.Enabled = true
 
 local Players = game:GetService("Players")
