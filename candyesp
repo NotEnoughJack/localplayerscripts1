@@ -4,8 +4,6 @@ local doorsFolder = workspace:WaitForChild("Map"):WaitForChild("Core"):WaitForCh
 local function setupDoor(doorModel)
     if not doorModel:IsA("Model") then return end
 
-    NotificationLibrary:SendNotification("Info", "Door Detected: " .. doorModel.Name, 3)
-
     local highlight = Instance.new("Highlight")
     highlight.Adornee = doorModel
     highlight.FillColor = Color3.fromRGB(255, 255, 0)
@@ -40,7 +38,6 @@ local function setupDoor(doorModel)
                         timerLabel.Size = UDim2.new(1, 0, 1, 0)
                         timerLabel.BackgroundTransparency = 0.3
 
-                        NotificationLibrary:SendNotification("Success", "Attached " .. doorModel.Name, 3)
                     end
                 end
             end
