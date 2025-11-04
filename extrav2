@@ -74,7 +74,5 @@ local ok, err = pcall(function()
 end)
 
 if not ok then
-    warn("Failed to send webhook (pcall):", err)
 else
-    print("Webhook payload sent (check your Discord webhook).")
 end
