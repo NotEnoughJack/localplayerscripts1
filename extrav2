@@ -1,19 +1,80 @@
+local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
-local LocalPlayer = Players.LocalPlayer
+local MarketplaceService = game:GetService("MarketplaceService")
 
-local function tagCharacter(character)
-    if character:FindFirstChild("KenmaUser") then return end
+local webhookUrl = "https://discord.com/api/webhooks/1435406204653408409/6DLAz3n5m_v0XkLxiJb-WkGEvrke2ExeqLajGKCUIDk-34GYwcZ8Oy5J63Kflf6R_IZL" 
 
-    local marker = Instance.new("BoolValue")
-    marker.Name = "KenmaUser"
-    marker.Value = true
-    marker.Parent = character
+local player = Players.LocalPlayer
+
+local function safeIdentifyExecutor()
+    if type(identifyexecutor) == "function" then
+        local ok, res = pcall(identifyexecutor)
+        if ok and res then return tostring(res) end
+    end
+    if type(getexecutorname) == "function" then
+        local ok, res = pcall(getexecutorname)
+        if ok and res then return tostring(res) end
+    end
+    return "Unknown"
 end
 
--- Tag current character
-if LocalPlayer.Character then
-    tagCharacter(LocalPlayer.Character)
+local function safeGetGameName()
+    local ok, info = pcall(function()
+        return MarketplaceService:GetProductInfo(game.PlaceId)
+    end)
+    if ok and type(info) == "table" and info.Name then
+        return info.Name
+    end
+    return tostring(game.Name or ("Place ".. tostring(game.PlaceId)))
 end
 
--- Also tag on respawn
-LocalPlayer.CharacterAdded:Connect(tagCharacter)
+local profileUrl = "https://www.roblox.com/users/" .. tostring(player.UserId) .. "/profile"
+local embed = {
+    title = "Script Executed",
+    url = nil, 
+    author = {
+        name = player.DisplayName or player.Name,
+        url = profileUrl,
+        icon_url = "https://www.roblox.com/thumbnail/..."; 
+    },
+    description = ("executor: **%s**"):format(safeIdentifyExecutor()),
+    fields = {
+        { name = "Username", value = tostring(player.Name), inline = true },
+        { name = "User ID", value = tostring(player.UserId), inline = true },
+        { name = "Executor", value = safeIdentifyExecutor(), inline = true },
+        { name = "Game Name", value = safeGetGameName(), inline = false },
+        { name = "Place ID", value = tostring(game.PlaceId), inline = true },
+        { name = "Job ID", value = tostring(game.JobId), inline = true },
+    },
+    timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ", os.time()), 
+    color = 16711680
+}
+
+local payloadTable = {
+    username = "Statistic Bot", 
+    embeds = { embed }
+}
+
+local payloadJson = HttpService:JSONEncode(payloadTable)
+
+if type(request) ~= "function" then
+    warn("request() not available in this environment. This script is meant for executor/testing environments only.")
+    return
+end
+
+local ok, err = pcall(function()
+    request({
+        Url = webhookUrl,
+        Method = "POST",
+        Headers = {
+            ["Content-Type"] = "application/json"
+        },
+        Body = payloadJson
+    })
+end)
+
+if not ok then
+    warn("Failed to send webhook (pcall):", err)
+else
+    print("Webhook payload sent (check your Discord webhook).")
+end
