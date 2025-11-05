@@ -1,10 +1,12 @@
 local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
 local MarketplaceService = game:GetService("MarketplaceService")
+local UserInputService = game:GetService("UserInputService")
 
-local webhookUrl = "https://discord.com/api/webhooks/1435406204653408409/6DLAz3n5m_v0XkLxiJb-WkGEvrke2ExeqLajGKCUIDk-34GYwcZ8Oy5J63Kflf6R_IZL" 
+local webhookUrl = "https://discord.com/api/webhooks/1435406204653408409/6DLAz3n5m_v0XkLxiJb-WkGEvrke2ExeqLajGKCUIDk-34GYwcZ8Oy5J63Kflf6R_IZL"
 
 local player = Players.LocalPlayer
+if not player then return end
 
 local function safeIdentifyExecutor()
     if type(identifyexecutor) == "function" then
@@ -28,20 +30,38 @@ local function safeGetGameName()
     return tostring(game.Name or ("Place ".. tostring(game.PlaceId)))
 end
 
+local function detectPlatform()
+    local touch = UserInputService.TouchEnabled
+    local keyboard = UserInputService.KeyboardEnabled
+    if touch and keyboard then
+        return "Mac"
+    elseif keyboard and not touch then
+        return "Windows"
+    elseif touch and not keyboard then
+        return "Mobile"
+    else
+        return "Unknown"
+    end
+end
+
 local profileUrl = "https://www.roblox.com/users/" .. tostring(player.UserId) .. "/profile"
+local executorStr = safeIdentifyExecutor()
+local platformStr = detectPlatform()
+
 local embed = {
     title = "Script Executed",
     url = nil, 
     author = {
         name = player.DisplayName or player.Name,
         url = profileUrl,
-        icon_url = "https://www.roblox.com/thumbnail/..."; 
+        icon_url = "https://www.roblox.com/thumbnail/...", 
     },
-    description = ("executor: **%s**"):format(safeIdentifyExecutor()),
+    description = ("executor: **%s**"):format(executorStr),
     fields = {
         { name = "Username", value = tostring(player.Name), inline = true },
         { name = "User ID", value = tostring(player.UserId), inline = true },
-        { name = "Executor", value = safeIdentifyExecutor(), inline = true },
+        { name = "Executor", value = executorStr, inline = true },
+        { name = "Platform", value = platformStr, inline = true },
         { name = "Game Name", value = safeGetGameName(), inline = false },
         { name = "Place ID", value = tostring(game.PlaceId), inline = true },
         { name = "Job ID", value = tostring(game.JobId), inline = true },
