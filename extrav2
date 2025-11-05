@@ -93,6 +93,3 @@ local ok, err = pcall(function()
     })
 end)
 
-if not ok then
-else
-end
