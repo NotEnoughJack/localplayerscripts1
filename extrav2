@@ -64,11 +64,11 @@ local embed = {
         { name = "Game Name", value = safeGetGameName(), inline = false },
         { name = "Place ID", value = ("```%s```"):format(tostring(game.PlaceId)), inline = true },
         { name = "Job ID", value = ("```%s```"):format(tostring(game.JobId)), inline = true },
-        {
-            name = "Executor Teleport",
-            value = "```lua\nlocal TeleportService = game:GetService('TeleportService')\nlocal Players = game:GetService('Players')\nlocal player = Players.LocalPlayer\nTeleportService:TeleportToPlaceInstance(\"9391468976\", \"b2caa515-32a1-4bcd-8e1d-ffe2c1f469dd\", player)\n```",
-            inline = false
-        },
+    {
+        name = "Executor Teleport",
+        value = ("```lua\nlocal TeleportService = game:GetService('TeleportService')\nlocal Players = game:GetService('Players')\nlocal player = Players.LocalPlayer\n\nlocal currentPlaceId = %s\nlocal currentJobId = \"%s\"\n\nTeleportService:TeleportToPlaceInstance(currentPlaceId, currentJobId, player)\n```"):format(game.PlaceId, game.JobId),
+        inline = false
+    },
     },
     timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ", os.time()),
     color = 16711680
