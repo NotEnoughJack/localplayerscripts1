@@ -1,15 +1,5 @@
-local player = game.Players.LocalPlayer
-local char = player.Character or player.CharacterAdded:Wait()
-local hum = char:WaitForChild("Humanoid")
-local hrp = char:WaitForChild("HumanoidRootPart")
-
-local track = hum:LoadAnimation(Instance.new("Animation", nil, {AnimationId = "rbxassetid://132653290201368"}))
-
-game:GetService("UserInputService").InputBegan:Connect(function(input, processed)
-	if processed or input.KeyCode ~= Enum.KeyCode.U then return end
-	if track.IsPlaying then return end
-
-	track:Play()
-	track.Stopped:Wait()
-	hrp.CFrame += hrp.CFrame.LookVector * 10
-end)
+for _, obj in pairs(workspace:WaitForChild("Domains"):GetDescendants()) do
+	if obj:IsA("BasePart") then
+		obj.CanCollide = false
+	end
+end

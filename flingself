@@ -2,7 +2,6 @@ local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
 local toggled = false
 
--- Set this to a lower knockback velocity
 local customVelocity = Vector3.new(100, 60, 100)
 
 local function applyCustomKnockback(obj)

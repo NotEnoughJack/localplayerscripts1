@@ -1,16 +1,11 @@
-local function playAnimationById(animationId)
-    local Players = game:GetService("Players")
-    local player = Players.LocalPlayer
+local p = game.Players.LocalPlayer
+local c = p.Character or p.CharacterAdded:Wait()
+local h = c:WaitForChild("Humanoid")
 
-    local character = player.Character or player.CharacterAdded:Wait()
-    local humanoid = character:WaitForChild("Humanoid")
-
-    local animation = Instance.new("Animation")
-    animation.AnimationId = "rbxassetid://" .. tostring(animationId)
-
-    local animationTrack = humanoid:LoadAnimation(animation)
-    animationTrack:Play()
+local function playAnim(id)
+	local a = Instance.new("Animation")
+	a.AnimationId = "rbxassetid://"..id
+	h:LoadAnimation(a):Play()
 end
 
-local animationId = 108374320117834 
-playAnimationById(animationId)
+playAnim(108374320117834)

@@ -4,8 +4,8 @@ local player = Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
 local humanoid = character:WaitForChild("Humanoid")
 
-local normalGravity = 196.2 -- Roblox default gravity
-local lowGravity = 20       -- Low gravity value
+local normalGravity = 196.2 
+local lowGravity = 20    
 local gravityEnabled = false
 
 local function toggleGravity()

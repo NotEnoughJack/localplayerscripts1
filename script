@@ -5,7 +5,7 @@ local LocalPlayer = Players.LocalPlayer
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local Window = Fluent:CreateWindow({
     Title = "Spotlight.gg",
-    SubTitle = "V2.35 ",
+    SubTitle = "V2.5 ",
     TabWidth = 160,
     Size = UDim2.fromOffset(580, 460),
     Theme = "Amethyst",
@@ -86,8 +86,8 @@ Fluent:Notify({
     Duration = 8
 })
 Fluent:Notify({
-    Title = "Same ol same ol
-    Content = "Removed Halloween Since JJS updated
+    Title = "Added old Scripts",
+    Content = "Removed Halloween Since JJS updated",
     Duration = 8
 })
 
@@ -124,6 +124,8 @@ AddScriptToggle(Tabs.Fun, "sandy", "Sandevistan", "Hold Z to move", "https://raw
 AddScriptToggle(Tabs.Fun, "JScare", "Scariest script", "Made by Xeryt", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/scaryscript")
 AddScriptToggle(Tabs.Combat, "Dred", "Directed Red", "creates a hologram from which the Reversal Red fires letting you shoot from any position. Made by Dragon", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/directedred")
 AddScriptToggle(Tabs.Utility, "Mesp", "Moveset ESP", "Makes any logic block visible", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/movesetesp")
+AddScriptToggle(Tabs.Utility, "domaininvade", "Domain Invade", "Walk into any domain", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/domaininvade")
+
 
 
 AddScriptToggle(Tabs.Animations, "MVP1", "MVP - Domain Invasion", "press B to activate", "https://raw.githubusercontent.com/keatoscripts/JJS/refs/heads/main/Toji.txt")
