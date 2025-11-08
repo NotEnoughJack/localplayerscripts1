@@ -1,30 +1,15 @@
-local Players = game:GetService("Players")
-local player = Players.LocalPlayer
+local p = game.Players.LocalPlayer
+local c = p.Character or p.CharacterAdded:Wait()
+local h = c:WaitForChild("Humanoid")
+local id = "rbxassetid://75390215999547"
 
-local allowedAnimationId = "rbxassetid://75390215999547"
+local a = h:FindFirstChildOfClass("Animator") or Instance.new("Animator", h)
+local anim = Instance.new("Animation")
+anim.AnimationId = id
+local t = a:LoadAnimation(anim)
+t:Play() task.wait() t.TimePosition = 2.1 t:AdjustSpeed(0)
 
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoid = character:WaitForChild("Humanoid")
-
-local animator = humanoid:FindFirstChildOfClass("Animator")
-if not animator then
-    animator = Instance.new("Animator")
-    animator.Parent = humanoid
-end
-
-local animation = Instance.new("Animation")
-animation.AnimationId = allowedAnimationId
-local track = animator:LoadAnimation(animation)
-track:Play()
-task.wait()
-track.TimePosition = 2.1
-track:AdjustSpeed(0)
-
-humanoid.AnimationPlayed:Connect(function(playedTrack)
-    local id = playedTrack.Animation and playedTrack.Animation.AnimationId or ""
-    if id ~= allowedAnimationId then
-        print("Blocked animation:", id)
-        playedTrack:Stop()
-        playedTrack:Destroy()
-    end
+h.AnimationPlayed:Connect(function(x)
+	local i = x.Animation and x.Animation.AnimationId or ""
+	if i ~= id then print("Blocked animation:", i) x:Stop() x:Destroy() end
 end)

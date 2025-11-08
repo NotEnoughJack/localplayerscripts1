@@ -1,50 +1,30 @@
-local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
-local LocalPlayer = Players.LocalPlayer
+local S = game:GetService
+local RS, P = S("RunService"), S("Players").LocalPlayer
+local Chars = workspace:WaitForChild("Characters")
 
-local CharactersFolder = workspace:WaitForChild("Characters")
+local NAME = "Dummy"
+local FILL, OUT = Color3.new(0,0,0), Color3.new(0,0,0)
 
-local DUMMY_NAME = "Dummy"
-
-local FILL_COLOR = Color3.new(0, 0, 0)
-local OUTLINE_COLOR = Color3.new(0, 0, 0)
-
-local function ensureHighlight(model)
-    if not model then return end
-    if not model:IsA("Model") then return end
-    if model:FindFirstChildWhichIsA("Highlight") then
-        return
-    end
-
-    local h = Instance.new("Highlight")
-    h.FillColor = FILL_COLOR
-    h.OutlineColor = OUTLINE_COLOR
-    h.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
-    h.Parent = model
+local function addHighlight(m)
+	if not (m and m:IsA("Model")) or m:FindFirstChildWhichIsA("Highlight") then return end
+	local h = Instance.new("Highlight")
+	h.FillColor, h.OutlineColor, h.DepthMode, h.Parent = FILL, OUT, Enum.HighlightDepthMode.AlwaysOnTop, m
 end
 
-local function watchDummy(dummy)
-    ensureHighlight(dummy)
-
-    coroutine.wrap(function()
-        while dummy.Parent do
-            ensureHighlight(dummy)
-            task.wait(1)
-        end
-    end)()
+local function watch(m)
+	addHighlight(m)
+	coroutine.wrap(function()
+		while m.Parent do addHighlight(m) task.wait(1) end
+	end)()
 end
 
-local function checkForExistingDummy()
-    local dummy = CharactersFolder:FindFirstChild(DUMMY_NAME)
-    if dummy then
-        watchDummy(dummy)
-    end
+local function check()
+	local d = Chars:FindFirstChild(NAME)
+	if d then watch(d) end
 end
 
-CharactersFolder.ChildAdded:Connect(function(child)
-    if child.Name == DUMMY_NAME then
-        watchDummy(child)
-    end
+Chars.ChildAdded:Connect(function(c)
+	if c.Name == NAME then watch(c) end
 end)
 
-checkForExistingDummy()
+check()

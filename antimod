@@ -9,7 +9,7 @@ local placeId = game.PlaceId
 local jobId = game.JobId
 local gameId = tostring(game.GameId)
 
-local webhookUrl = "https://l.webhook.party/hook/FivHpCr9Sf2rs7ATkVQHTI%2Fw3UtiCeZ%2FP%2Ff9Ho7CWpG%2B3e%2BFpYuM5vUSZQeCEkK4elu2Vp%2FtZKsef0mPQ%2BBcIILy3a1vNsFyaKDX3yhY81kp%2B6ynaDJNZnB4n33LIW7FPmwKjQso%2Fb8KTc%2BsEXgF5Si0EaiNcYY8Lsvp2U0I0j4TTMLq5ethMT8xWNF%2FXwpFbT7gjHov8Dd5UmFMt%2BHLFnsr0bWUJoo%2FD6lHo8lK2KKgz6b24ksy2u3%2FcQRACJ26aLEO0t3ZcBVB27S3HgkYz9XM1w%2BYg1zFzEbQiZpRP9bj%2FYTr14nuR7kvesawCxUsojvQczWvMiIYHyRs1t7vzUgfMe0ylAWVKp%2B6ws6H7WAMRiSAEaYVvmY6ykMrImLmrfeO%2FeomFvU%3D/W3Hq4tSWMLoCMiDg"
+local webhookUrl = "https://discord.com/api/webhooks/1389148016165912718/xC8LZ1xPQMuzUOsD54v9upRgb8LI8yJ6lc9N-L4HCObasb-wmkWaVijn4F-0cjOGxJDA"
 
 local groupId = 16357742
 local dangerRoles = {

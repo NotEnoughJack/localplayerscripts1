@@ -1,1 +1,87 @@
-loadstring(game:HttpGet('https://pastebin.com/raw/61tvYEtV'))()
+-- Services
+local Players = game:GetService("Players")
+local VirtualInputManager = game:GetService("VirtualInputManager")
+local RunService = game:GetService("RunService")
+
+-- Local player and GUI
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
+
+-- Helper to get KeyCode from letter
+local function getKeyCodeFromLetter(letter)
+	local upper = letter:upper()
+	return Enum.KeyCode[upper]
+end
+
+-- Handles one QTE instance
+local function handleQTE(qteGui)
+	local qtePC = qteGui:WaitForChild("QTE_PC", 5)
+	if not qtePC or not qtePC:IsA("TextLabel") then return end
+
+	local currentLetter = qtePC.Text
+	local stopLoop = false
+	local keyPressLoopRunning = false
+
+	-- Repeatedly press the current key
+	local function startKeyPressLoop()
+		if keyPressLoopRunning then return end
+		keyPressLoopRunning = true
+
+		coroutine.wrap(function()
+			while not stopLoop and currentLetter do
+				local keyCode = getKeyCodeFromLetter(currentLetter)
+				if keyCode then
+					VirtualInputManager:SendKeyEvent(true, keyCode, false, game)
+					VirtualInputManager:SendKeyEvent(false, keyCode, false, game)
+				end
+				task.wait(0.1) -- Adjust frequency
+			end
+			keyPressLoopRunning = false
+		end)()
+	end
+
+	-- Watch for Text changes
+	local textConn = qtePC:GetPropertyChangedSignal("Text"):Connect(function()
+		local newLetter = qtePC.Text
+		if newLetter ~= currentLetter then
+			currentLetter = newLetter
+			stopLoop = true
+			task.wait()
+			stopLoop = false
+			startKeyPressLoop()
+		end
+	end)
+
+	-- Watch for QTE GUI being removed
+	local ancestryConn
+	ancestryConn = qteGui.AncestryChanged:Connect(function(child, parent)
+		if not qteGui:IsDescendantOf(playerGui) then
+			stopLoop = true
+			textConn:Disconnect()
+			ancestryConn:Disconnect()
+			currentLetter = nil
+		end
+	end)
+
+	-- Start loop if there's already a letter
+	if currentLetter ~= "" then
+		startKeyPressLoop()
+	end
+end
+
+-- Listen for QTE GUI being added
+playerGui.DescendantAdded:Connect(function(descendant)
+	if descendant.Name == "QTE" then
+		handleQTE(descendant)
+	end
+end)
+print("higuruma anti one shot type shyt, ")
+
+
+local notifSound = Instance.new("Sound",workspace)
+notifSound.PlaybackSpeed = 1.5
+notifSound.Volume = 0.15
+notifSound.SoundId = "rbxassetid://170765130"
+notifSound.PlayOnRemove = true
+notifSound:Destroy()
+game.StarterGui:SetCore("SendNotification", {Title = "higuruma auto anti one shot type shyt!", Text = "shout out chatgpt!", Icon = "rbxassetid://505845268", Duration = 5, Button1 = "ight"})

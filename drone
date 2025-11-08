@@ -1,115 +1,71 @@
-local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
-local InsertService = game:GetService("InsertService")
-local UIS = game:GetService("UserInputService")
+local S = game:GetService
+local P = S("Players").LocalPlayer
+local RS, IS, UIS = S("RunService"), S("InsertService"), S("UserInputService")
 
-local player = Players.LocalPlayer
-local droneAccessoryID = 17865400476
-local allowedAnimationId = "rbxassetid://75390215999547"
+local DRONE_ID, ANIM_ID = 17865400476, "rbxassetid://75390215999547"
+local SPEED, SMOOTH, TILT = 80, 0.2, math.rad(45)
+local vel, goal = Vector3.zero, Vector3.zero
 
-local speed = 80
-local smoothness = 0.2
-local tiltAmount = math.rad(45)
-local currentVelocity = Vector3.zero
-local targetVelocity = Vector3.zero
-
-local function getInputDirection()
-	local dir = Vector3.zero
-	if UIS:IsKeyDown(Enum.KeyCode.W) then dir += Vector3.new(0, 0, -1) end
-	if UIS:IsKeyDown(Enum.KeyCode.S) then dir += Vector3.new(0, 0, 1) end
-	if UIS:IsKeyDown(Enum.KeyCode.A) then dir += Vector3.new(-1, 0, 0) end
-	if UIS:IsKeyDown(Enum.KeyCode.D) then dir += Vector3.new(1, 0, 0) end
-	if UIS:IsKeyDown(Enum.KeyCode.Space) then dir += Vector3.new(0, 1, 0) end
-	if UIS:IsKeyDown(Enum.KeyCode.LeftControl) then dir += Vector3.new(0, -1, 0) end
-	return dir.Magnitude > 0 and dir.Unit or Vector3.zero
+local function dirInput()
+	local d = Vector3.zero
+	if UIS:IsKeyDown(Enum.KeyCode.W) then d += Vector3.new(0,0,-1) end
+	if UIS:IsKeyDown(Enum.KeyCode.S) then d += Vector3.new(0,0,1) end
+	if UIS:IsKeyDown(Enum.KeyCode.A) then d += Vector3.new(-1,0,0) end
+	if UIS:IsKeyDown(Enum.KeyCode.D) then d += Vector3.new(1,0,0) end
+	if UIS:IsKeyDown(Enum.KeyCode.Space) then d += Vector3.new(0,1,0) end
+	if UIS:IsKeyDown(Enum.KeyCode.LeftControl) then d += Vector3.new(0,-1,0) end
+	return d.Magnitude > 0 and d.Unit or Vector3.zero
 end
 
--- this fuckass shit is fucking broken for no fucking reason and idk wtf to fucking do
-local function attachDroneAccessory(character)
-	local success, model = pcall(function()
-		return InsertService:LoadAsset(droneAccessoryID)
-	end)
-	if success and model then
-		local accessory = model:FindFirstChildOfClass("Accessory")
-		if accessory then
-			accessory.Parent = character
-			local humanoid = character:FindFirstChildOfClass("Humanoid")
-			if humanoid then
-				humanoid:AddAccessory(accessory)
-			end
+local function attachDrone(char)
+	local ok, m = pcall(function() return IS:LoadAsset(DRONE_ID) end)
+	if ok and m then
+		local a = m:FindFirstChildOfClass("Accessory")
+		if a then
+			a.Parent = char
+			local h = char:FindFirstChildOfClass("Humanoid")
+			if h then h:AddAccessory(a) end
 		end
 	end
 end
 
-local function enableDroneFlight(character)
-	local root = character:WaitForChild("HumanoidRootPart")
-	local humanoid = character:WaitForChild("Humanoid")
-	local camera = workspace.CurrentCamera
+local function fly(char)
+	local r, h = char:WaitForChild("HumanoidRootPart"), char:WaitForChild("Humanoid")
+	local cam = workspace.CurrentCamera
+	h.PlatformStand = true
+	vel, goal = Vector3.zero, Vector3.zero
 
-	humanoid.PlatformStand = true
-	currentVelocity = Vector3.zero
-	targetVelocity = Vector3.zero
+	RS.RenderStepped:Connect(function(dt)
+		local i = dirInput()
+		local w = cam.CFrame:VectorToWorldSpace(i)
+		goal, vel = w * SPEED, vel:Lerp(goal, SMOOTH)
+		r.Velocity, r.AssemblyAngularVelocity = vel, Vector3.zero
 
-	RunService.RenderStepped:Connect(function(dt)
-		local inputDir = getInputDirection()
-		local worldDir = camera.CFrame:VectorToWorldSpace(inputDir)
-
-		targetVelocity = worldDir * speed
-		currentVelocity = currentVelocity:Lerp(targetVelocity, smoothness)
-
-		root.Velocity = currentVelocity
-		root.AssemblyAngularVelocity = Vector3.zero
-
-		local forwardTilt = 0
-		local sideTilt = 0
-		if inputDir.Z ~= 0 then forwardTilt = inputDir.Z * tiltAmount end
-		if inputDir.X ~= 0 then sideTilt = -inputDir.X * tiltAmount end
-
-		local look = camera.CFrame.LookVector
-		local yaw = math.atan2(-look.X, -look.Z)
-
-		local goalCFrame = CFrame.new(root.Position)
-			* CFrame.Angles(0, yaw, 0)
-			* CFrame.Angles(forwardTilt, 0, sideTilt)
-
-		root.CFrame = root.CFrame:Lerp(goalCFrame, 0.2)
+		local f, s = i.Z * TILT, -i.X * TILT
+		local look, yaw = cam.CFrame.LookVector, math.atan2(-look.X, -look.Z)
+		local goalCF = CFrame.new(r.Position) * CFrame.Angles(0, yaw, 0) * CFrame.Angles(f, 0, s)
+		r.CFrame = r.CFrame:Lerp(goalCF, 0.2)
 	end)
 end
 
-local function setupAnimationBlocking(character)
-	local humanoid = character:WaitForChild("Humanoid")
-	local animator = humanoid:FindFirstChildOfClass("Animator")
-	if not animator then
-		animator = Instance.new("Animator")
-		animator.Parent = humanoid
-	end
-
-	local animation = Instance.new("Animation")
-	animation.AnimationId = allowedAnimationId
-	local track = animator:LoadAnimation(animation)
-	track:Play()
-	task.wait()
-	track.TimePosition = 2.1
-	track:AdjustSpeed(0)
-
-	humanoid.AnimationPlayed:Connect(function(playedTrack)
-		local id = playedTrack.Animation and playedTrack.Animation.AnimationId or ""
-		if id ~= allowedAnimationId then
-			print("Blocked animation:", id)
-			playedTrack:Stop()
-			playedTrack:Destroy()
-		end
+local function blockAnims(char)
+	local h = char:WaitForChild("Humanoid")
+	local a = h:FindFirstChildOfClass("Animator") or Instance.new("Animator", h)
+	local anim = Instance.new("Animation")
+	anim.AnimationId = ANIM_ID
+	local t = a:LoadAnimation(anim)
+	t:Play() task.wait() t.TimePosition = 2.1 t:AdjustSpeed(0)
+	h.AnimationPlayed:Connect(function(pl)
+		local id = pl.Animation and pl.Animation.AnimationId or ""
+		if id ~= ANIM_ID then pl:Stop() pl:Destroy() end
 	end)
 end
 
-local function onCharacterAdded(character)
-	attachDroneAccessory(character)
-	enableDroneFlight(character)
-	setupAnimationBlocking(character)
+local function setup(c)
+	attachDrone(c)
+	fly(c)
+	blockAnims(c)
 end
 
-player.CharacterAdded:Connect(onCharacterAdded)
-
-if player.Character then
-	onCharacterAdded(player.Character)
-end
+P.CharacterAdded:Connect(setup)
+if P.Character then setup(P.Character) end
