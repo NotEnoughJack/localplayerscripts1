@@ -1,0 +1,97 @@
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local UserInputService = game:GetService("UserInputService")
+
+local localPlayer = Players.LocalPlayer
+local camera = workspace.CurrentCamera
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = localPlayer:WaitForChild("PlayerGui")
+
+local button = Instance.new("TextButton")
+button.Size = UDim2.new(0, 50, 0, 50)
+button.Position = UDim2.new(0, 10, 1, -60) -- Bottom left
+button.BackgroundColor3 = Color3.fromRGB(0, 255, 255)
+button.Text = "PS"
+button.TextColor3 = Color3.new(0, 0, 0)
+button.BorderSizePixel = 0
+button.Parent = screenGui
+
+local dragging = false
+local dragStart
+
+button.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true
+        dragStart = input.Position
+    end
+end)
+
+button.InputChanged:Connect(function(input)
+    if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
+        local delta = input.Position - dragStart
+        button.Position = UDim2.new(
+            button.Position.X.Scale,
+            button.Position.X.Offset + delta.X,
+            button.Position.Y.Scale,
+            button.Position.Y.Offset + delta.Y
+        )
+        dragStart = input.Position
+    end
+end)
+
+UserInputService.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = false
+    end
+end)
+
+local function getClosestToCenter()
+    local center = Vector2.new(camera.ViewportSize.X / 2, camera.ViewportSize.Y / 2)
+    for _, plr in pairs(Players:GetPlayers()) do
+        if plr ~= localPlayer and plr.Character then
+            local hrp = plr.Character:FindFirstChild("HumanoidRootPart")
+            if hrp then
+                local screenPos, onScreen = camera:WorldToViewportPoint(hrp.Position)
+                if onScreen then
+                    return plr
+                end
+            end
+        end
+    end
+end
+
+button.MouseButton1Click:Connect(function()
+    local target = getClosestToCenter()
+    if target and target.Character then
+        ReplicatedStorage.Knit.Knit.Services.TodoService.RE.RightActivated:FireServer(target.Character)
+        wait(0.53)
+        ReplicatedStorage.Knit.Knit.Services.TodoService.RE.Activated:FireServer(false)
+    end
+end)
+
+local UserInputService = game:GetService("UserInputService")
+
+local function getNil(name, class)
+	for _, v in pairs(getnilinstances()) do
+		if v.ClassName == class and v.Name == name then
+			return v
+		end
+	end
+end
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+	if gameProcessed then return end
+	
+	if input.KeyCode == Enum.KeyCode.R then
+		task.wait(0.53) 
+		
+		local args = {
+			[1] = false
+		}
+
+		game:GetService("ReplicatedStorage")
+			.Knit.Knit.Services.TodoService.RE.Activated
+			:FireServer(unpack(args))
+	end
+end)
