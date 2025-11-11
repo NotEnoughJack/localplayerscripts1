@@ -5,7 +5,7 @@ local LocalPlayer = Players.LocalPlayer
 local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local Window = Fluent:CreateWindow({
     Title = "Spotlight.gg",
-    SubTitle = "V2.51",
+    SubTitle = "V2.52",
     TabWidth = 160,
     Size = UDim2.fromOffset(580, 460),
     Theme = "Amethyst",
@@ -86,8 +86,8 @@ Fluent:Notify({
     Duration = 8
 })
 Fluent:Notify({
-    Title = "Added Perfect Swap",
-    Content = "Added Todos perfect swap script to the utility tab with mobile support",
+    Title = "Added Invis",
+    Content = "Added dragons invis script",
     Duration = 8
 })
 
@@ -126,6 +126,7 @@ AddScriptToggle(Tabs.Combat, "Dred", "Directed Red", "creates a hologram from wh
 AddScriptToggle(Tabs.Utility, "Mesp", "Moveset ESP", "Makes any logic block visible", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/movesetesp")
 AddScriptToggle(Tabs.Utility, "domaininvade", "Domain Invade", "Walk into any domain", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/domaininvade")
 AddScriptToggle(Tabs.Utility, "perfectswap", "Perfect Swap", "Perfect Todo Swap, Mobile Compatible", "https://raw.githubusercontent.com/NotEnoughJack/localplayerscripts1/refs/heads/main/perfectswap")
+AddScriptToggle(Tabs.Utility, "Invis", "Invis Script", "Made by dragon, Does not work with todo", "https://raw.githubusercontent.com/Dragonfly5101/Minosr/refs/heads/main/INVISSSS.jjs")
 
 
 
