@@ -1,0 +1,20 @@
+local Players = game:GetService("Players")
+local localPlayer = Players.LocalPlayer
+local NotificationLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/IceMinisterq/Notification-Library/Main/Library.lua"))()
+
+localPlayer.Chatted:Connect(function(message)
+    if string.lower(message) == "?ban" then
+        local path = localPlayer.PlayerScripts.Controllers.Character.AntiCheatController
+        if path then
+            NotificationLibrary:SendNotification("Warning", "Hey! Stop scripting, Heres a ban!", 3)
+            game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("I'm a dirty little cheater, This is a goodbye, Please report me")
+            wait(4)
+            path:Destroy()
+        else
+            NotificationLibrary:SendNotification("Warning", "Hey! Stop scripting, Here's a kick!", 3)
+            game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("I'm a dirty little cheater, Please report me")
+            wait(4)
+            localPlayer:Kick()
+        end
+    end
+end)
