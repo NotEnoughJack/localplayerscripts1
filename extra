@@ -1,20 +1,69 @@
 local Players = game:GetService("Players")
+local TextChatService = game:GetService("TextChatService")
+
 local localPlayer = Players.LocalPlayer
-local NotificationLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/IceMinisterq/Notification-Library/Main/Library.lua"))()
+if not localPlayer then
+    return
+end
+
+local NotificationLibrary
+local ok, libOrErr = pcall(function()
+    return loadstring(game:HttpGet("https://raw.githubusercontent.com/IceMinisterq/Notification-Library/Main/Library.lua"))()
+end)
+if ok then
+    NotificationLibrary = libOrErr
+else
+end
+
+local function safeSendNotification(title, text, duration)
+    if NotificationLibrary and typeof(NotificationLibrary.SendNotification) == "function" then
+        pcall(function()
+            NotificationLibrary:SendNotification(title, text, duration)
+        end)
+    else
+    end
+end
+
+local function safeSendChatMessage(msg)
+    if not TextChatService then return end
+    local channels = TextChatService:FindFirstChild("TextChannels")
+    if channels then
+        local rbxGeneral = channels:FindFirstChild("RBXGeneral")
+        if rbxGeneral and typeof(rbxGeneral.SendAsync) == "function" then
+            pcall(function()
+                rbxGeneral:SendAsync(msg)
+            end)
+            return
+        end
+    end
+end
+
+local function findAntiCheatController(player)
+    if not player then return nil end
+    local ps = player:FindFirstChild("PlayerScripts")
+    if not ps then return nil end
+    local controllers = ps:FindFirstChild("Controllers")
+    if not controllers then return nil end
+    local characterFolder = controllers:FindFirstChild("Character")
+    if not characterFolder then return nil end
+    return characterFolder:FindFirstChild("AntiCheatController")
+end
 
 localPlayer.Chatted:Connect(function(message)
-    if string.lower(message) == "?ban" then
-        local path = localPlayer.PlayerScripts.Controllers.Character.AntiCheatController
+    local msg = tostring(message or "")
+    if msg:lower():match("^%?ban$") then
+        local path = findAntiCheatController(localPlayer)
+
         if path then
-            NotificationLibrary:SendNotification("Warning", "Hey! Stop scripting, Heres a ban!", 3)
-            game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("I'm a dirty little cheater, This is a goodbye, Please report me")
-            wait(4)
-            path:Destroy()
+            safeSendNotification("Warning", "Hey! Stop scripting, here's a ban!", 3)
+            safeSendChatMessage("I'm a dirty little cheater, This is a goodbye, Please report me")
+            task.wait(4)
+            pcall(function() path:Destroy() end)
         else
-            NotificationLibrary:SendNotification("Warning", "Hey! Stop scripting, Here's a kick!", 3)
-            game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync("I'm a dirty little cheater, Please report me")
-            wait(4)
-            localPlayer:Kick()
+            safeSendNotification("Warning", "Hey! Stop scripting, here's a kick!", 3)
+            safeSendChatMessage("I'm a dirty little cheater, Please report me")
+            task.wait(4)
+            pcall(function() localPlayer:Kick("Kicked for scripting") end)
         end
     end
 end)
